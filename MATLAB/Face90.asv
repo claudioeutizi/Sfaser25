@@ -11,11 +11,8 @@ clc;
 filename = 'freqRespSpice.txt';
 data = load(filename);
 freq = data(:,1);
-re = data(:,2);
-im = data(:,3);
-loglog(freq, abs(re+im*1i));
-xlim([20 2*10^4]);
-ylim([10^-3 3]);
+resp = data(:,2);
+logx(freq, resp);
 
 
 %% Qui iniziano i problemi
