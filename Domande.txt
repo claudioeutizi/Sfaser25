@@ -1,0 +1,3 @@
+Funzionamento LFO su spice
+correttezza della formula utilizzata per il calcolo della Rds (Vds=0)
+grafo del circuito e metodo di calcolo della scattering matrix con V-net e I-net

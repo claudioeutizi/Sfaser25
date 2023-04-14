@@ -36,8 +36,8 @@ C9 = 47*10^(-9);
 Vcut = -2.021;                                      %in this particular JFET used in LTspice
 Vref = 5.1;
 LFO=3.8;
-Idss=5.185;                                         %not sure, found experimentally
-Rds = 1/(2*Idss*10^(-3)*(LFO-Vref-Vcut)/Vcut^2);    %Not sure about the assumption of Vds=0
+Idss=5.185*10^(-3);                                         %not sure, found experimentally
+Rds = 1/(2*Idss*(LFO-Vref-Vcut)/Vcut^2);    %Not sure about the assumption of Vds=0
 
 
 R14 = 470000;
@@ -57,7 +57,35 @@ R23 = 24000;
 R25 = 24000;
 R26 = 24000;
 
-R2=R7=R8=R16=150000;
+R2 = 150000;
+R7 = 150000;
+R8 = 150000;
+R16 = 150000;
+
+Qv = [   	  eye(11);
+        -1 -1  0  0  0	0  0  0  0 0 0;
+         0  0  1  0	 0  0  0  0	 0 0 0;
+         0  0  1  1  1  1  1  1  1 1 1;
+         0  0  0  0	 1  0  0  0  0 0 0;
+         0  0  0  0	 0  0  1  0	 0 0 0;
+         0  0  0  0	 0  0  0  0	 1 0 0;
+        -1 -1 -1  0  0  0  0  0  0 0 0;
+        -1 -1 -1  0  0  0  0  0  0 0 0;
+        -1 -1 -1 -1	-1	0  0  0	 0 0 0;
+        -1 -1 -1 -1	-1  0  0  0	 0 0 0;
+        -1 -1 -1 -1	-1 -1 -1  0	 0 0 0;
+        -1 -1 -1 -1 -1 -1 -1  0  0 0 0;
+        -1 -1 -1 -1	-1 -1 -1 -1	-1 0 0;
+        -1 -1 -1 -1 -1 -1 -1 -1 -1 0 0;];
+    
+Qi=[    eye(11);
+    
+
+
+
+]
+
+
 
 
 
