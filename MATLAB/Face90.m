@@ -9,14 +9,41 @@ clc;
 N=length(Vin);
 %% Import reference LTspice frequency response
 % ! before bjt stage ! 
-filename = 'freqRespSpice.txt';
-data = load(filename);
-freq = data(:,1);
-re = data(:,2);
-im = data(:,3);
-loglog(freq, abs(re+im*1i));
+% filename = 'freqRespSpice.txt';
+% data = load(filename);
+% freq = data(:,1);
+% re = data(:,2);
+% im = data(:,3);
+% loglog(freq, abs(re+im*1i));
+% xlim([20 2*10^4]);
+% ylim([10^-3 3]);
+
+data2=load('noBJT.txt');
+freq2 = data2(:,1);
+re2 = data2(:,2);
+im2 = data2(:,3);
+pre=abs(re2+im2*1i);
+
+figure;
+loglog(freq2,pre);
 xlim([20 2*10^4]);
 ylim([10^-3 3]);
+
+data3=load('postBJT.txt');
+re3 = data3(:,2);
+im3 = data3(:,3);
+post=abs(re3+im3*1i);
+
+hold on;
+loglog(freq2,post);
+xlim([20 2*10^4]);
+ylim([10^-3 3]);
+
+figure;
+d=post./pre;
+
+semilogx(freq2,20*log10(d));
+xlim([20 2*10^4]);
 
 
 %% Parameters of dynamic elements
