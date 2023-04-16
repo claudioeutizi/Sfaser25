@@ -3,6 +3,7 @@
 
 # Add this line
 out/
+build/
 
 # Prerequisites
 *.d
