@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.15)
 project(minimal_plugin VERSION 0.0.1)
-add_subdirectory(C:/Users/matti/Desktop/MAE/JUCE ./JUCE) 
+add_subdirectory(C:/JUCE ./JUCE) 
 
 juce_add_plugin(Face90
 

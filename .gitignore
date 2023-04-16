@@ -106,5 +106,4 @@ extras/Projucer/JUCECompileEngine.dylib
 
 CMakeUserPresets.json
 
-CMakeLists.txt
 JUCE/CMakeLists.txt
