@@ -1,3 +1,9 @@
+# Visual Studio 2022 cache/options directory
+.vs/
+
+# Add this line
+out/
+
 # Prerequisites
 *.d
 
