@@ -4,6 +4,7 @@
 # Add this line
 out/
 build/
+Builds/
 
 # Prerequisites
 *.d
