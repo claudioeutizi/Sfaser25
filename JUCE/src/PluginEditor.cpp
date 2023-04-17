@@ -10,20 +10,30 @@
 #include "PluginEditor.h"
 
 //==============================================================================
-NewProjectAudioProcessorEditor::NewProjectAudioProcessorEditor (NewProjectAudioProcessor& p)
+Face90AudioProcessorEditor::Face90AudioProcessorEditor (Face90AudioProcessor& p)
     : AudioProcessorEditor (&p), audioProcessor (p)
 {
+    addAndMakeVisible(speedSlider);
+    speedSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+    speedSlider.setRange(0.1, 10, 0.1);
+    speedSlider.addListener(this);
+
+    addAndMakeVisible(led);
+    led.addListener(this);
+
+    addAndMakeVisible(onOffSwitch);
+    onOffSwitch.addListener(this);
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
     setSize (400, 300);
 }
 
-NewProjectAudioProcessorEditor::~NewProjectAudioProcessorEditor()
+Face90AudioProcessorEditor::~Face90AudioProcessorEditor()
 {
 }
 
 //==============================================================================
-void NewProjectAudioProcessorEditor::paint (juce::Graphics& g)
+void Face90AudioProcessorEditor::paint (juce::Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
     g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));
@@ -33,8 +43,15 @@ void NewProjectAudioProcessorEditor::paint (juce::Graphics& g)
     g.drawFittedText ("Hello World!", getLocalBounds(), juce::Justification::centred, 1);
 }
 
-void NewProjectAudioProcessorEditor::resized()
+void Face90AudioProcessorEditor::resized()
 {
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
+}
+
+void buttonClicked(juce::Button* btn){
+}
+
+
+void sliderValueChanged (juce::Slider *slider){
 }
