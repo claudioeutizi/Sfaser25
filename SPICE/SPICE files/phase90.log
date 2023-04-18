@@ -1,6 +1,6 @@
 Circuit: * C:\Users\matti\Desktop\MAE\mxrPhase90\Face90\SPICE\SPICE files\phase90.asc
 
-v5: both pins shorted together -- ignoring.
+v6: both pins shorted together -- ignoring.
 Early termination of direct N-R iteration.
 Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
 Starting Gmin stepping
@@ -30,21 +30,21 @@ Source Step = 93.9394%
 Source stepping succeeded in finding the operating point.
 
 
-Date: Sat Apr 15 16:04:05 2023
-Total elapsed time: 15.395 seconds.
+Date: Sun Apr 16 17:02:03 2023
+Total elapsed time: 45.925 seconds.
 
 tnom = 27
 temp = 27
 method = modified trap
-totiter = 358809
-traniter = 357098
-tranpoints = 141032
-accept = 93002
-rejected = 48030
-matrix size = 169
-fillins = 1394
+totiter = 828550
+traniter = 826840
+tranpoints = 412049
+accept = 409430
+rejected = 2619
+matrix size = 166
+fillins = 1462
 solver = Normal
 Avg thread counts: 1.0/1.0/1.0/1.0
-Matrix Compiler1: 220.51 KB object code size  50.4/35.9/[18.6]
-Matrix Compiler2: 39.50 KB object code size  12.1/9.1/[4.3]
+Matrix Compiler1: 258.62 KB object code size  47.7/23.3/[10.8]
+Matrix Compiler2: 40.11 KB object code size  12.7/8.5/[4.4]
 
