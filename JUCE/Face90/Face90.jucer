@@ -1,0 +1,526 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<JUCERPROJECT id="XIYqYB" name="Face90" projectType="audioplug" useAppConfig="0"
+              addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1">
+  <MAINGROUP id="rtYDuW" name="Face90">
+    <GROUP id="{62A10761-4B4D-06E8-617E-2410959EE530}" name="Source">
+      <FILE id="ryIUM0" name="FilmStripSlider.cpp" compile="1" resource="0"
+            file="Source/FilmStripSlider.cpp"/>
+      <FILE id="PV0dDa" name="FilmStripSlider.h" compile="0" resource="0"
+            file="Source/FilmStripSlider.h"/>
+      <GROUP id="{97B2B32D-2781-52AF-0B59-D5F48A094526}" name="Assets">
+        <GROUP id="{B7C03024-BC39-CC93-8F5B-B86CC8D0DD9B}" name="knob">
+          <GROUP id="{9665E756-4E3C-FDEA-5420-2EA4B041EABF}" name="cropped">
+            <FILE id="wlyZL7" name="speed-knob0000.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0000.png"/>
+            <FILE id="fBgPB1" name="speed-knob0001.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0001.png"/>
+            <FILE id="OG4qbm" name="speed-knob0002.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0002.png"/>
+            <FILE id="X2n5Y9" name="speed-knob0003.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0003.png"/>
+            <FILE id="UM2WY4" name="speed-knob0004.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0004.png"/>
+            <FILE id="oizAFb" name="speed-knob0005.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0005.png"/>
+            <FILE id="pmqYQd" name="speed-knob0006.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0006.png"/>
+            <FILE id="ltxz90" name="speed-knob0007.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0007.png"/>
+            <FILE id="YjN79P" name="speed-knob0008.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0008.png"/>
+            <FILE id="zaXUgK" name="speed-knob0009.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0009.png"/>
+            <FILE id="fVIC0n" name="speed-knob0010.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0010.png"/>
+            <FILE id="sbBetB" name="speed-knob0011.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0011.png"/>
+            <FILE id="rBsDIr" name="speed-knob0012.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0012.png"/>
+            <FILE id="bMLDl4" name="speed-knob0013.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0013.png"/>
+            <FILE id="nbxeSK" name="speed-knob0014.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0014.png"/>
+            <FILE id="Yl8OJ4" name="speed-knob0015.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0015.png"/>
+            <FILE id="lr1CF6" name="speed-knob0016.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0016.png"/>
+            <FILE id="iHwsqq" name="speed-knob0017.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0017.png"/>
+            <FILE id="vN2oDT" name="speed-knob0018.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0018.png"/>
+            <FILE id="N593py" name="speed-knob0019.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0019.png"/>
+            <FILE id="q0TVt2" name="speed-knob0020.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0020.png"/>
+            <FILE id="lg1K7f" name="speed-knob0021.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0021.png"/>
+            <FILE id="NCnQOi" name="speed-knob0022.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0022.png"/>
+            <FILE id="XabZBc" name="speed-knob0023.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0023.png"/>
+            <FILE id="h5Ug1C" name="speed-knob0024.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0024.png"/>
+            <FILE id="mliGnh" name="speed-knob0025.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0025.png"/>
+            <FILE id="kXeKxp" name="speed-knob0026.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0026.png"/>
+            <FILE id="cInS0l" name="speed-knob0027.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0027.png"/>
+            <FILE id="mbfUPD" name="speed-knob0028.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0028.png"/>
+            <FILE id="EYg5kL" name="speed-knob0029.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0029.png"/>
+            <FILE id="BrUJxI" name="speed-knob0030.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0030.png"/>
+            <FILE id="JRBWsi" name="speed-knob0031.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0031.png"/>
+            <FILE id="aZv3jt" name="speed-knob0032.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0032.png"/>
+            <FILE id="m1mThj" name="speed-knob0033.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0033.png"/>
+            <FILE id="gIKhaC" name="speed-knob0034.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0034.png"/>
+            <FILE id="zeiy5x" name="speed-knob0035.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0035.png"/>
+            <FILE id="DWEt4F" name="speed-knob0036.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0036.png"/>
+            <FILE id="o6zC3J" name="speed-knob0037.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0037.png"/>
+            <FILE id="Tt3BVJ" name="speed-knob0038.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0038.png"/>
+            <FILE id="e1ReS2" name="speed-knob0039.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0039.png"/>
+            <FILE id="ZjHRlg" name="speed-knob0040.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0040.png"/>
+            <FILE id="yyIPt9" name="speed-knob0041.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0041.png"/>
+            <FILE id="fWmTHo" name="speed-knob0042.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0042.png"/>
+            <FILE id="RyNAHa" name="speed-knob0043.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0043.png"/>
+            <FILE id="W7m7TI" name="speed-knob0044.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0044.png"/>
+            <FILE id="wY9BUv" name="speed-knob0045.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0045.png"/>
+            <FILE id="oeNtBA" name="speed-knob0046.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0046.png"/>
+            <FILE id="cQQZH6" name="speed-knob0047.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0047.png"/>
+            <FILE id="NV2lyA" name="speed-knob0048.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0048.png"/>
+            <FILE id="XSZ11Q" name="speed-knob0049.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0049.png"/>
+            <FILE id="FnxSyx" name="speed-knob0050.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0050.png"/>
+            <FILE id="xEUYGC" name="speed-knob0051.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0051.png"/>
+            <FILE id="yiE680" name="speed-knob0052.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0052.png"/>
+            <FILE id="Neg3Ac" name="speed-knob0053.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0053.png"/>
+            <FILE id="XCHVIl" name="speed-knob0054.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0054.png"/>
+            <FILE id="zemLws" name="speed-knob0055.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0055.png"/>
+            <FILE id="UoiMVe" name="speed-knob0056.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0056.png"/>
+            <FILE id="YjRYsR" name="speed-knob0057.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0057.png"/>
+            <FILE id="ziFiSb" name="speed-knob0058.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0058.png"/>
+            <FILE id="zgAZ2b" name="speed-knob0059.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0059.png"/>
+            <FILE id="oNAKub" name="speed-knob0060.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0060.png"/>
+            <FILE id="hzVWja" name="speed-knob0061.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0061.png"/>
+            <FILE id="aPBCeO" name="speed-knob0062.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0062.png"/>
+            <FILE id="zabGAT" name="speed-knob0063.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0063.png"/>
+            <FILE id="Azeecf" name="speed-knob0064.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0064.png"/>
+            <FILE id="iUVPfL" name="speed-knob0065.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0065.png"/>
+            <FILE id="Ni7wgz" name="speed-knob0066.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0066.png"/>
+            <FILE id="scKqb0" name="speed-knob0067.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0067.png"/>
+            <FILE id="nOMUDS" name="speed-knob0068.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0068.png"/>
+            <FILE id="e9HMui" name="speed-knob0069.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0069.png"/>
+            <FILE id="sqCisg" name="speed-knob0070.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0070.png"/>
+            <FILE id="p3khPz" name="speed-knob0071.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0071.png"/>
+            <FILE id="IFaPH5" name="speed-knob0072.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0072.png"/>
+            <FILE id="IWZDWa" name="speed-knob0073.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0073.png"/>
+            <FILE id="V0ctc7" name="speed-knob0074.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0074.png"/>
+            <FILE id="bPiLKC" name="speed-knob0075.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0075.png"/>
+            <FILE id="vTX1BH" name="speed-knob0076.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0076.png"/>
+            <FILE id="sHbSKh" name="speed-knob0077.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0077.png"/>
+            <FILE id="xGPAob" name="speed-knob0078.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0078.png"/>
+            <FILE id="uIWNOV" name="speed-knob0079.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0079.png"/>
+            <FILE id="Homy8G" name="speed-knob0080.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0080.png"/>
+            <FILE id="zFp9px" name="speed-knob0081.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0081.png"/>
+            <FILE id="txrBYg" name="speed-knob0082.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0082.png"/>
+            <FILE id="mv4Dch" name="speed-knob0083.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0083.png"/>
+            <FILE id="Jnn14p" name="speed-knob0084.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0084.png"/>
+            <FILE id="vOkITb" name="speed-knob0085.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0085.png"/>
+            <FILE id="cz1aKH" name="speed-knob0086.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0086.png"/>
+            <FILE id="HqgLdD" name="speed-knob0087.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0087.png"/>
+            <FILE id="cOZkEN" name="speed-knob0088.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0088.png"/>
+            <FILE id="n5flmw" name="speed-knob0089.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0089.png"/>
+            <FILE id="R771T2" name="speed-knob0090.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0090.png"/>
+            <FILE id="yhBT8p" name="speed-knob0091.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0091.png"/>
+            <FILE id="Ou0e7c" name="speed-knob0092.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0092.png"/>
+            <FILE id="mQCJhF" name="speed-knob0093.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0093.png"/>
+            <FILE id="fUz1PO" name="speed-knob0094.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0094.png"/>
+            <FILE id="ooDZDy" name="speed-knob0095.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0095.png"/>
+            <FILE id="jvjC3b" name="speed-knob0096.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0096.png"/>
+            <FILE id="U56MBA" name="speed-knob0097.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0097.png"/>
+            <FILE id="xypAzl" name="speed-knob0098.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0098.png"/>
+            <FILE id="aUd9Vw" name="speed-knob0099.png" compile="0" resource="1"
+                  file="GUI/knob/cropped/speed-knob0099.png"/>
+          </GROUP>
+          <FILE id="z8uIhl" name="speed-knob0000.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0000.png"/>
+          <FILE id="wibQPY" name="speed-knob0001.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0001.png"/>
+          <FILE id="HE2pdc" name="speed-knob0002.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0002.png"/>
+          <FILE id="LHReLr" name="speed-knob0003.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0003.png"/>
+          <FILE id="kv3P5f" name="speed-knob0004.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0004.png"/>
+          <FILE id="I6Gx3v" name="speed-knob0005.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0005.png"/>
+          <FILE id="QMaGfu" name="speed-knob0006.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0006.png"/>
+          <FILE id="Ry09oc" name="speed-knob0007.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0007.png"/>
+          <FILE id="orNadL" name="speed-knob0008.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0008.png"/>
+          <FILE id="eiPgfU" name="speed-knob0009.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0009.png"/>
+          <FILE id="IawpVt" name="speed-knob0010.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0010.png"/>
+          <FILE id="xOJgQJ" name="speed-knob0011.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0011.png"/>
+          <FILE id="vhxhXJ" name="speed-knob0012.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0012.png"/>
+          <FILE id="OucjLm" name="speed-knob0013.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0013.png"/>
+          <FILE id="n1Xfpz" name="speed-knob0014.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0014.png"/>
+          <FILE id="IbYhLL" name="speed-knob0015.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0015.png"/>
+          <FILE id="pWRAtj" name="speed-knob0016.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0016.png"/>
+          <FILE id="Nxgs3g" name="speed-knob0017.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0017.png"/>
+          <FILE id="WX1AWF" name="speed-knob0018.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0018.png"/>
+          <FILE id="QPhoaB" name="speed-knob0019.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0019.png"/>
+          <FILE id="tDdals" name="speed-knob0020.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0020.png"/>
+          <FILE id="Bm5RGJ" name="speed-knob0021.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0021.png"/>
+          <FILE id="E5zoT6" name="speed-knob0022.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0022.png"/>
+          <FILE id="HLytwr" name="speed-knob0023.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0023.png"/>
+          <FILE id="q1aFZB" name="speed-knob0024.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0024.png"/>
+          <FILE id="wuomzG" name="speed-knob0025.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0025.png"/>
+          <FILE id="bOVr7F" name="speed-knob0026.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0026.png"/>
+          <FILE id="E4hOKS" name="speed-knob0027.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0027.png"/>
+          <FILE id="fA0YMd" name="speed-knob0028.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0028.png"/>
+          <FILE id="ZxDPeO" name="speed-knob0029.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0029.png"/>
+          <FILE id="G2GiS7" name="speed-knob0030.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0030.png"/>
+          <FILE id="FAbymc" name="speed-knob0031.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0031.png"/>
+          <FILE id="Aq5mcL" name="speed-knob0032.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0032.png"/>
+          <FILE id="K4A3Ft" name="speed-knob0033.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0033.png"/>
+          <FILE id="EXTMIJ" name="speed-knob0034.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0034.png"/>
+          <FILE id="A7PaEK" name="speed-knob0035.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0035.png"/>
+          <FILE id="sEOFPy" name="speed-knob0036.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0036.png"/>
+          <FILE id="IKKNGR" name="speed-knob0037.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0037.png"/>
+          <FILE id="p970Rc" name="speed-knob0038.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0038.png"/>
+          <FILE id="cmkXJs" name="speed-knob0039.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0039.png"/>
+          <FILE id="N0PwGf" name="speed-knob0040.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0040.png"/>
+          <FILE id="FzdFlQ" name="speed-knob0041.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0041.png"/>
+          <FILE id="xgbxsx" name="speed-knob0042.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0042.png"/>
+          <FILE id="t3ejx0" name="speed-knob0043.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0043.png"/>
+          <FILE id="zQPTLA" name="speed-knob0044.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0044.png"/>
+          <FILE id="hYROkm" name="speed-knob0045.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0045.png"/>
+          <FILE id="A8ScvV" name="speed-knob0046.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0046.png"/>
+          <FILE id="TG7vSm" name="speed-knob0047.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0047.png"/>
+          <FILE id="oqARAC" name="speed-knob0048.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0048.png"/>
+          <FILE id="jffaru" name="speed-knob0049.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0049.png"/>
+          <FILE id="B0fy6f" name="speed-knob0050.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0050.png"/>
+          <FILE id="q4SxzW" name="speed-knob0051.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0051.png"/>
+          <FILE id="mvJqOl" name="speed-knob0052.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0052.png"/>
+          <FILE id="b4cJMf" name="speed-knob0053.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0053.png"/>
+          <FILE id="xYB90S" name="speed-knob0054.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0054.png"/>
+          <FILE id="lDzrg7" name="speed-knob0055.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0055.png"/>
+          <FILE id="YGjDnz" name="speed-knob0056.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0056.png"/>
+          <FILE id="Lyl0sA" name="speed-knob0057.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0057.png"/>
+          <FILE id="huuwXZ" name="speed-knob0058.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0058.png"/>
+          <FILE id="Zjsdn6" name="speed-knob0059.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0059.png"/>
+          <FILE id="Hip8gW" name="speed-knob0060.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0060.png"/>
+          <FILE id="QUc19X" name="speed-knob0061.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0061.png"/>
+          <FILE id="f6KILS" name="speed-knob0062.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0062.png"/>
+          <FILE id="CYQ6sM" name="speed-knob0063.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0063.png"/>
+          <FILE id="kuLeC2" name="speed-knob0064.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0064.png"/>
+          <FILE id="apQLg2" name="speed-knob0065.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0065.png"/>
+          <FILE id="OI5qRG" name="speed-knob0066.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0066.png"/>
+          <FILE id="xU9PC0" name="speed-knob0067.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0067.png"/>
+          <FILE id="g2Lx6S" name="speed-knob0068.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0068.png"/>
+          <FILE id="WUa1yh" name="speed-knob0069.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0069.png"/>
+          <FILE id="YbmqDk" name="speed-knob0070.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0070.png"/>
+          <FILE id="A5miFH" name="speed-knob0071.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0071.png"/>
+          <FILE id="LoESyl" name="speed-knob0072.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0072.png"/>
+          <FILE id="WRfumk" name="speed-knob0073.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0073.png"/>
+          <FILE id="Ya4XgH" name="speed-knob0074.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0074.png"/>
+          <FILE id="Grjq3r" name="speed-knob0075.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0075.png"/>
+          <FILE id="PRvBjy" name="speed-knob0076.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0076.png"/>
+          <FILE id="pA8IIQ" name="speed-knob0077.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0077.png"/>
+          <FILE id="LADPOJ" name="speed-knob0078.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0078.png"/>
+          <FILE id="bUb8Jt" name="speed-knob0079.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0079.png"/>
+          <FILE id="T8Via8" name="speed-knob0080.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0080.png"/>
+          <FILE id="uJ7xHk" name="speed-knob0081.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0081.png"/>
+          <FILE id="ufEaDM" name="speed-knob0082.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0082.png"/>
+          <FILE id="ATLUyf" name="speed-knob0083.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0083.png"/>
+          <FILE id="cevp0A" name="speed-knob0084.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0084.png"/>
+          <FILE id="YNTSql" name="speed-knob0085.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0085.png"/>
+          <FILE id="oRM94I" name="speed-knob0086.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0086.png"/>
+          <FILE id="t8EE2o" name="speed-knob0087.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0087.png"/>
+          <FILE id="bswiri" name="speed-knob0088.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0088.png"/>
+          <FILE id="GIjrFi" name="speed-knob0089.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0089.png"/>
+          <FILE id="YCISLG" name="speed-knob0090.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0090.png"/>
+          <FILE id="Xl8TGm" name="speed-knob0091.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0091.png"/>
+          <FILE id="U5rlA6" name="speed-knob0092.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0092.png"/>
+          <FILE id="giph92" name="speed-knob0093.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0093.png"/>
+          <FILE id="qJCE9l" name="speed-knob0094.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0094.png"/>
+          <FILE id="Zp8yJd" name="speed-knob0095.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0095.png"/>
+          <FILE id="Nfen9b" name="speed-knob0096.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0096.png"/>
+          <FILE id="I2dY1A" name="speed-knob0097.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0097.png"/>
+          <FILE id="EZEumb" name="speed-knob0098.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0098.png"/>
+          <FILE id="DmIVk3" name="speed-knob0099.png" compile="0" resource="1"
+                file="GUI/knob/speed-knob0099.png"/>
+        </GROUP>
+        <GROUP id="{E2C1B70C-2A45-2457-D351-1A9089894ABA}" name="led">
+          <GROUP id="{A2F5A1BB-842D-2B7A-3F90-49606B7B6529}" name="cropped">
+            <FILE id="NueDX6" name="on-off-led-strip.png" compile="0" resource="1"
+                  file="GUI/led/cropped/on-off-led-strip.png"/>
+            <FILE id="QEcwhy" name="on-off-led0074.png" compile="0" resource="1"
+                  file="GUI/led/cropped/on-off-led0074.png"/>
+            <FILE id="BwNHY7" name="on-off-led0075.png" compile="0" resource="1"
+                  file="GUI/led/cropped/on-off-led0075.png"/>
+          </GROUP>
+          <FILE id="QMrNM3" name="on-off-led0074.png" compile="0" resource="1"
+                file="GUI/led/on-off-led0074.png"/>
+          <FILE id="HYM50P" name="on-off-led0075.png" compile="0" resource="1"
+                file="GUI/led/on-off-led0075.png"/>
+        </GROUP>
+        <GROUP id="{1FC5C6D3-881C-D141-4411-5C6CA643D29C}" name="switch">
+          <GROUP id="{4DFD79F7-BE61-5E06-F8BA-90CE96EEC22E}" name="cropped">
+            <FILE id="M4GTuq" name="on-off-switch0015.png" compile="0" resource="1"
+                  file="GUI/switch/cropped/on-off-switch0015.png"/>
+            <FILE id="M01L4e" name="on-off-switch0016.png" compile="0" resource="1"
+                  file="GUI/switch/cropped/on-off-switch0016.png"/>
+            <FILE id="CVnJEV" name="on-off-switch0017.png" compile="0" resource="1"
+                  file="GUI/switch/cropped/on-off-switch0017.png"/>
+            <FILE id="QnwEOM" name="on-off-switch0018.png" compile="0" resource="1"
+                  file="GUI/switch/cropped/on-off-switch0018.png"/>
+            <FILE id="Ki5vNZ" name="on-off-switch0019.png" compile="0" resource="1"
+                  file="GUI/switch/cropped/on-off-switch0019.png"/>
+            <FILE id="I8Mmaw" name="on-off-switch0020.png" compile="0" resource="1"
+                  file="GUI/switch/cropped/on-off-switch0020.png"/>
+            <FILE id="oXWK0G" name="on-off-switch0021.png" compile="0" resource="1"
+                  file="GUI/switch/cropped/on-off-switch0021.png"/>
+          </GROUP>
+          <FILE id="lFe3AP" name="on-off-switch-strip.png" compile="0" resource="1"
+                file="GUI/switch/on-off-switch-strip.png"/>
+          <FILE id="dPMw1l" name="on-off-switch0015.png" compile="0" resource="1"
+                file="GUI/switch/on-off-switch0015.png"/>
+          <FILE id="cEDM3i" name="on-off-switch0016.png" compile="0" resource="1"
+                file="GUI/switch/on-off-switch0016.png"/>
+          <FILE id="MYwaxI" name="on-off-switch0017.png" compile="0" resource="1"
+                file="GUI/switch/on-off-switch0017.png"/>
+          <FILE id="bh5xcU" name="on-off-switch0018.png" compile="0" resource="1"
+                file="GUI/switch/on-off-switch0018.png"/>
+          <FILE id="zwXGSb" name="on-off-switch0019.png" compile="0" resource="1"
+                file="GUI/switch/on-off-switch0019.png"/>
+          <FILE id="yoXktK" name="on-off-switch0020.png" compile="0" resource="1"
+                file="GUI/switch/on-off-switch0020.png"/>
+          <FILE id="ROD1bi" name="on-off-switch0021.png" compile="0" resource="1"
+                file="GUI/switch/on-off-switch0021.png"/>
+        </GROUP>
+        <FILE id="qN2N6q" name="BasePedal.png" compile="0" resource="1" file="GUI/BasePedal.png"/>
+        <FILE id="SHtPO1" name="GUI_cropped.png" compile="0" resource="1" file="GUI/GUI_cropped.png"/>
+        <FILE id="hw2ZDk" name="GUI_cropped_resized.png" compile="0" resource="1"
+              file="GUI/GUI_cropped_resized.png"/>
+        <FILE id="WEAL8S" name="GUI1920x1080.png" compile="0" resource="1"
+              file="GUI/GUI1920x1080.png"/>
+        <FILE id="agOa8V" name="knob.png" compile="0" resource="1" file="GUI/knob.png"/>
+        <FILE id="UGcfnf" name="pedal3DModel.c4d" compile="0" resource="1"
+              file="GUI/pedal3DModel.c4d"/>
+        <FILE id="AgRm3W" name="sctrached texture.jpg" compile="0" resource="1"
+              file="GUI/sctrached texture.jpg"/>
+        <FILE id="x1277C" name="speed_knob.png" compile="0" resource="1" file="GUI/speed_knob.png"/>
+      </GROUP>
+      <FILE id="JqSDOO" name="PluginProcessor.cpp" compile="1" resource="0"
+            file="Source/PluginProcessor.cpp"/>
+      <FILE id="ZM42zO" name="PluginProcessor.h" compile="0" resource="0"
+            file="Source/PluginProcessor.h"/>
+      <FILE id="ozf65F" name="PluginEditor.cpp" compile="1" resource="0"
+            file="Source/PluginEditor.cpp"/>
+      <FILE id="hnMYl4" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+    </GROUP>
+  </MAINGROUP>
+  <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" JUCE_VST3_CAN_REPLACE_VST2="0"/>
+  <EXPORTFORMATS>
+    <VS2022 targetFolder="Builds/VisualStudio2022">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="Face90"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="Face90"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_audio_basics" path="../../../../../../../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="../../../../../../../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="../../../../../../../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="../../../../../../../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="../../../../../../../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="../../../../../../../JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="../../../../../../../JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../../../../../../../JUCE/modules"/>
+        <MODULEPATH id="juce_dsp" path="../../../../../../../JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../../../../../../../JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="../../../../../../../JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../../../../../../../JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../../../../../../../JUCE/modules"/>
+      </MODULEPATHS>
+    </VS2022>
+  </EXPORTFORMATS>
+  <MODULES>
+    <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_plugin_client" showAllCode="1" useLocalCopy="0"
+            useGlobalPath="1"/>
+    <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_utils" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_dsp" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+  </MODULES>
+</JUCERPROJECT>
