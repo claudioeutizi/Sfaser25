@@ -105,7 +105,7 @@ extras/Projucer/JUCECompileEngine.dylib
 .vscode
 /build
 JUCE/face90/build
-
+JUCE/Face90/JuceLibraryCode
 
 CMakeUserPresets.json
 
