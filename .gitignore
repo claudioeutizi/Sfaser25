@@ -104,6 +104,8 @@ extras/Projucer/JUCECompileEngine.dylib
 
 .vscode
 /build
+JUCE/build
+
 
 CMakeUserPresets.json
 
