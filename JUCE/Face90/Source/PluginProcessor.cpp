@@ -183,6 +183,16 @@ void Face90AudioProcessor::setStateInformation (const void* data, int sizeInByte
     // whose contents will have been created by the getStateInformation() call.
 }
 
+float Face90AudioProcessor::getSpeed()
+{
+    return this->speed;
+}
+
+void Face90AudioProcessor::setSpeed(float speed)
+{
+    this->speed = speed;
+}
+
 //==============================================================================
 // This creates new instances of the plugin..
 juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()

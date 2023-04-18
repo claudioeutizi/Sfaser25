@@ -2,8 +2,9 @@
 .vs/
 
 # Add this line
-out/
-build/
+JUCE/Face90/out/
+JUCE/Face90/build/
+JUCE/Face90/Builds/
 
 # Prerequisites
 *.d
