@@ -35,7 +35,11 @@ Sfaser25AudioProcessorEditor::Sfaser25AudioProcessorEditor (Sfaser25AudioProcess
 
 	//speed knob
 	addAndMakeVisible(speedKnob = new juce::Slider("SpeedKnob"));
-	speedKnob->setRange(0, 1, 0.01);
+	speedKnob->setAlpha(0.0f);
+	speedKnob->setMouseCursor(juce::MouseCursor::PointingHandCursor);
+	speedKnob->setPopupDisplayEnabled(true, true, nullptr);
+	speedKnob->setTextValueSuffix(" Hz");
+	speedKnob->setRange(0.5, 10, 0.01);
 	speedKnob->setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
 	speedKnob->setTextBoxStyle(juce::Slider::TextBoxLeft, false, 0, 0);
 	speedKnob->addListener(this);
