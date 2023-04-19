@@ -113,3 +113,10 @@ JUCE/Face90/JuceLibraryCode
 CMakeUserPresets.json
 
 JUCE/CMakeLists.txt
+JUCE/Sfaser25/Builds/VisualStudio2022/Sfaser25_StandalonePlugin.vcxproj.filters
+JUCE/Sfaser25/Builds/VisualStudio2022/Sfaser25_StandalonePlugin.vcxproj
+JUCE/Sfaser25/Builds/VisualStudio2022/Sfaser25_SharedCode.vcxproj.filters
+JUCE/Sfaser25/Builds/VisualStudio2022/Sfaser25_SharedCode.vcxproj
+JUCE/Sfaser25/Builds/VisualStudio2022/Sfaser25_VST3.vcxproj
+JUCE/Sfaser25/Builds/VisualStudio2022/Sfaser25_VST3.vcxproj.filters
+SPICE/SPICE files/phase90.raw
