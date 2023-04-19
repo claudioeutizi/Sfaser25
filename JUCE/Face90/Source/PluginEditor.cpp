@@ -14,27 +14,27 @@
 Face90AudioProcessorEditor::Face90AudioProcessorEditor (Face90AudioProcessor& p)
     : AudioProcessorEditor (&p), audioProcessor (p)
 {
-	cachedImage_BaseModel_png_1 = juce::ImageCache::getFromMemory(BinaryData::GUI_cropped_png, BinaryData::GUI_cropped_pngSize);
-	cachedImage_speedKnobFilmRoll_png_1 = juce::ImageCache::getFromMemory(BinaryData::speed_knob_png, BinaryData::speed_knob_pngSize);
+	cachedImage_BaseModel_png_1 = juce::ImageCache::getFromMemory(BinaryData::pedal_full_res_2k_cropped_scaled_png, BinaryData::pedal_full_res_2k_cropped_scaled_pngSize);
+	cachedImage_speedKnobFilmRoll_png_1 = juce::ImageCache::getFromMemory(BinaryData::speedknobstrip_png, BinaryData::speedknobstrip_pngSize);
 
 	//on off switch
-	addAndMakeVisible(onOffSwitch = new juce::ImageButton("onoffswitch"));
+	addAndMakeVisible(onOffSwitch = new juce::ImageButton("onOffSwitch"));
 	onOffSwitch->addListener(this);
 	onOffSwitch->setImages(false, true, true,
-		juce::ImageCache::getFromMemory(BinaryData::onoffswitch0015_png, BinaryData::onoffswitch0015_pngSize), 1.000f, juce::Colour(0x00000000),
+		juce::ImageCache::getFromMemory(BinaryData::onoffswitchup_png, BinaryData::onoffswitchup_pngSize), 1.000f, juce::Colour(0x00000000),
 		juce::Image(), 1.000f, juce::Colour(0x00000000),
 		juce::Image(), 1.000f, juce::Colour(0x00000000));
 
 	//on off led
-	addAndMakeVisible(ledOnOff = new juce::ImageButton("onoffLed"));
+	addAndMakeVisible(ledOnOff = new juce::ImageButton("onOffLed"));
 	ledOnOff->addListener(this);
 	ledOnOff->setImages(false, true, true,
-		juce::ImageCache::getFromMemory(BinaryData::onoffled0074_png, BinaryData::onoffled0074_pngSize), 1.000f, juce::Colour(0x00000000),
+		juce::ImageCache::getFromMemory(BinaryData::onoffledoff_png, BinaryData::onoffledoff_pngSize), 1.000f, juce::Colour(0x00000000),
 		juce::Image(), 1.000f, juce::Colour(0x00000000),
 		juce::Image(), 1.000f, juce::Colour(0x00000000));
 
 	//speed knob
-	addAndMakeVisible(speedKnob = new juce::Slider("SKnob"));
+	addAndMakeVisible(speedKnob = new juce::Slider("SpeedKnob"));
 	speedKnob->setRange(0, 1, 0.01);
 	speedKnob->setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
 	speedKnob->setTextBoxStyle(juce::Slider::TextBoxLeft, false, 0, 0);
@@ -45,7 +45,7 @@ Face90AudioProcessorEditor::Face90AudioProcessorEditor (Face90AudioProcessor& p)
 	// 
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
-	setSize(616, 925);
+	setSize(windowWidth, windowHeight);
 }
 
 Face90AudioProcessorEditor::~Face90AudioProcessorEditor()
@@ -71,15 +71,15 @@ void Face90AudioProcessorEditor::paint(juce::Graphics& g)
 
 		if (onOffSwitchPressed == true)
 		{
-			ledOnOff->setBounds(256, 495, 103, 106);
+			ledOnOff->setBounds(windowWidth/2 - ledWidth/2, ledY, ledWidth, ledHeight);
 			ledOnOff->setImages(false, true, true,
-				juce::ImageCache::getFromMemory(BinaryData::onoffled0075_png, BinaryData::onoffled0075_pngSize), 1.000f, juce::Colour(0x00000000),
+				juce::ImageCache::getFromMemory(BinaryData::onoffledon_png, BinaryData::onoffledon_pngSize), 1.000f, juce::Colour(0x00000000),
 				juce::Image(), 1.000f, juce::Colour(0x00000000),
 				juce::Image(), 1.000f, juce::Colour(0x00000000));
 
-			onOffSwitch->setBounds(225, 630, 166, 169);
+			onOffSwitch->setBounds(windowWidth/2 - switchWidth/2, switchY, switchWidth, switchHeight);
 			onOffSwitch->setImages(false, true, true,
-				juce::ImageCache::getFromMemory(BinaryData::onoffswitch0017_png, BinaryData::onoffswitch0017_pngSize), 1.000f, juce::Colour(0x00000000),
+				juce::ImageCache::getFromMemory(BinaryData::onoffswitchdown_png, BinaryData::onoffswitchdown_pngSize), 1.000f, juce::Colour(0x00000000),
 				juce::Image(), 1.000f, juce::Colour(0x00000000),
 				juce::Image(), 1.000f, juce::Colour(0x00000000));
 			repaintFlag = false;
@@ -87,28 +87,28 @@ void Face90AudioProcessorEditor::paint(juce::Graphics& g)
 
 		else
 		{
-			ledOnOff->setBounds(256, 495, 103, 106);
+			ledOnOff->setBounds(windowWidth / 2 - ledWidth / 2, ledY, ledWidth, ledHeight);
 			ledOnOff->setImages(false, true, true,
-				juce::ImageCache::getFromMemory(BinaryData::onoffled0074_png, BinaryData::onoffled0074_pngSize), 1.000f, juce::Colour(0x00000000),
+				juce::ImageCache::getFromMemory(BinaryData::onoffledoff_png, BinaryData::onoffledoff_pngSize), 1.000f, juce::Colour(0x00000000),
 				juce::Image(), 1.000f, juce::Colour(0x00000000),
 				juce::Image(), 1.000f, juce::Colour(0x00000000));
 
-			onOffSwitch->setBounds(225, 630, 166, 169);
+			onOffSwitch->setBounds(windowWidth / 2 - switchWidth / 2, switchY, switchWidth, switchHeight);
 			onOffSwitch->setImages(false, true, true,
-				juce::ImageCache::getFromMemory(BinaryData::onoffswitch0015_png, BinaryData::onoffswitch0015_pngSize), 1.000f, juce::Colour(0x00000000),
+				juce::ImageCache::getFromMemory(BinaryData::onoffswitchup_png, BinaryData::onoffswitchup_pngSize), 1.000f, juce::Colour(0x00000000),
 				juce::Image(), 1.000f, juce::Colour(0x00000000),
 				juce::Image(), 1.000f, juce::Colour(0x00000000));
 			repaintFlag = false;
 		}
 	}
-	fssSpeed.drawFrame(g, 214, 100, 188, 183, *speedKnob, audioProcessor.getSpeed());
+	fssSpeed.drawFrame(g, windowWidth / 2 - knobWidth / 2, 29, knobWidth, knobHeight, *speedKnob, audioProcessor.getSpeed());
 }
 
 void Face90AudioProcessorEditor::resized()
 {
-	onOffSwitch->setBounds(225, 630, 166, 169);
-	ledOnOff->setBounds(256, 495, 103, 106);
-	speedKnob->setBounds(214, 100, 188, 183);
+	onOffSwitch->setBounds(windowWidth / 2 - switchWidth / 2, switchY, switchWidth, switchHeight);
+	ledOnOff->setBounds(windowWidth / 2 - ledWidth / 2, ledY, ledWidth, ledHeight);
+	speedKnob->setBounds(windowWidth / 2 - knobWidth / 2, knobY, knobWidth, knobHeight);
 }
 
 void Face90AudioProcessorEditor::sliderValueChanged(juce::Slider* slider)

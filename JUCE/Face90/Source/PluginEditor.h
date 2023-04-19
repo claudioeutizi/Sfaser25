@@ -48,5 +48,21 @@ private:
 	juce::ScopedPointer<juce::ImageButton> onOffSwitch;
 	juce::ScopedPointer<juce::ImageButton> ledOnOff;
 
+	const int windowWidth = 360;
+	const int windowHeight = 497;
+
+	const int knobY = 29;
+	const int knobWidth = 118;
+	const int knobHeight = 135;	
+
+	const int ledY = 163;
+	const int ledWidth = 138;
+	const int ledHeight = 134;	
+
+	const int switchY = 284;
+	const int switchWidth = 146;
+	const int switchHeight = 164;
+
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Face90AudioProcessorEditor)
 };
