@@ -8,16 +8,18 @@ Gmin = 10
 vernier = 0.5
 vernier = 0.25
 vernier = 0.125
-Gmin = 4.55111
-vernier = 0.0625
-vernier = 0.03125
-vernier = 0.015625
-vernier = 0.0078125
-Gmin = 4.3453
-vernier = 0.00390625
-vernier = 0.00195312
-vernier = 0.000976562
-Gmin = 4.3326
+Gmin = 4.66851
+vernier = 0.166667
+vernier = 0.0833333
+vernier = 0.0416667
+vernier = 0.0208333
+Gmin = 4.32209
+vernier = 0.0104167
+vernier = 0.00520833
+vernier = 0.00260417
+vernier = 0.00130208
+vernier = 0.000651042
+Gmin = 4.33331
 vernier = 0.000488281
 Gmin = 0
 Gmin stepping failed
@@ -30,21 +32,21 @@ Source Step = 93.9394%
 Source stepping succeeded in finding the operating point.
 
 
-Date: Sun Apr 16 17:02:03 2023
-Total elapsed time: 45.925 seconds.
+Date: Wed Apr 19 11:50:13 2023
+Total elapsed time: 59.095 seconds.
 
 tnom = 27
 temp = 27
 method = modified trap
-totiter = 828550
-traniter = 826840
-tranpoints = 412049
-accept = 409430
-rejected = 2619
-matrix size = 166
-fillins = 1462
+totiter = 1164776
+traniter = 1162993
+tranpoints = 567601
+accept = 484115
+rejected = 83486
+matrix size = 170
+fillins = 1888
 solver = Normal
 Avg thread counts: 1.0/1.0/1.0/1.0
-Matrix Compiler1: 258.62 KB object code size  47.7/23.3/[10.8]
-Matrix Compiler2: 40.11 KB object code size  12.7/8.5/[4.4]
+Matrix Compiler1: 383.50 KB object code size  79.4/50.5/[26.2]
+Matrix Compiler2: 47.89 KB object code size  12.2/7.2/[4.1]
 

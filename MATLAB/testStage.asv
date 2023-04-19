@@ -1,0 +1,54 @@
+clear;
+close all;
+clc;
+
+fs=44100;
+Ts=1/fs;
+
+Qv=[1 0 1 1 1 1;
+    0 1 0 0 0 1];
+
+Qi=[1 0 0 1 1 0;
+    0 1 1 0 0 0];
+
+Z=diag([15000 10000 10000 24000 10*10^9 5000]);
+
+S=2 * Qv.' * inv(Qi * inv(Z) * Qv.') * Qi * inv(Z) - eye(6);
+
+% Define the scattering matrix S, constant voltage generator at port 1
+% Define the incident wave a and the reflected wave b at port 1
+a = 0.01; % constant voltage generator
+b = 0; % open circuit
+
+% Define the number of iterations to perform
+N = 100;
+
+% Initialize the WDF scattering matrix
+S_wdf = S;
+
+% Initialize the voltage waves at each port
+V = zeros(size(S, 1), 1);
+V(1) = a;
+V(2) = b;
+
+% Perform the WDF iterations
+for n = 1:N
+    % Compute the reflection coefficient vector
+    Gamma_n = inv(S_wdf(1:2,1:2) - eye(2))  (V(1:2) - V(3:4));
+    
+    % Update the voltage waves
+    V(1:2) = Gamma_n .* conj(V(1:2) - V(3:4));
+    V(3:4) = Gamma_n .* (V(1:2) + V(3:4));
+    V(5:6) = S_wdf(5:6,:) * V;
+    
+    % Update the WDF scattering matrix
+    S_wdf(1:2,1:2) = eye(2) - Gamma_n * conj(Gamma_n)';
+    S_wdf(1:2,3:6) = Gamma_n .* S_wdf(1:2,3:6);
+    S_wdf(3:6,1:2) = S_wdf(3:6,1:2) .* repmat(Gamma_n', 4, 1);
+end
+
+% Compute the output voltage at port 6
+Vout = V(6);
+
+
+
