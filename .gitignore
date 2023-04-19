@@ -39,6 +39,9 @@ JUCE/Face90/Builds/
 *.out
 *.app
 
+# RAW
+*.raw
+
 ._*
 *.mode1v3
 *.pbxuser
