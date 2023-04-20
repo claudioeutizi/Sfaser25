@@ -22,6 +22,4 @@ void FilmStripSlider::drawFrame(juce::Graphics& g, int x, int y, int width, int 
 	double pos = (int)(slider.getValue() / div);
 
 	g.drawImage(*knobStrip, x, y, width, height, 0, (int)(pos * frameSize), width, height, false);
-
-
 }
