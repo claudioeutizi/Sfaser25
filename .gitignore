@@ -2,8 +2,9 @@
 .vs/
 
 # Add this line
-out/
-build/
+JUCE/Face90/out/
+JUCE/Face90/build/
+JUCE/Face90/Builds/
 
 # Prerequisites
 *.d
@@ -37,6 +38,9 @@ build/
 *.exe
 *.out
 *.app
+
+# RAW
+*.raw
 
 ._*
 *.mode1v3
@@ -103,7 +107,16 @@ extras/Projucer/JUCECompileEngine.dylib
 
 .vscode
 /build
+JUCE/face90/build
+JUCE/Face90/JuceLibraryCode
 
 CMakeUserPresets.json
 
 JUCE/CMakeLists.txt
+JUCE/Sfaser25/Builds/VisualStudio2022/Sfaser25_StandalonePlugin.vcxproj.filters
+JUCE/Sfaser25/Builds/VisualStudio2022/Sfaser25_StandalonePlugin.vcxproj
+JUCE/Sfaser25/Builds/VisualStudio2022/Sfaser25_SharedCode.vcxproj.filters
+JUCE/Sfaser25/Builds/VisualStudio2022/Sfaser25_SharedCode.vcxproj
+JUCE/Sfaser25/Builds/VisualStudio2022/Sfaser25_VST3.vcxproj
+JUCE/Sfaser25/Builds/VisualStudio2022/Sfaser25_VST3.vcxproj.filters
+SPICE/SPICE files/phase90.raw

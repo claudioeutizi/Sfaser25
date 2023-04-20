@@ -1,0 +1,33 @@
+* C:\Users\matti\Desktop\MAE\mxrPhase90\Face90\SPICE\SPICE files\phase90 - Stage.asc
+V1 Vdd 0 9
+V2 0 Vee 9
+XU1a N009 N001 Vdd Vee N001 TL061
+C5 N009 N008 0.01µ
+R3 N008 N007 10k
+R14 N009 Vref 470k
+V3 Vref 0 5.1
+R1 N002 N005 10k
+XU2a N010 N002 Vdd Vee N003 TL061
+R6 N010 Vref 24k
+R5 N003 N002 10k
+R8 N004 N006 150k
+R16 N004 N001 150k
+R7 N011 N004 150k
+Q1 N011 N004 Vref 0 2N4125
+C2 out N011 47n
+R4 N011 0 56k
+R2 out 0 150k
+V5 0 0 wavefile=C:\Users\matti\Desktop\MAE\mxrPhase90\Face90\MATLAB\jumpMono.wav AC 1
+V6 N007 0 SINE(0 0.2 1K)
+R9 N010 Vref 10000000000
+R10 N010 N005 15000
+R11 N003 0 5000
+V4 N005 0 5
+.model NPN NPN
+.model PNP PNP
+.lib C:\Users\matti\AppData\Local\LTspice\lib\cmp\standard.bjt
+.include TL061.txt
+.tran 1s
+.wave "C:\Users\matti\Desktop\MAE\mxrPhase90\Face90\MATLAB\sineLowVolumewithBJT.wav" 16 44.1k V(out)
+.backanno
+.end
