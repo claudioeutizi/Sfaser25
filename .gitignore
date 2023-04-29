@@ -1,6 +1,8 @@
 # Visual Studio 2022 cache/options directory
 .vs/
 
+/JUCE/Sfaser25/Builds
+
 # Add this line
 JUCE/Face90/out/
 JUCE/Face90/build/
@@ -120,3 +122,13 @@ JUCE/Sfaser25/Builds/VisualStudio2022/Sfaser25_SharedCode.vcxproj
 JUCE/Sfaser25/Builds/VisualStudio2022/Sfaser25_VST3.vcxproj
 JUCE/Sfaser25/Builds/VisualStudio2022/Sfaser25_VST3.vcxproj.filters
 SPICE/SPICE files/phase90.raw
+
+.DS_Store
+*.swp
+*~.nib
+
+/build/
+
+*.pbxuser
+*.perspective
+*.perspectivev3
