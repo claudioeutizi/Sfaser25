@@ -112,15 +112,12 @@ extras/Projucer/JUCECompileEngine.dylib
 JUCE/face90/build
 JUCE/Face90/JuceLibraryCode
 
+
+
 CMakeUserPresets.json
 
-JUCE/CMakeLists.txt
-JUCE/Sfaser25/Builds/VisualStudio2022/Sfaser25_StandalonePlugin.vcxproj.filters
-JUCE/Sfaser25/Builds/VisualStudio2022/Sfaser25_StandalonePlugin.vcxproj
-JUCE/Sfaser25/Builds/VisualStudio2022/Sfaser25_SharedCode.vcxproj.filters
-JUCE/Sfaser25/Builds/VisualStudio2022/Sfaser25_SharedCode.vcxproj
-JUCE/Sfaser25/Builds/VisualStudio2022/Sfaser25_VST3.vcxproj
-JUCE/Sfaser25/Builds/VisualStudio2022/Sfaser25_VST3.vcxproj.filters
+JUCE/Sfaser25/Builds/
+
 SPICE/SPICE files/phase90.raw
 
 .DS_Store
