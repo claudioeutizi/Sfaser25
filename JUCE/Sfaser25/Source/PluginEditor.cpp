@@ -8,7 +8,7 @@
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
-#include "FilmStripSlider.h"
+#include "./GUI/FilmStripSlider.h"
 
 //==============================================================================
 Sfaser25AudioProcessorEditor::Sfaser25AudioProcessorEditor (Sfaser25AudioProcessor& p)

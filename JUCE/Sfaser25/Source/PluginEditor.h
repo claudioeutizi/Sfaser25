@@ -11,7 +11,6 @@
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
 #include "FilmStripSlider.h"
-#include "Images.h"
 
 //==============================================================================
 /**

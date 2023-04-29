@@ -14,17 +14,17 @@ namespace BinaryData
     extern const char*   onoffledon_png;
     const int            onoffledon_pngSize = 106405;
 
+    extern const char*   onoffledstrip_png;
+    const int            onoffledstrip_pngSize = 88590;
+
     extern const char*   onoffswitchdown_png;
     const int            onoffswitchdown_pngSize = 136438;
-
-    extern const char*   onoffswitchup_png;
-    const int            onoffswitchup_pngSize = 136143;
 
     extern const char*   onoffswitchstrip_png;
     const int            onoffswitchstrip_pngSize = 214674;
 
-    extern const char*   onoffledstrip_png;
-    const int            onoffledstrip_pngSize = 88590;
+    extern const char*   onoffswitchup_png;
+    const int            onoffswitchup_pngSize = 136143;
 
     extern const char*   pedal_full_res_2k_cropped_scaled_png;
     const int            pedal_full_res_2k_cropped_scaled_pngSize = 1438549;
