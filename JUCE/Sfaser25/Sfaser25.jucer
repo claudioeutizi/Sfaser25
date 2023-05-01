@@ -4,28 +4,32 @@
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1">
   <MAINGROUP id="rtYDuW" name="Sfaser25">
     <GROUP id="{62A10761-4B4D-06E8-617E-2410959EE530}" name="Source">
-      <GROUP id="{67104C6D-6A2A-236E-2A8A-F33BFE734151}" name="Assets">
-        <FILE id="yQlTy3" name="onoff-led-off.png" compile="0" resource="1"
-              file="GUI/led/cropped/onoff-led-off.png"/>
-        <FILE id="T6kgMO" name="onoff-led-on.png" compile="0" resource="1"
-              file="GUI/led/cropped/onoff-led-on.png"/>
-        <FILE id="dIfCFw" name="onoff-switch-down.png" compile="0" resource="1"
-              file="GUI/switch/cropped/onoff-switch-down.png"/>
-        <FILE id="PGsyQZ" name="onoff-switch-up.png" compile="0" resource="1"
-              file="GUI/switch/cropped/onoff-switch-up.png"/>
-        <FILE id="PnkH2s" name="onoff-switch-strip.png" compile="0" resource="1"
-              file="GUI/switch/onoff-switch-strip.png"/>
-        <FILE id="elgXfi" name="onoff-led-strip.png" compile="0" resource="1"
-              file="GUI/led/onoff-led-strip.png"/>
-        <FILE id="cpsSQY" name="pedal_full_res_2k_cropped_scaled.png" compile="0"
-              resource="1" file="GUI/pedal_full_res_2k_cropped_scaled.png"/>
-        <FILE id="vBcJFo" name="speed-knob-strip.png" compile="0" resource="1"
-              file="GUI/knob/speed-knob-strip.png"/>
+      <FILE id="yYuyUC" name="inputStage.cpp" compile="1" resource="0" file="Source/inputStage.cpp"/>
+      <FILE id="HT5Xvd" name="inputStage.h" compile="0" resource="0" file="Source/inputStage.h"/>
+      <GROUP id="{A2C53561-1A4F-F2E7-8CB1-082D3835416D}" name="GUI">
+        <GROUP id="{A31FED77-C6A1-32E8-4540-3B51D63D2E06}" name="Assets">
+          <FILE id="Az2caT" name="onoff-led-off.png" compile="0" resource="1"
+                file="Source/GUI/Assets/onoff-led-off.png"/>
+          <FILE id="wcs67B" name="onoff-led-on.png" compile="0" resource="1"
+                file="Source/GUI/Assets/onoff-led-on.png"/>
+          <FILE id="g5kjLy" name="onoff-led-strip.png" compile="0" resource="1"
+                file="Source/GUI/Assets/onoff-led-strip.png"/>
+          <FILE id="Q3fvBd" name="onoff-switch-down.png" compile="0" resource="1"
+                file="Source/GUI/Assets/onoff-switch-down.png"/>
+          <FILE id="hzJrGa" name="onoff-switch-strip.png" compile="0" resource="1"
+                file="Source/GUI/Assets/onoff-switch-strip.png"/>
+          <FILE id="nTOcKR" name="onoff-switch-up.png" compile="0" resource="1"
+                file="Source/GUI/Assets/onoff-switch-up.png"/>
+          <FILE id="DlA79m" name="pedal_full_res_2k_cropped_scaled.png" compile="0"
+                resource="1" file="Source/GUI/Assets/pedal_full_res_2k_cropped_scaled.png"/>
+          <FILE id="hfSWIs" name="speed-knob-strip.png" compile="0" resource="1"
+                file="Source/GUI/Assets/speed-knob-strip.png"/>
+        </GROUP>
+        <FILE id="sQyDXV" name="FilmStripSlider.cpp" compile="1" resource="0"
+              file="Source/GUI/FilmStripSlider.cpp"/>
+        <FILE id="YZec5S" name="FilmStripSlider.h" compile="0" resource="0"
+              file="Source/GUI/FilmStripSlider.h"/>
       </GROUP>
-      <FILE id="ryIUM0" name="FilmStripSlider.cpp" compile="1" resource="0"
-            file="Source/FilmStripSlider.cpp"/>
-      <FILE id="PV0dDa" name="FilmStripSlider.h" compile="0" resource="0"
-            file="Source/FilmStripSlider.h"/>
       <FILE id="JqSDOO" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="ZM42zO" name="PluginProcessor.h" compile="0" resource="0"
@@ -58,6 +62,27 @@
         <MODULEPATH id="juce_gui_extra" path="../../../../../../../JUCE/modules"/>
       </MODULEPATHS>
     </VS2022>
+    <XCODE_MAC targetFolder="Builds/MacOSX">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug"/>
+        <CONFIGURATION isDebug="0" name="Release"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_audio_basics" path="../../juce"/>
+        <MODULEPATH id="juce_audio_devices" path="../../juce"/>
+        <MODULEPATH id="juce_audio_formats" path="../../juce"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="../../juce"/>
+        <MODULEPATH id="juce_audio_processors" path="../../juce"/>
+        <MODULEPATH id="juce_audio_utils" path="../../juce"/>
+        <MODULEPATH id="juce_core" path="../../juce"/>
+        <MODULEPATH id="juce_data_structures" path="../../juce"/>
+        <MODULEPATH id="juce_dsp" path="../../juce"/>
+        <MODULEPATH id="juce_events" path="../../juce"/>
+        <MODULEPATH id="juce_graphics" path="../../juce"/>
+        <MODULEPATH id="juce_gui_basics" path="../../juce"/>
+        <MODULEPATH id="juce_gui_extra" path="../../juce"/>
+      </MODULEPATHS>
+    </XCODE_MAC>
   </EXPORTFORMATS>
   <MODULES>
     <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>

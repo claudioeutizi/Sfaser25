@@ -95,6 +95,22 @@ void Sfaser25AudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlo
 {
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
+    
+    juce::ignoreUnused (sampleRate, samplesPerBlock);
+
+        //Compute S for each stage
+        S_in = PrepareInputStage(sample_rate);
+}
+
+//juce native - based method found online
+juce::AudioBuffer<float> Sfaser25AudioProcessor::GetAudioBufferFromFile(juce::File file)
+{
+    auto* reader = formatManager.createReaderFor(file);
+    juce::AudioBuffer<float> audioBuffer;
+    audioBuffer.setSize(reader->numChannels, reader->lengthInSamples);
+    reader->read(&audioBuffer, 0, reader->lengthInSamples, 0, true, true);
+    delete reader;
+    return audioBuffer;
 }
 
 void Sfaser25AudioProcessor::releaseResources()
@@ -131,9 +147,10 @@ bool Sfaser25AudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts)
 
 void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
+    juce::ignoreUnused(midiMessages);
     juce::ScopedNoDenormals noDenormals;
-    auto totalNumInputChannels  = getTotalNumInputChannels();
-    auto totalNumOutputChannels = getTotalNumOutputChannels();
+    //auto totalNumInputChannels  = getTotalNumInputChannels();
+   // auto totalNumOutputChannels = getTotalNumOutputChannels();
 
     // In case we have more outputs than inputs, this code clears any output
     // channels that didn't contain input data, (because these aren't
@@ -141,8 +158,8 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
     // This is here to avoid people getting screaming feedback
     // when they first compile a plugin, but obviously you don't need to keep
     // this code if your algorithm always overwrites all the output channels.
-    for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
-        buffer.clear (i, 0, buffer.getNumSamples());
+    //for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
+     //   buffer.clear (i, 0, buffer.getNumSamples());
 
     // This is the place where you'd normally do the guts of your plugin's
     // audio processing...
@@ -150,13 +167,62 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
     // the samples and the outer loop is handling the channels.
     // Alternatively, you can process the samples with the channels
     // interleaved by keeping the same state.
+    /*
     for (int channel = 0; channel < totalNumInputChannels; ++channel)
     {
+        //buffer.clear (i, 0, buffer.getNumSamples());
+        
         auto* channelData = buffer.getWritePointer (channel);
-
+        
+        float input_out = 0;
+        
+        auto inputBuffer = buffer.getReadPointer(channel);//MONO input
+        
+        for(int sample = 0; sample<buffer.getNumSamples(); ++sample)
+        {
+            const float input_sample = inputBuffer[sample];
+            input_out = InputStageSample(input_sample, S_in, I_data);
+            
+            //tone_out = ToneCTLStageSample_9x9(sum_out, S_tc_9x9, TC_data_9x9);
+            channelData[sample] = input_out;
+            //channelData1[sample] = channelData[sample];
+        }*/
         // ..do something to the data...
+    
+    auto totalNumInputChannels  = 1; //getTotalNumInputChannels();
+    auto totalNumOutputChannels = getTotalNumOutputChannels();
+
+    for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
+        buffer.clear (i, 0, buffer.getNumSamples());
+
+     int channel = 0;
+     auto* channelData = buffer.getWritePointer (channel);
+     auto* channelData1 = buffer.getWritePointer (channel+1);
+
+
+     float input_out = 0;
+     //float gain_out = 0;
+     //float sum_out = 0;
+     //float tone_out = 0;
+
+
+       //sample by sample computation
+       auto inputBuffer = buffer.getReadPointer(channel);//MONO inputd
+       for(int sample = 0; sample<buffer.getNumSamples(); ++sample)
+       {
+           const float input_sample = inputBuffer[sample];
+           input_out = InputStageSample(input_sample, S_in, I_data);
+           
+           //tone_out = ToneCTLStageSample_9x9(sum_out, S_tc_9x9, TC_data_9x9);
+           channelData[sample] = input_out+5.1;
+           channelData1[sample] = input_out+5.1;
+           
+       }
+     //  std::cout << "Sample" << channelData[sample] - 5.1 << std::endl;
+
+
     }
-}
+
 
 //==============================================================================
 bool Sfaser25AudioProcessor::hasEditor() const

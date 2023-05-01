@@ -11,7 +11,6 @@
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
 #include "FilmStripSlider.h"
-#include "Images.h"
 
 //==============================================================================
 /**
@@ -30,22 +29,24 @@ public:
     //==============================================================================
     void paint (juce::Graphics&) override;
     void resized() override;
+	void setButtonState(bool buttonState) { this->buttonState = buttonState; };
+	bool getButtonState() { return this->buttonState; };
 
 private:
 	float previousSpeed = 0;
 	bool onOffSwitchPressed = false;
 	bool repaintFlag = false;
 
-	juce::Image cachedImage_speedKnobFilmRoll_png_1;
-	juce::Image cachedImage_BaseModel_png_1;
-	juce::Image cachedImage_ledOff_png_1;
-	juce::Image cachedImage_ledOn_png_2;
-	juce::Image cachedImage_onOffSwitchDown_png_5;
-	juce::Image cachedImage_onOffSwitchUp_png2_6;
+	juce::Image speedKnobStripImage;
+	juce::Image backgroundImage;
+	juce::Image onOffSwitchStripImage;
 
 	Sfaser25AudioProcessor& audioProcessor;
 	juce::ScopedPointer<juce::Slider> speedKnob;
+
 	juce::ScopedPointer<juce::ImageButton> onOffSwitch;
+	bool buttonState = false;
+
 	juce::ScopedPointer<juce::ImageButton> ledOnOff;
 
 	const int windowWidth = 360;

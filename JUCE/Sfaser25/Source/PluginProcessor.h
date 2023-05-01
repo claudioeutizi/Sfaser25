@@ -8,7 +8,10 @@
 
 #pragma once
 
+#include <juce_audio_processors/juce_audio_processors.h>
+#include <juce_audio_formats/juce_audio_formats.h>
 #include <JuceHeader.h>
+#include "InputStage.h"
 
 //==============================================================================
 /**
@@ -63,4 +66,17 @@ private:
     float speed;
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Sfaser25AudioProcessor)
+    
+    //juce::ScopedPointer<juce::AudioProcessorValueTreeState> state;
+    
+    //input stage
+        Input_Data I_data;
+        Mat_IN S_in;
+    
+    //output stage
+    //Output_Data O_data;
+    
+    juce::AudioFormatManager formatManager;
+    juce::AudioBuffer<float> GetAudioBufferFromFile(juce::File file);
+    float sample_rate = 192000;
 };
