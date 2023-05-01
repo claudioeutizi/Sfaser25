@@ -607,6 +607,15 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\shiftStage.cpp">
+      <Filter>Sfaser25\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\outputStage.cpp">
+      <Filter>Sfaser25\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\inputStage.cpp">
+      <Filter>Sfaser25\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\GUI\FilmStripSlider.cpp">
       <Filter>Sfaser25\Source\GUI</Filter>
     </ClCompile>
@@ -3057,6 +3066,15 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\shiftStage.h">
+      <Filter>Sfaser25\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\outputStage.h">
+      <Filter>Sfaser25\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\inputStage.h">
+      <Filter>Sfaser25\Source</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\GUI\FilmStripSlider.h">
       <Filter>Sfaser25\Source\GUI</Filter>
     </ClInclude>

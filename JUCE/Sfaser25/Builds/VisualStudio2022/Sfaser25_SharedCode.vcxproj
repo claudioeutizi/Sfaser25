@@ -139,6 +139,9 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\shiftStage.cpp"/>
+    <ClCompile Include="..\..\Source\outputStage.cpp"/>
+    <ClCompile Include="..\..\Source\inputStage.cpp"/>
     <ClCompile Include="..\..\Source\GUI\FilmStripSlider.cpp"/>
     <ClCompile Include="..\..\Source\PluginProcessor.cpp"/>
     <ClCompile Include="..\..\Source\PluginEditor.cpp"/>
@@ -2424,6 +2427,9 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_gui_extra.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\shiftStage.h"/>
+    <ClInclude Include="..\..\Source\outputStage.h"/>
+    <ClInclude Include="..\..\Source\inputStage.h"/>
     <ClInclude Include="..\..\Source\GUI\FilmStripSlider.h"/>
     <ClInclude Include="..\..\Source\PluginProcessor.h"/>
     <ClInclude Include="..\..\Source\PluginEditor.h"/>
