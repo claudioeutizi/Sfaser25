@@ -100,6 +100,8 @@ void Sfaser25AudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlo
 
         //Compute S for each stage
         S_in = PrepareInputStage(sample_rate);
+        S_sh = PrepareShiftStage(sample_rate);
+        S_out = PrepareOutputStage(sample_rate);
 }
 
 //juce native - based method found online
@@ -193,7 +195,7 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
     auto totalNumOutputChannels = getTotalNumOutputChannels();
 
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
-        buffer.clear (i, 0, buffer.getNumSamples());
+            buffer.clear (i, 0, buffer.getNumSamples());
 
      int channel = 0;
      auto* channelData = buffer.getWritePointer (channel);
@@ -202,8 +204,11 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
 
      float input_out = 0;
      //float gain_out = 0;
-     //float sum_out = 0;
-     //float tone_out = 0;
+    float shift_out1 = 0;
+    float shift_out2 = 0;
+    float shift_out3 = 0;
+    float shift_out4 = 0;
+    float output_out = 0;
 
 
        //sample by sample computation
@@ -212,13 +217,16 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
        {
            const float input_sample = inputBuffer[sample];
            input_out = InputStageSample(input_sample, S_in, I_data);
+           shift_out1 = ShiftStageSample(input_out, S_sh, Sh_data);
+           //shift_out2 = ShiftStageSample(shift_out1, S_sh, Sh_data);
+           //shift_out3 = ShiftStageSample(shift_out2, S_sh, Sh_data);
+           //shift_out4 = ShiftStageSample(shift_out3, S_sh, Sh_data);
+           output_out = OutputStageSample(shift_out1, input_out, S_out, O_data);
            
            //tone_out = ToneCTLStageSample_9x9(sum_out, S_tc_9x9, TC_data_9x9);
-           channelData[sample] = input_out+5.1;
-           channelData1[sample] = input_out+5.1;
-           
+           channelData[sample] = output_out;
+           channelData1[sample] = channelData[sample];
        }
-     //  std::cout << "Sample" << channelData[sample] - 5.1 << std::endl;
 
 
     }
@@ -241,12 +249,13 @@ void Sfaser25AudioProcessor::getStateInformation (juce::MemoryBlock& destData)
     // You should use this method to store your parameters in the memory block.
     // You could do that either as raw data, or use the XML or ValueTree classes
     // as intermediaries to make it easy to save and load complex data.
-}
+    }
 
 void Sfaser25AudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
     // You should use this method to restore your parameters from this memory block,
     // whose contents will have been created by the getStateInformation() call.
+    
 }
 
 float Sfaser25AudioProcessor::getSpeed()

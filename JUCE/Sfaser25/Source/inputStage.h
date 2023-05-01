@@ -12,12 +12,14 @@
 #endif /* inputStage_h */
 
 
-#include "C:/Users/matti/Desktop/MAE/mxrPhase90/Face90/JUCE/eigen-3.4.0/Eigen/Dense"
+#include "/Users/djsamu.el/Documents/eigen-3.4.0/Eigen/Dense"
 #include <stdio.h>
 #include <iostream>
 
 using Eigen::MatrixXd;
 using namespace Eigen;
+
+//float B_old_in=-5.1;
 
 struct Input_Data
 {

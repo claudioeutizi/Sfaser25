@@ -11,7 +11,9 @@
 #include <juce_audio_processors/juce_audio_processors.h>
 #include <juce_audio_formats/juce_audio_formats.h>
 #include <JuceHeader.h>
-#include "InputStage.h"
+#include "inputStage.h"
+#include "outputStage.h"
+#include "shiftStage.h"
 
 //==============================================================================
 /**
@@ -72,8 +74,14 @@ private:
     //input stage
         Input_Data I_data;
         Mat_IN S_in;
-    
+    //shifting stage
+        Shift_Data Sh_data;
+        Mat_SH S_sh;
     //output stage
+        Output_Data O_data;
+        Mat_OUT S_out;
+    
+    
     //Output_Data O_data;
     
     juce::AudioFormatManager formatManager;

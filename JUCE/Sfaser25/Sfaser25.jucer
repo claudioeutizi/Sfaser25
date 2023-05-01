@@ -4,6 +4,10 @@
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1">
   <MAINGROUP id="rtYDuW" name="Sfaser25">
     <GROUP id="{62A10761-4B4D-06E8-617E-2410959EE530}" name="Source">
+      <FILE id="bbe4g0" name="shiftStage.cpp" compile="1" resource="0" file="Source/shiftStage.cpp"/>
+      <FILE id="CI8wfr" name="shiftStage.h" compile="0" resource="0" file="Source/shiftStage.h"/>
+      <FILE id="ZdMtAF" name="outputStage.cpp" compile="1" resource="0" file="Source/outputStage.cpp"/>
+      <FILE id="W9DDnV" name="outputStage.h" compile="0" resource="0" file="Source/outputStage.h"/>
       <FILE id="yYuyUC" name="inputStage.cpp" compile="1" resource="0" file="Source/inputStage.cpp"/>
       <FILE id="HT5Xvd" name="inputStage.h" compile="0" resource="0" file="Source/inputStage.h"/>
       <GROUP id="{A2C53561-1A4F-F2E7-8CB1-082D3835416D}" name="GUI">

@@ -13,12 +13,13 @@ Mat_IN PrepareInputStage(float sampleRate)
     //double V_gnd = -4.5; non useful here
             //float R_gnd = 1e-3;
             
-            float Ts = 1/sampleRate;
+    float Ts = 1/sampleRate;
             //WDF analysis
-            float Z1 = 10e3;
-            float Z2 = Ts/(2*0.01e-6);
-            float Z3 = 5e3;
-            float Z4 = 470e3;
+    float Z1 = 10e3;
+    float Z2 = Ts/(2*0.01e-6);
+    float Z3 = 5e3;
+    float Z4 = 470e3;
+            
     
     Matrix<float, 4, 2> Qv;
     Qv <<   1, 0,
@@ -55,14 +56,14 @@ Mat_IN PrepareInputStage(float sampleRate)
 
 float InputStageSample(const float inputSample, const Mat_IN& S, Input_Data& I_d)
 {
-    
-
     //outputBuffer[i] = inputBuffer[i] * 0.1;
     I_d.a[0] = -inputSample;
-    I_d.a[1] = I_d.b[1];
+    I_d.a[1] = I_d.b(1);
     I_d.a[3] = 5.1; //V_gnd
     I_d.b = S*I_d.a;
-    double outputSample = ((I_d.a[2]+I_d.b[2])/2);
+    //B_old_in=I_d.b(1);
+    
+    float outputSample = ((I_d.a[2]+I_d.b[2])/2);
     return outputSample;
 
 }
