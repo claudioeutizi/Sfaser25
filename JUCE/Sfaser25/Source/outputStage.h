@@ -7,7 +7,7 @@
 
   ==============================================================================
 */
-#include "/Users/djsamu.el/Documents/eigen-3.4.0/Eigen/Dense"
+#include "C:\Users\matti\Desktop\MAE\mxrPhase90\Face90\JUCE\eigen-3.4.0\Eigen\Dense"
 #include <stdio.h>
 #include <iostream>
 
@@ -16,14 +16,13 @@
 using Eigen::MatrixXd;
 using namespace Eigen;
 
-//float B_old_out=1.01637;
 
-struct Output_Data
+struct wavesOUT
 {
     Matrix<float, 6, 1> a = {0,0,0,0,0,0};
     Matrix<float, 6, 1> b = {0,0,1.01637,0,0,0};
 };
 
-typedef Matrix<float,6,6> Mat_OUT;
-Mat_OUT PrepareOutputStage(float sampleRate);
-float OutputStageSample(float inputBuffer, float inputDry, const Mat_OUT& S, Output_Data& V_d);
+typedef Matrix<float,6,6> Matrix6f;
+Matrix6f PrepareOutputStage(float sampleRate);
+float OutputStageSample(float inputWet, float inputDry, const Matrix6f& S, wavesOUT& waves);

@@ -9,7 +9,7 @@
 */
 
 
-#include "/Users/djsamu.el/Documents/eigen-3.4.0/Eigen/Dense"
+#include "C:\Users\matti\Desktop\MAE\mxrPhase90\Face90\JUCE\eigen-3.4.0\Eigen\Dense"
 #include <stdio.h>
 #include <iostream>
 
@@ -18,16 +18,15 @@
 using Eigen::MatrixXd;
 using namespace Eigen;
 
-//float sampleRate = 192000;
 
-//float Z6 = 0;
 
-struct Shift_Data
+struct wavesSTAGE
 {
-    Matrix<float, 8, 1> a = {0,0,0,0,0,0,0,0};
-    Matrix<float, 8, 1> b = {0,0,0,0,0,0,0,0};
+    Matrix<double, 8, 1> a = {0,0,0,0,0,0,0,0};
+    Matrix<double, 8, 1> b = {0,0,0,0,0,0,0,0};
 };
+//da definire globale?
+typedef Matrix<double, 8, 8> Matrix8d;
 
-typedef Matrix<float,8,8> Mat_SH;
-Mat_SH PrepareShiftStage(float sampleRate);
-float ShiftStageSample(float inputBuffer, const Mat_SH& S, Shift_Data& Sh_d);
+Matrix8d PrepareShiftStage(float sampleRate);
+float ShiftStageSample(float inputSample, const Matrix8d& S, wavesSTAGE& waves);

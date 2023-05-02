@@ -5,6 +5,7 @@
 
   ==============================================================================
 */
+#pragma once
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
@@ -100,7 +101,7 @@ void Sfaser25AudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlo
 
         //Compute S for each stage
         S_in = PrepareInputStage(sample_rate);
-        S_sh = PrepareShiftStage(sample_rate);
+        S_stage = PrepareShiftStage(sample_rate);
         S_out = PrepareOutputStage(sample_rate);
 }
 
@@ -151,45 +152,7 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
 {
     juce::ignoreUnused(midiMessages);
     juce::ScopedNoDenormals noDenormals;
-    //auto totalNumInputChannels  = getTotalNumInputChannels();
-   // auto totalNumOutputChannels = getTotalNumOutputChannels();
 
-    // In case we have more outputs than inputs, this code clears any output
-    // channels that didn't contain input data, (because these aren't
-    // guaranteed to be empty - they may contain garbage).
-    // This is here to avoid people getting screaming feedback
-    // when they first compile a plugin, but obviously you don't need to keep
-    // this code if your algorithm always overwrites all the output channels.
-    //for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
-     //   buffer.clear (i, 0, buffer.getNumSamples());
-
-    // This is the place where you'd normally do the guts of your plugin's
-    // audio processing...
-    // Make sure to reset the state if your inner loop is processing
-    // the samples and the outer loop is handling the channels.
-    // Alternatively, you can process the samples with the channels
-    // interleaved by keeping the same state.
-    /*
-    for (int channel = 0; channel < totalNumInputChannels; ++channel)
-    {
-        //buffer.clear (i, 0, buffer.getNumSamples());
-        
-        auto* channelData = buffer.getWritePointer (channel);
-        
-        float input_out = 0;
-        
-        auto inputBuffer = buffer.getReadPointer(channel);//MONO input
-        
-        for(int sample = 0; sample<buffer.getNumSamples(); ++sample)
-        {
-            const float input_sample = inputBuffer[sample];
-            input_out = InputStageSample(input_sample, S_in, I_data);
-            
-            //tone_out = ToneCTLStageSample_9x9(sum_out, S_tc_9x9, TC_data_9x9);
-            channelData[sample] = input_out;
-            //channelData1[sample] = channelData[sample];
-        }*/
-        // ..do something to the data...
     
     auto totalNumInputChannels  = 1; //getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
@@ -202,29 +165,26 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
      auto* channelData1 = buffer.getWritePointer (channel+1);
 
 
-     float input_out = 0;
-     //float gain_out = 0;
-    float shift_out1 = 0;
-    float shift_out2 = 0;
-    float shift_out3 = 0;
-    float shift_out4 = 0;
-    float output_out = 0;
+    float input_out = 0;
+    float makeupGain = 2;
+
 
 
        //sample by sample computation
-       auto inputBuffer = buffer.getReadPointer(channel);//MONO inputd
+       auto inputBuffer = buffer.getReadPointer(channel);//MONO input
+
        for(int sample = 0; sample<buffer.getNumSamples(); ++sample)
        {
            const float input_sample = inputBuffer[sample];
-           input_out = InputStageSample(input_sample, S_in, I_data);
-           shift_out1 = ShiftStageSample(input_out, S_sh, Sh_data);
-           //shift_out2 = ShiftStageSample(shift_out1, S_sh, Sh_data);
-           //shift_out3 = ShiftStageSample(shift_out2, S_sh, Sh_data);
-           //shift_out4 = ShiftStageSample(shift_out3, S_sh, Sh_data);
-           output_out = OutputStageSample(shift_out1, input_out, S_out, O_data);
+
+           stage0 = InputStageSample(input_sample, S_in, initIN);
+           stage1 = ShiftStageSample(stage0, S_stage, initSTAGE);
+           stage2 = ShiftStageSample(stage1, S_stage, initSTAGE);
+           stage3 = ShiftStageSample(stage2, S_stage, initSTAGE);
+           stage4 = ShiftStageSample(stage3, S_stage, initSTAGE);
+           output = OutputStageSample(stage4, stage0, S_out, initOUT);
            
-           //tone_out = ToneCTLStageSample_9x9(sum_out, S_tc_9x9, TC_data_9x9);
-           channelData[sample] = output_out;
+           channelData[sample] = output*makeupGain;
            channelData1[sample] = channelData[sample];
        }
 

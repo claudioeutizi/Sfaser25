@@ -12,21 +12,20 @@
 #endif /* inputStage_h */
 
 
-#include "/Users/djsamu.el/Documents/eigen-3.4.0/Eigen/Dense"
+#include "C:\Users\matti\Desktop\MAE\mxrPhase90\Face90\JUCE\eigen-3.4.0\Eigen\Dense"
 #include <stdio.h>
 #include <iostream>
 
 using Eigen::MatrixXd;
 using namespace Eigen;
 
-//float B_old_in=-5.1;
 
-struct Input_Data
+struct wavesIN
 {
-    Matrix<float, 4, 1> a = {0,0,0,0};
-    Matrix<float, 4, 1> b = {0,-5.1,0,0};
+    Vector4f a = {0,0,0,0};
+    Vector4f b = {0,-5.1,0,0};
 };
 
-typedef Matrix<float,4,4> Mat_IN;
-Mat_IN PrepareInputStage(float sampleRate);
-float InputStageSample(const float inputBuffer, const Mat_IN& S, Input_Data& I_d);
+
+Matrix4f PrepareInputStage(float sampleRate);
+float InputStageSample(const float inputSample, const Matrix4f& S, wavesIN& waves);

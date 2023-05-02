@@ -71,15 +71,22 @@ private:
     
     //juce::ScopedPointer<juce::AudioProcessorValueTreeState> state;
     
+    float stage0 = 0;
+    float stage1 = 0;
+    float stage2 = 0;
+    float stage3 = 0;
+    float stage4 = 0;
+    float output = 0;
+
     //input stage
-        Input_Data I_data;
-        Mat_IN S_in;
+        wavesIN initIN;
+        Matrix4f S_in;
     //shifting stage
-        Shift_Data Sh_data;
-        Mat_SH S_sh;
+        wavesSTAGE initSTAGE;
+        Matrix8d S_stage;
     //output stage
-        Output_Data O_data;
-        Mat_OUT S_out;
+        wavesOUT initOUT;
+        Matrix6f S_out;
     
     
     //Output_Data O_data;

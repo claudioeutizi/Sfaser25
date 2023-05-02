@@ -11,15 +11,11 @@
 #include "shiftStage.h"
 #include <cmath>
 
-Mat_SH PrepareShiftStage(float sampleRate)
+Matrix8d PrepareShiftStage(float sampleRate)
 {
-    //parameters of circuit
-    //double V_gnd = -4.5; non useful here
-            //float R_gnd = 1e-3;
     float Ts = 1/sampleRate;
     
-    
-            //WDF analysis
+   
     float Z1 = 1e-6;
     float Z2 = 24e3;
     float Z3 = 10e3;
@@ -27,65 +23,56 @@ Mat_SH PrepareShiftStage(float sampleRate)
     float Z5 = Z3;
     //float Z6 = 1/(k*(Vg - Vref - Vp));
     float Z6 = 10e3;
-    float Z7 = 5e3;
+    float Z7 = 1e9;
     float Z8 = 1e-6;
             
     
-    Matrix<float, 8, 4> Qv;
-    Qv <<   1, 0, 0, 0,
+    Matrix<double, 8, 4> Qv_T;
+    Qv_T << 1, 0, 0, 0,
             0, 1, 0, 0,
             0, 0, 1, 0,
             0, 0, 0, 1,
             0, 0, 0, 1,
             0, 1, 0, 0,
-            -1, 0, -1, -1,
-            -1, -1, 0,-1;
+           -1, 0, -1, -1,
+           -1, -1, 0,-1;
     
-    Matrix<float, 4, 8> Qv_T = Qv.transpose();
+    Matrix<double, 4, 8> Qv = Qv_T.transpose();
     
-    Matrix<float, 8, 4> Qi;
-    Qi <<   1, 0, 0, 0,
+    Matrix<double, 8, 4> Qi_T;
+    Qi_T << 1, 0, 0, 0,
             0, 1, 0, 0,
             0, 0, 1, 0,
             0, 0, 0, 1,
-            -1, 0, -1, 0,
+           -1, 0, -1, 0,
             0, 1, 0, 0,
             0, 0, 0, 0,
-            -1, -1, 0, -1;
+           -1, -1, 0, -1;
     
-    Matrix<float, 4, 8> Qi_T = Qi.transpose();
+    Matrix<double, 4, 8> Qi = Qi_T.transpose();
     
-    Matrix<float, 8,1> vector1;
-    vector1 << Z1, Z2, Z3, Z4, Z5, Z6, Z7, Z8;
+    Matrix<double, 8,1> z(Z1, Z2, Z3, Z4, Z5, Z6, Z7, Z8);
+    MatrixXd Z = z.asDiagonal();
     
-    MatrixXf Z;
-    Z = vector1.asDiagonal();
+    MatrixXd I = MatrixXd::Identity(8,8);
     
-    int rowNumber = 8;
-    int columnNumber = 8;
-    
-    MatrixXf I;
-    I = MatrixXf::Identity(rowNumber,columnNumber);
-    
-    Mat_SH S;
-    S << 2 * Qv * (Qi_T * Z.inverse() * Qv).inverse() * (Qi_T * Z.inverse()) - I;
+    Matrix8d S = 2 * Qv_T * (Qi * Z.inverse() * Qv_T).inverse() * (Qi * Z.inverse()) - I;
     
     return S;
     
 }
 
-float ShiftStageSample(const float inputSample, const Mat_SH& S, Shift_Data& Sh_d)
+float ShiftStageSample(float inputSample, const Matrix8d& S, wavesSTAGE& waves)
 {
-    //outputBuffer[i] = inputBuffer[i] * 0.1;
+
     
+    waves.a[0] = -inputSample;
+    waves.a[3] = waves.b(3);
+    waves.a[7] = 5.1;
+    waves.b = S*waves.a;
+  
     
-    Sh_d.a[0] = -inputSample;
-    Sh_d.a[3] = Sh_d.b(3);
-    Sh_d.a[7] = 5.1; //V_gnd
-    Sh_d.b = S*Sh_d.a;
-    //B_old_in=I_d.b(1);
-    
-    float outputSample = ((Sh_d.a[6]+Sh_d.b[6])/2);
+    float outputSample = ((waves.a[6]+waves.b[6])/2);
     return outputSample;
 
 }
