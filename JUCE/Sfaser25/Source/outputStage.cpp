@@ -10,7 +10,7 @@
 
 #include "outputStage.h"
 
-Matrix6f PrepareOutputStage(float sampleRate)
+Matrix6f prepareOutputStage(float sampleRate)
 {
     float Ts = 1/sampleRate;
         
@@ -45,7 +45,7 @@ Matrix6f PrepareOutputStage(float sampleRate)
     
 }
 
-float OutputStageSample(float inputWet, float inputDry, const Matrix6f& S, wavesOUT& waves)
+float outputStageSample(float inputWet, float inputDry, const Matrix6f& S, wavesOUT& waves)
 {
     waves.a[0] = -inputWet;
     waves.a[4] = -inputDry;

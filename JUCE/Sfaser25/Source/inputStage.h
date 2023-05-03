@@ -27,5 +27,5 @@ struct wavesIN
 };
 
 
-Matrix4f PrepareInputStage(float sampleRate);
-float InputStageSample(const float inputSample, const Matrix4f& S, wavesIN& waves);
+Matrix4f prepareInputStage(float sampleRate);
+float inputStageSample(const float inputSample, const Matrix4f& S, wavesIN& waves);

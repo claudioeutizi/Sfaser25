@@ -28,5 +28,5 @@ struct wavesSTAGE
 //da definire globale?
 typedef Matrix<double, 8, 8> Matrix8d;
 
-Matrix8d PrepareShiftStage(float sampleRate);
-float ShiftStageSample(float inputSample, const Matrix8d& S, wavesSTAGE& waves);
+Matrix8d prepareShiftStage(float sampleRate);
+float shiftStageSample(float inputSample, const Matrix8d& S, wavesSTAGE& waves);

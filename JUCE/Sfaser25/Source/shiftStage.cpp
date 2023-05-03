@@ -11,7 +11,7 @@
 #include "shiftStage.h"
 #include <cmath>
 
-Matrix8d PrepareShiftStage(float sampleRate)
+Matrix8d prepareShiftStage(float sampleRate)
 {
     float Ts = 1/sampleRate;
     
@@ -62,15 +62,12 @@ Matrix8d PrepareShiftStage(float sampleRate)
     
 }
 
-float ShiftStageSample(float inputSample, const Matrix8d& S, wavesSTAGE& waves)
+float shiftStageSample(float inputSample, const Matrix8d& S, wavesSTAGE& waves)
 {
-
-    
     waves.a[0] = -inputSample;
     waves.a[3] = waves.b(3);
     waves.a[7] = 5.1;
     waves.b = S*waves.a;
-  
     
     float outputSample = ((waves.a[6]+waves.b[6])/2);
     return outputSample;

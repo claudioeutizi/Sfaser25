@@ -7,7 +7,7 @@
 
 #include "inputStage.h"
 
-Matrix4f PrepareInputStage(float sampleRate)
+Matrix4f prepareInputStage(float sampleRate)
 {      
     float Ts = 1/sampleRate;
            
@@ -43,7 +43,7 @@ Matrix4f PrepareInputStage(float sampleRate)
     
 }
 
-float InputStageSample(const float inputSample, const Matrix4f& S, wavesIN& waves)
+float inputStageSample(const float inputSample, const Matrix4f& S, wavesIN& waves)
 {
     //mettere qui il for per riempireil buffer?
     waves.a[0] = -inputSample;

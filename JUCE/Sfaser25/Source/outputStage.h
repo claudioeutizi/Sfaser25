@@ -24,5 +24,5 @@ struct wavesOUT
 };
 
 typedef Matrix<float,6,6> Matrix6f;
-Matrix6f PrepareOutputStage(float sampleRate);
-float OutputStageSample(float inputWet, float inputDry, const Matrix6f& S, wavesOUT& waves);
+Matrix6f prepareOutputStage(float sampleRate);
+float outputStageSample(float inputWet, float inputDry, const Matrix6f& S, wavesOUT& waves);

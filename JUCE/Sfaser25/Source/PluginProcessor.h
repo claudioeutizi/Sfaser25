@@ -71,11 +71,11 @@ private:
     
     //juce::ScopedPointer<juce::AudioProcessorValueTreeState> state;
     
-    float stage0 = 0;
-    float stage1 = 0;
-    float stage2 = 0;
-    float stage3 = 0;
-    float stage4 = 0;
+    float inputStage = 0;
+    float shiftingStage1 = 0;
+    float shiftingStage2 = 0;
+    float shiftingStage3 = 0;
+    float shiftingStage4 = 0;
     float output = 0;
 
     //input stage
