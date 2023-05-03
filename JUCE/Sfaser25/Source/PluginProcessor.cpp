@@ -103,8 +103,8 @@ void Sfaser25AudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlo
         S_in = prepareInputStage(sample_rate);
         S_stage = prepareShiftStage(sample_rate);
         S_out = prepareOutputStage(sample_rate);
-        juce::File inputFile("C:/Users/claud/OneDrive/Desktop/Sfaser25/MATLAB/Sfaser25/noise192.wav");
-        juce::File outputFile("C:/Users/claud/OneDrive/Desktop/Sfaser25/MATLAB/Sfaser25/outputSweep.wav");
+        juce::File inputFile("C:/Users/matti/Desktop/MAE/mxrPhase90/Face90/MATLAB/Useful Files/noise192.wav");
+        juce::File outputFile("C:/Users/matti/Desktop/MAE/mxrPhase90/Face90/MATLAB/Sfaser25/outputnoise.wav");
 
         juce::AudioFormatManager formatManager;
         formatManager.registerBasicFormats();
@@ -127,11 +127,11 @@ void Sfaser25AudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlo
             {
                 const float input_sample = inputBuffer[sample];
 
-                inputStage = inputStageSample(input_sample, S_in, initIN);
-                shiftingStage1 = shiftStageSample(inputStage, S_stage, initSTAGE);
-                shiftingStage2 = shiftStageSample(shiftingStage1, S_stage, initSTAGE);
-                shiftingStage3 = shiftStageSample(shiftingStage2, S_stage, initSTAGE);
-                shiftingStage4 = shiftStageSample(shiftingStage3, S_stage, initSTAGE);
+                inputStage = inputStageSample(input_sample*2, S_in, initIN);
+                shiftingStage1 = shiftStageSample(inputStage, S_stage, initSTAGE1);
+                shiftingStage2 = shiftStageSample(shiftingStage1, S_stage, initSTAGE2);
+                shiftingStage3 = shiftStageSample(shiftingStage2, S_stage, initSTAGE3);
+                shiftingStage4 = shiftStageSample(shiftingStage3, S_stage, initSTAGE4);
                 output = outputStageSample(shiftingStage4, inputStage, S_out, initOUT);
 
                 outputBuffer[sample] = output * 3;
@@ -219,7 +219,7 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
 
 
     float input_out = 0;
-    float makeupGain = 3;
+    float makeupGain = 5;
 
        //sample by sample computation
        auto inputBuffer = buffer.getReadPointer(channel);//MONO input
@@ -229,10 +229,10 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
            const float input_sample = inputBuffer[sample];
 
            inputStage = inputStageSample(input_sample, S_in, initIN);
-           shiftingStage1 = shiftStageSample(inputStage, S_stage, initSTAGE);
-           shiftingStage2 = shiftStageSample(shiftingStage1, S_stage, initSTAGE);
-           shiftingStage3 = shiftStageSample(shiftingStage2, S_stage, initSTAGE);
-           shiftingStage4 = shiftStageSample(shiftingStage3, S_stage, initSTAGE);
+           shiftingStage1 = shiftStageSample(inputStage, S_stage, initSTAGE1);
+           shiftingStage2 = shiftStageSample(shiftingStage1, S_stage, initSTAGE2);
+           shiftingStage3 = shiftStageSample(shiftingStage2, S_stage, initSTAGE3);
+           shiftingStage4 = shiftStageSample(shiftingStage3, S_stage, initSTAGE4);
            output = outputStageSample(shiftingStage4, inputStage, S_out, initOUT);
            
            channelDataL[sample] = output * makeupGain;

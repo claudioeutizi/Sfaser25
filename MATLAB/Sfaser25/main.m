@@ -3,7 +3,7 @@ clear;
 close all;
 
 
-input = 'noise';
+input = 'audio';
 
 if strcmp(input, 'sine')
 f0 = 440;
@@ -29,8 +29,8 @@ Vin=Vin(1:2*fs);
 N=length(Vin);
 t = 0:Ts:N*Ts-Ts;
 
-[V_spiceOUT,fs2] = audioread('sweep.wav');
-t_spiceOUT = 0:1/fs2:length(V_spiceOUT)/fs2-1/fs2;
+% [V_spiceOUT,fs2] = audioread('sweep.wav');
+% t_spiceOUT = 0:1/fs2:length(V_spiceOUT)/fs2-1/fs2;
 end
 
 

@@ -22,7 +22,7 @@ Matrix8d prepareShiftStage(float sampleRate)
     float Z4 = Ts/(2*47e-9);
     float Z5 = Z3;
     //float Z6 = 1/(k*(Vg - Vref - Vp));
-    float Z6 = 1e3;
+    float Z6 = 700;
     float Z7 = 1e9;
     float Z8 = 1e-6;
             
@@ -52,9 +52,9 @@ Matrix8d prepareShiftStage(float sampleRate)
     Matrix<double, 4, 8> Qi = Qi_T.transpose();
     
     Matrix<double, 8,1> z(Z1, Z2, Z3, Z4, Z5, Z6, Z7, Z8);
-    MatrixXd Z = z.asDiagonal();
+    Matrix8d Z = z.asDiagonal();
     
-    MatrixXd I = MatrixXd::Identity(8,8);
+    Matrix8d I = Matrix8d::Identity(8,8);
     
     Matrix8d S = 2 * Qv_T * (Qi * Z.inverse() * Qv_T).inverse() * (Qi * Z.inverse()) - I;
     
