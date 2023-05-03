@@ -80,8 +80,8 @@ Vout = zeros(N,1);
 for n = 1 : N
  
 
-Z6 = 1 / (k * (Vg(n) - Vref - Vp));
-% Z6=10e3;
+% Z6 = 1 / (k * (Vg(n) - Vref - Vp));
+Z6=1e3;
 Z = diag([Z1 Z2 Z3 Z4 Z5 Z6 Z7 Z8]);
 
 S = 2*Qv'*((Qi/Z*Qv')\(Qi/Z)) - eye(size(Qv,2));

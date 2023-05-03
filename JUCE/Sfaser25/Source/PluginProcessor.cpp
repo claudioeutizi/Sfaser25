@@ -103,6 +103,58 @@ void Sfaser25AudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlo
         S_in = PrepareInputStage(sample_rate);
         S_stage = PrepareShiftStage(sample_rate);
         S_out = PrepareOutputStage(sample_rate);
+        //juce::File inputFile("C:/Users/matti/Desktop/MAE/mxrPhase90/Face90/MATLAB/Sfaser25/ExpSweep.wav");
+        //juce::File outputFile("C:/Users/matti/Desktop/MAE/mxrPhase90/Face90/MATLAB/Sfaser25/outputSweep.wav");
+
+        //juce::AudioFormatManager formatManager;
+        //formatManager.registerBasicFormats();
+
+        //juce::AudioFormatReader* reader = formatManager.createReaderFor(inputFile);
+        //if (reader != nullptr)
+        //{
+        //    // Read the audio data from the input file
+        //    juce::AudioBuffer<float> buffer(reader->numChannels, reader->lengthInSamples);
+        //    reader->read(&buffer, 0, reader->lengthInSamples, 0, true, true);
+
+
+        //    juce::AudioBuffer<float> buffer2(reader->numChannels, reader->lengthInSamples);
+
+        //    // Process the audio data here...
+        //    auto* inputBuffer = buffer.getReadPointer(0);
+        //    auto* outputBuffer = buffer2.getWritePointer(0);
+
+        //    for (int sample = 0; sample < buffer.getNumSamples()-1; ++sample)
+        //    {
+        //        const float input_sample = inputBuffer[sample];
+
+        //        stage0 = InputStageSample(input_sample, S_in, initIN);
+        //        stage1 = ShiftStageSample(stage0, S_stage, initSTAGE);
+        //        stage2 = ShiftStageSample(stage1, S_stage, initSTAGE);
+        //        stage3 = ShiftStageSample(stage2, S_stage, initSTAGE);
+        //        stage4 = ShiftStageSample(stage3, S_stage, initSTAGE);
+        //        output = OutputStageSample(stage4, stage0, S_out, initOUT);
+
+        //        outputBuffer[sample] = output * 3;
+        //    }
+
+        //    // Create a new audio file for the output
+        //    juce::FileOutputStream outputStream(outputFile);
+        //    if (outputStream.openedOk())
+        //    {
+        //        juce::WavAudioFormat wavFormat;
+        //        std::unique_ptr<juce::AudioFormatWriter> writer(
+        //            wavFormat.createWriterFor(&outputStream, reader->sampleRate, reader->numChannels, 16, {}, 0)
+        //        );;
+        //        if (writer != nullptr)
+        //        {
+        //            // Write the processed audio data to the output file
+        //            writer->writeFromAudioSampleBuffer(buffer2, 0, buffer2.getNumSamples());
+        //        }
+        //    }
+
+        //    // Clean up the reader
+        //    delete reader;
+        //}
 }
 
 //juce native - based method found online
