@@ -90,7 +90,6 @@ private:
     
     
     //Output_Data O_data;
-    
     juce::AudioFormatManager formatManager;
     juce::AudioBuffer<float> GetAudioBufferFromFile(juce::File file);
     float sample_rate = 192000;

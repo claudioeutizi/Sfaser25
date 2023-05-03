@@ -22,7 +22,7 @@ Matrix8d PrepareShiftStage(float sampleRate)
     float Z4 = Ts/(2*47e-9);
     float Z5 = Z3;
     //float Z6 = 1/(k*(Vg - Vref - Vp));
-    float Z6 = 10e3;
+    float Z6 = 1e3;
     float Z7 = 1e9;
     float Z8 = 1e-6;
             

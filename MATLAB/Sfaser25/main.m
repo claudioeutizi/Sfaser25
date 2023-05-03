@@ -16,7 +16,7 @@ end
 
 if strcmp(input, 'noise')
 fs = 192000;
-N=2*fs;
+N=0.5*fs;
 Ts = 1/fs;
 t = 0:Ts:N*Ts-Ts;
 Vin=randn(N,1);

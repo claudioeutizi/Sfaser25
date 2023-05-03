@@ -20,7 +20,7 @@ Matrix4f PrepareInputStage(float sampleRate)
     Matrix<float, 4, 2> Qv_T;
     Qv_T << 1, 0,
             0, 1,
-           -1, 1,
+           -1, -1,
            -1, -1;
     Matrix<float, 2, 4> Qv = Qv_T.transpose();
     
