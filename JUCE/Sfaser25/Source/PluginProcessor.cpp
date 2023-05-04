@@ -25,6 +25,7 @@ Sfaser25AudioProcessor::Sfaser25AudioProcessor()
 {
     shiftStage = new ShiftStage();
     inputStage = new InputStage();
+    outputStage = new OutputStage();
 }
 
 Sfaser25AudioProcessor::~Sfaser25AudioProcessor()

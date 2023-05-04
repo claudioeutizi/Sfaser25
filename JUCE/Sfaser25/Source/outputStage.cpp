@@ -12,12 +12,11 @@
 
 OutputStage::OutputStage()
 {
-    this->Z1 = 150e3;
-    this->Z2 = Z1;
-    this->Z3 = 0;
-    this->Z4 = 56e3;
-    this->Z5 = Z1;
-    this->Z6 = Z1;
+    Z1 = 150e3;
+    Z2 = Z1;
+    Z4 = 56e3;
+    Z5 = Z1;
+    Z6 = Z1;
 
     this->Qv_T << 1, 0, 0,
         0, 1, 0,
@@ -36,7 +35,7 @@ OutputStage::OutputStage()
 Matrix6f OutputStage::prepareOutputStage(float sampleRate)
 {
     float Ts = 1/sampleRate;
-    this->Z3 = Ts / (2 * 47e-9);
+    float Z3 = Ts / (2 * 47e-9);
     
     Matrix<float, 6,1> z(Z1, Z2, Z3, Z4, Z5, Z6);
     Matrix6f Z = z.asDiagonal();

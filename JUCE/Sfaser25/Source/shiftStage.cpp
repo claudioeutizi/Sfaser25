@@ -32,7 +32,10 @@ ShiftStage::ShiftStage() {
         0, 1, 0, 0,
         0, 0, 0, 0,
         -1, -1, 0, -1;
+
     this->Qi = Qi_T.transpose();
+
+    this->I = Matrix8d::Identity(8, 8);
 
 }
 
@@ -40,15 +43,13 @@ Matrix8d ShiftStage::prepareShiftStage(float sampleRate)
 {
     float Ts = 1/sampleRate;
 
-    this->Z4 = Ts / (2 * 47e-9);
+    float Z4 = Ts / (2 * 47e-9);
     
     /*Matrix<double, 8,1> z(Z1, Z2, Z3, Z4, Z5, 0, Z7, Z8);*/
     Matrix<double, 8, 1> z(Z1, Z2, Z3, Z4, Z5, 0, Z7, Z8);
-    Matrix8d Z = z.asDiagonal();
+    this->Z = z.asDiagonal();
     
-    this->I = Matrix8d::Identity(8,8);
-    
-    Matrix8d S = 2 * Qv_T * (Qi * Z.inverse() * Qv_T).inverse() * (Qi * Z.inverse()) - I;
+    Matrix8d S = 2 * this->Qv_T * (this->Qi * Z.inverse() * this->Qv_T).inverse() * (this->Qi * Z.inverse()) - this->I;
     
     return S;
     
@@ -58,7 +59,7 @@ float ShiftStage::shiftStageSample(float inputSample, const Matrix8d& S, wavesST
 {
     Z(6,6) = 1 / (k * (LFO - Vref - Vp));
     
-    S1 = 2 * Qv_T * (Qi * Z.inverse() * Qv_T).inverse() * (Qi * Z.inverse()) - I;
+    this->S1 = 2 * this->Qv_T * (this->Qi * Z.inverse() * this->Qv_T).inverse() * (this->Qi * Z.inverse()) - this->I;
 
     waves.a[0] = -inputSample;
     waves.a[3] = waves.b(3);

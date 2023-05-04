@@ -16,15 +16,15 @@
 using Eigen::MatrixXd;
 using namespace Eigen;
 
+struct wavesIN
+{
+    Vector4f a = { 0,0,0,0 };
+    Vector4f b = { 0,-5.1,0,0 };
+};
+
 class InputStage {
 
 public:
-
-    struct wavesIN
-    {
-        Vector4f a = { 0,0,0,0 };
-        Vector4f b = { 0,-5.1,0,0 };
-    };
 
     InputStage();
     ~InputStage() {}
@@ -33,7 +33,6 @@ public:
 
 private:
     float Z1;
-    float Z2;
     float Z3;
     float Z4;
 

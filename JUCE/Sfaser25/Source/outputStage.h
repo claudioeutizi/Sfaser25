@@ -41,7 +41,6 @@ private:
 
     float Z1;
     float Z2;
-    float Z3;
     float Z4;
     float Z5;
     float Z6;

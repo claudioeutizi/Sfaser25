@@ -81,19 +81,18 @@ private:
 
     //input stage
     InputStage* inputStage;
-    InputStage::wavesIN initIN;
+    wavesIN initIN;
     Matrix4f S_in;
 
     //shifting stage
     ShiftStage* shiftStage;
-    ShiftStage::wavesSTAGE initSTAGE1, initSTAGE2, initSTAGE3, initSTAGE4;
+    wavesSTAGE initSTAGE1, initSTAGE2, initSTAGE3, initSTAGE4;
     Matrix8d S_stage;
 
     //output stage
     OutputStage* outputStage;
     wavesOUT initOUT;
     Matrix6f S_out;
-    
     
     //Output_Data O_data;
     juce::AudioFormatManager formatManager;
