@@ -25,16 +25,11 @@ public:
     ShiftingStage();
     ~ShiftingStage();
 
-<<<<<<< Updated upstream
     struct wavesSTAGE
     {
         Matrix<double, 8, 1> a = {0,0,0,0,0,0,0,0};
         Matrix<double, 8, 1> b = {0,0,0,0,0,0,0,0};
     };
-=======
-    Matrix8d prepareShiftStage(float sampleRate);
-    float shiftStageSample(float inputSample, Matrix8d S, wavesSTAGE& waves, float LFO);
->>>>>>> Stashed changes
 
 private:
    
@@ -43,7 +38,7 @@ private:
     float Z3 = 10e3;
     float Z4;
     float Z5 = Z3;
-    float Z6 = 700;
+    /*float Z6 = 700;*/
     float Z7 = 1e9;
     float Z8 = 1e-6;
     

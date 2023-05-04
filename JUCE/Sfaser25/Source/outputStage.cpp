@@ -10,33 +10,7 @@
 
 #include "outputStage.h"
 
-<<<<<<< Updated upstream
 Matrix6f prepareOutputStage(float sampleRate)
-=======
-OutputStage::OutputStage()
-{
-    Z1 = 150e3;
-    Z2 = Z1;
-    Z4 = 56e3;
-    Z5 = Z1;
-    Z6 = Z1;
-
-    Qv_T << 1, 0, 0,
-        0, 1, 0,
-        0, 0, 1,
-        -1, -1, 0,
-        1, 0, 0,
-        -1, -1, -1;
-
-    Qi_T = Qv_T;
-    Qv = this->Qv_T.transpose();
-    Qi = Qv;
-
-    I = Matrix6f::Identity(6, 6);
-}
-
-Matrix6f OutputStage::prepareOutputStage(float sampleRate)
->>>>>>> Stashed changes
 {
     float Ts = 1/sampleRate;
         
