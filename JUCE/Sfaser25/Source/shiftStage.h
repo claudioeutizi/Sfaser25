@@ -61,5 +61,8 @@ private:
     Matrix8d Z;
  
     Matrix8d I;
-   
+
+    Matrix4d I4;
+
+   Matrix8d S1;
 };

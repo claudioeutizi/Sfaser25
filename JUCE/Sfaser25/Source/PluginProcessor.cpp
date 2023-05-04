@@ -222,12 +222,13 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
     float input_out = 0;
     float makeupGain = 5;
 
-       //sample by sample computation
+       
        auto inputBuffer = buffer.getReadPointer(channel);//MONO input
 
        for(int sample = 0; sample < buffer.getNumSamples(); ++sample)
        {
            lfo = 3.64;
+
            const float input_sample = inputBuffer[sample];
 
            inputStageOutput = inputStage.inputStageSample(input_sample, S_in, initIN);
