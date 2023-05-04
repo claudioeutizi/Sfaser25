@@ -18,18 +18,18 @@ OutputStage::OutputStage()
     Z5 = Z1;
     Z6 = Z1;
 
-    this->Qv_T << 1, 0, 0,
+    Qv_T << 1, 0, 0,
         0, 1, 0,
         0, 0, 1,
         -1, -1, 0,
         1, 0, 0,
         -1, -1, -1;
 
-    this->Qi_T = Qv_T;
-    this->Qv = this->Qv_T.transpose();
-    this->Qi = Qv;
+    Qi_T = Qv_T;
+    Qv = Qv_T.transpose();
+    Qi = Qv;
 
-    this->I = Matrix6f::Identity(6, 6);
+    I = Matrix6f::Identity(6, 6);
 }
 
 Matrix6f OutputStage::prepareOutputStage(float sampleRate)
@@ -53,7 +53,7 @@ float OutputStage::outputStageSample(float inputWet, float inputDry, const Matri
     waves.a[2] = waves.b(2);
     waves.b = S*waves.a;
     
-    double outputSample = ((waves.a[5]+waves.b[5])/2);
+    float outputSample = ((waves.a[5]+waves.b[5])/2);
     return outputSample;
 
 }

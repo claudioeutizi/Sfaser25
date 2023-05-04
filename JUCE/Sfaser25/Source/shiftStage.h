@@ -31,8 +31,8 @@ public:
     ShiftStage();
     ~ShiftStage() {};
 
-    Matrix8d prepareShiftStage(float sampleRate);
-    float shiftStageSample(float inputSample, const Matrix8d& S, wavesSTAGE& waves, float LFO);
+    void prepareShiftStage(float sampleRate);
+    float shiftStageSample(float inputSample, wavesSTAGE& waves, float LFO);
 
 private:
    
@@ -40,6 +40,9 @@ private:
     float Z2 = 24e3;
     float Z3 = 10e3;
     float Z5 = Z3;
+    //float Z6 = 700;
+    float Z4 = 0;
+    float Z6 = 700;
     /*float Z6 = 700;*/
     float Z7 = 1e9;
     float Z8 = 1e-6;
@@ -60,5 +63,5 @@ private:
     Matrix8d Z;
  
     Matrix8d I;
-    Matrix8d S1;
+   
 };
