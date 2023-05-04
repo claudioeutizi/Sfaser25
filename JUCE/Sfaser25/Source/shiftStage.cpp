@@ -41,7 +41,7 @@ ShiftStage::ShiftStage() {
 
 }
 
-void ShiftStage::prepareShiftStage(float sampleRate)
+Matrix8d ShiftStage::prepareShiftStage(float sampleRate)
 {
     float Ts = 1/sampleRate;
 
@@ -49,21 +49,20 @@ void ShiftStage::prepareShiftStage(float sampleRate)
     
     Matrix<double, 8, 1> z(Z1, Z2, Z3, Z4, Z5, Z6, Z7, Z8);
     Z = z.asDiagonal();
-   
+    Matrix8d S = 2 * Qv_T * (Qi * Z.inverse() * Qv_T).inverse() * (Qi * Z.inverse()) - I;
+    return S;
     
 }
 
-float ShiftStage::shiftStageSample(float inputSample, wavesSTAGE& waves, float LFO)
+float ShiftStage::shiftStageSample(float inputSample, Matrix8d S, wavesSTAGE& waves, float LFO)
 {
-    Z(6,6) = (double) 1 / (k * (LFO - Vref - Vp));
-    
-    
-    Matrix8d S1 = 2 * Qv_T * (Qi * Z.inverse() * Qv_T).inverse() * (Qi * Z.inverse()) - I;
+    /*Z(6,6) = (double) 1 / (k * (LFO - Vref - Vp));*/
+    /*Matrix8d S1 = 2 * Qv_T * (Qi * Z.inverse() * Qv_T).inverse() * (Qi * Z.inverse()) - I;*/
 
     waves.a[0] = -inputSample;
     waves.a[3] = waves.b(3);
     waves.a[7] = 5.1;
-    waves.b = S1 * waves.a;
+    waves.b = S * waves.a;
     
     float outputSample = ((waves.a[6]+waves.b[6])/2);
     return outputSample;
