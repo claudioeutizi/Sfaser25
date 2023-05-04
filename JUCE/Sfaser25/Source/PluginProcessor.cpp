@@ -230,10 +230,10 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
            const float input_sample = inputBuffer[sample];
 
            stage0 = InputStageSample(input_sample, S_in, initIN);
-           stage1 = ShiftStageSample(stage0, S_stage, initSTAGE);
-           stage2 = ShiftStageSample(stage1, S_stage, initSTAGE);
-           stage3 = ShiftStageSample(stage2, S_stage, initSTAGE);
-           stage4 = ShiftStageSample(stage3, S_stage, initSTAGE);
+           stage1 = ShiftStageSample(stage0, S_stage, initSTAGE1);
+           stage2 = ShiftStageSample(stage1, S_stage, initSTAGE2);
+           stage3 = ShiftStageSample(stage2, S_stage, initSTAGE3);
+           stage4 = ShiftStageSample(stage3, S_stage, initSTAGE4);
            output = OutputStageSample(stage4, stage0, S_out, initOUT);
            
            channelData[sample] = output * makeupGain;

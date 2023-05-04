@@ -82,7 +82,10 @@ private:
         wavesIN initIN;
         Matrix4f S_in;
     //shifting stage
-        wavesSTAGE initSTAGE;
+        wavesSTAGE initSTAGE1;
+        wavesSTAGE initSTAGE2;
+        wavesSTAGE initSTAGE3;
+        wavesSTAGE initSTAGE4;
         Matrix8d S_stage;
     //output stage
         wavesOUT initOUT;
