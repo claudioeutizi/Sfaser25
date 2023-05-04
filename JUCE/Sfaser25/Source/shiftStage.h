@@ -15,18 +15,46 @@
 
 #pragma once
 
-using Eigen::MatrixXd;
 using namespace Eigen;
-
-
-
-struct wavesSTAGE
-{
-    Matrix<double, 8, 1> a = {0,0,0,0,0,0,0,0};
-    Matrix<double, 8, 1> b = {0,0,0,0,0,0,0,0};
-};
 //da definire globale?
 typedef Matrix<double, 8, 8> Matrix8d;
 
-Matrix8d prepareShiftStage(float sampleRate);
-float shiftStageSample(float inputSample, const Matrix8d& S, wavesSTAGE& waves);
+class ShiftingStage {
+
+public:
+    ShiftingStage();
+    ~ShiftingStage();
+
+    struct wavesSTAGE
+    {
+        Matrix<double, 8, 1> a = {0,0,0,0,0,0,0,0};
+        Matrix<double, 8, 1> b = {0,0,0,0,0,0,0,0};
+    };
+
+private:
+   
+    float Z1 = 1e-6;
+    float Z2 = 24e3;
+    float Z3 = 10e3;
+    float Z4;
+    float Z5 = Z3;
+    /*float Z6 = 700;*/
+    float Z7 = 1e9;
+    float Z8 = 1e-6;
+    
+    
+    Matrix<double, 8, 4> Qv_T;
+    
+    Matrix<double, 4, 8> Qv;
+    
+    Matrix<double, 8, 4> Qi_T;
+    
+    Matrix<double, 4, 8> Qi;
+    
+    Matrix8d Z;
+    Matrix8d I;
+    
+    Matrix8d S1;
+    Matrix8d prepareShiftStage(float sampleRate);
+    float shiftStageSample(float inputSample, const Matrix8d& S, wavesSTAGE& waves, float LFO);
+};

@@ -126,12 +126,13 @@ void Sfaser25AudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlo
             for (int sample = 0; sample < buffer.getNumSamples()-1; ++sample)
             {
                 const float input_sample = inputBuffer[sample];
+                lfo = 3.64;
 
                 inputStage = inputStageSample(input_sample*2, S_in, initIN);
-                shiftingStage1 = shiftStageSample(inputStage, S_stage, initSTAGE1);
-                shiftingStage2 = shiftStageSample(shiftingStage1, S_stage, initSTAGE2);
-                shiftingStage3 = shiftStageSample(shiftingStage2, S_stage, initSTAGE3);
-                shiftingStage4 = shiftStageSample(shiftingStage3, S_stage, initSTAGE4);
+                shiftingStage1 = shiftStageSample(inputStage, S_stage, initSTAGE1, lfo);
+                shiftingStage2 = shiftStageSample(shiftingStage1, S_stage, initSTAGE2, lfo);
+                shiftingStage3 = shiftStageSample(shiftingStage2, S_stage, initSTAGE3, lfo);
+                shiftingStage4 = shiftStageSample(shiftingStage3, S_stage, initSTAGE4, lfo);
                 output = outputStageSample(shiftingStage4, inputStage, S_out, initOUT);
 
                 outputBuffer[sample] = output * 3;
@@ -226,13 +227,14 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
 
        for(int sample = 0; sample < buffer.getNumSamples(); ++sample)
        {
+           lfo = 3.64;
            const float input_sample = inputBuffer[sample];
 
            inputStage = inputStageSample(input_sample, S_in, initIN);
-           shiftingStage1 = shiftStageSample(inputStage, S_stage, initSTAGE1);
-           shiftingStage2 = shiftStageSample(shiftingStage1, S_stage, initSTAGE2);
-           shiftingStage3 = shiftStageSample(shiftingStage2, S_stage, initSTAGE3);
-           shiftingStage4 = shiftStageSample(shiftingStage3, S_stage, initSTAGE4);
+           shiftingStage1 = shiftStageSample(inputStage, S_stage, initSTAGE1, lfo);
+           shiftingStage2 = shiftStageSample(shiftingStage1, S_stage, initSTAGE2, lfo);
+           shiftingStage3 = shiftStageSample(shiftingStage2, S_stage, initSTAGE3, lfo);
+           shiftingStage4 = shiftStageSample(shiftingStage3, S_stage, initSTAGE4, lfo);
            output = outputStageSample(shiftingStage4, inputStage, S_out, initOUT);
            
            channelDataL[sample] = output * makeupGain;

@@ -77,12 +77,13 @@ private:
     float shiftingStage3 = 0;
     float shiftingStage4 = 0;
     float output = 0;
+    float lfo;
 
     //input stage
         wavesIN initIN;
         Matrix4f S_in;
     //shifting stage
-        wavesSTAGE initSTAGE1, initSTAGE2, initSTAGE3, initSTAGE4;
+        ShiftingStage::wavesSTAGE initSTAGE1, initSTAGE2, initSTAGE3, initSTAGE4;
         Matrix8d S_stage;
     //output stage
         wavesOUT initOUT;
