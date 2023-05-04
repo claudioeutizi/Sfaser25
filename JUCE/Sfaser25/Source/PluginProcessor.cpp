@@ -20,7 +20,7 @@ Sfaser25AudioProcessor::Sfaser25AudioProcessor()
                       #endif
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
-                       )
+                       ), shiftStage() ,inputStage(), outputStage()
 #endif
 {
 }
@@ -100,11 +100,19 @@ void Sfaser25AudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlo
     juce::ignoreUnused (sampleRate, samplesPerBlock);
 
         //Compute S for each stage
+<<<<<<< Updated upstream
         S_in = prepareInputStage(sample_rate);
         S_stage = prepareShiftStage(sample_rate);
         S_out = prepareOutputStage(sample_rate);
         juce::File inputFile("C:/Users/matti/Desktop/MAE/mxrPhase90/Face90/MATLAB/Useful Files/noise192.wav");
         juce::File outputFile("C:/Users/matti/Desktop/MAE/mxrPhase90/Face90/MATLAB/Sfaser25/outputnoise.wav");
+=======
+        S_in = inputStage.prepareInputStage(sample_rate);
+        S_stage = shiftStage.prepareShiftStage(sample_rate);
+        S_out = outputStage.prepareOutputStage(sample_rate);
+        //juce::File inputFile("C:/Users/matti/Desktop/MAE/mxrPhase90/Face90/MATLAB/Useful Files/noise192.wav");
+        //juce::File outputFile("C:/Users/matti/Desktop/MAE/mxrPhase90/Face90/MATLAB/Sfaser25/outputnoise.wav");
+>>>>>>> Stashed changes
 
         juce::AudioFormatManager formatManager;
         formatManager.registerBasicFormats();
@@ -230,12 +238,21 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
            lfo = 3.64;
            const float input_sample = inputBuffer[sample];
 
+<<<<<<< Updated upstream
            inputStage = inputStageSample(input_sample, S_in, initIN);
            shiftingStage1 = shiftStageSample(inputStage, S_stage, initSTAGE1, lfo);
            shiftingStage2 = shiftStageSample(shiftingStage1, S_stage, initSTAGE2, lfo);
            shiftingStage3 = shiftStageSample(shiftingStage2, S_stage, initSTAGE3, lfo);
            shiftingStage4 = shiftStageSample(shiftingStage3, S_stage, initSTAGE4, lfo);
            output = outputStageSample(shiftingStage4, inputStage, S_out, initOUT);
+=======
+           inputStageOutput = inputStage.inputStageSample(input_sample, S_in, initIN);
+           shiftStageOutput1 = shiftStage.shiftStageSample(inputStageOutput, S_stage, initSTAGE1, lfo);
+           shiftStageOutput2 = shiftStage.shiftStageSample(shiftStageOutput1, S_stage, initSTAGE2, lfo);
+           shiftStageOutput3 = shiftStage.shiftStageSample(shiftStageOutput2, S_stage, initSTAGE3, lfo);
+           shiftStageOutput4 = shiftStage.shiftStageSample(shiftStageOutput3, S_stage, initSTAGE4, lfo);
+           output = outputStage.outputStageSample(shiftStageOutput4, inputStageOutput, S_out, initOUT);
+>>>>>>> Stashed changes
            
            channelDataL[sample] = output * makeupGain;
            channelDataR[sample] = output * makeupGain;

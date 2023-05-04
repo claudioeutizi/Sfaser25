@@ -67,6 +67,7 @@ public:
 private:
     float speed;
     //==============================================================================
+<<<<<<< Updated upstream
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Sfaser25AudioProcessor)
     
     //juce::ScopedPointer<juce::AudioProcessorValueTreeState> state;
@@ -76,10 +77,22 @@ private:
     float shiftingStage2 = 0;
     float shiftingStage3 = 0;
     float shiftingStage4 = 0;
+=======
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Sfaser25AudioProcessor)
+
+        //juce::ScopedPointer<juce::AudioProcessorValueTreeState> state;
+
+    float inputStageOutput = 0;
+    float shiftStageOutput1 = 0;
+    float shiftStageOutput2 = 0;
+    float shiftStageOutput3 = 0;
+    float shiftStageOutput4 = 0;
+>>>>>>> Stashed changes
     float output = 0;
     float lfo;
 
     //input stage
+<<<<<<< Updated upstream
         wavesIN initIN;
         Matrix4f S_in;
     //shifting stage
@@ -89,9 +102,24 @@ private:
         wavesOUT initOUT;
         Matrix6f S_out;
     
+=======
+    InputStage inputStage;
+    wavesIN initIN;
+    Matrix4f S_in;
+
+    //shifting stage
+    ShiftStage shiftStage;
+    wavesSTAGE initSTAGE1, initSTAGE2, initSTAGE3, initSTAGE4;
+    Matrix8d S_stage;
+
+    //output stage
+    OutputStage outputStage;
+    wavesOUT initOUT;
+    Matrix6f S_out;
+>>>>>>> Stashed changes
     
     //Output_Data O_data;
     juce::AudioFormatManager formatManager;
     juce::AudioBuffer<float> GetAudioBufferFromFile(juce::File file);
-    float sample_rate = 192000;
+    float sample_rate = 44100;
 };
