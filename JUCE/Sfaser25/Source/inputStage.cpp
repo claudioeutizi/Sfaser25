@@ -5,37 +5,35 @@
 //  Created by Samuele Del Moro on 30/04/23.
 //
 
-#include "inputStage.h"
+#include "InputStage.h"
 
-Matrix4f prepareInputStage(float sampleRate)
+InputStage::InputStage()
+{
+    this->Z1 = 10e3;
+    this->Z2 = 0;
+    this->Z3 = 1e9;
+    this->Z4 = 470e3;
+
+    this->Qv_T << 1, 0,
+        0, 1,
+        -1, -1,
+        -1, -1;
+    this->Qv = Qv_T.transpose();
+
+    this->Qi_T << 1, 0,
+        0, 1,
+        0, 0,
+        -1, -1;
+    this->Qi = Qi_T.transpose();
+    this->I = Matrix4f::Identity(4, 4);
+}
+
+Matrix4f InputStage::prepareInputStage(float sampleRate)
 {      
-    float Ts = 1/sampleRate;
-           
-    float Z1 = 10e3;
-    float Z2 = Ts/(2*0.01e-6);
-    float Z3 = 1e9;
-    float Z4 = 470e3;
-            
-    
-    Matrix<float, 4, 2> Qv_T;
-    Qv_T << 1, 0,
-            0, 1,
-           -1, -1,
-           -1, -1;
-    Matrix<float, 2, 4> Qv = Qv_T.transpose();
-    
-    Matrix<float, 4, 2> Qi_T;
-    Qi_T << 1, 0,
-            0, 1,
-            0, 0,
-           -1,-1;
-    Matrix<float, 2, 4> Qi = Qi_T.transpose();
-    
-    
+    float Ts = 1/sampleRate; 
+    this->Z2 = Ts / (2 * 0.01e-6);
     Vector4f z(Z1, Z2, Z3, Z4);
     Matrix4f Z = z.asDiagonal();
-    
-    Matrix4f I = Matrix4f::Identity(4, 4);
 
     Matrix4f S = 2 * Qv_T * (Qi * Z.inverse() * Qv_T).inverse() * (Qi * Z.inverse()) - I;
     
@@ -43,7 +41,7 @@ Matrix4f prepareInputStage(float sampleRate)
     
 }
 
-float inputStageSample(const float inputSample, const Matrix4f& S, wavesIN& waves)
+float InputStage::inputStageSample(const float inputSample, const Matrix4f& S, wavesIN& waves)
 {
     //mettere qui il for per riempireil buffer?
     waves.a[0] = -inputSample;

@@ -11,9 +11,9 @@
 #include <juce_audio_processors/juce_audio_processors.h>
 #include <juce_audio_formats/juce_audio_formats.h>
 #include <JuceHeader.h>
-#include "inputStage.h"
-#include "outputStage.h"
-#include "shiftStage.h"
+#include "InputStage.h"
+#include "OutputStage.h"
+#include "ShiftStage.h"
 
 //==============================================================================
 /**
@@ -67,27 +67,32 @@ public:
 private:
     float speed;
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Sfaser25AudioProcessor)
-    
-    //juce::ScopedPointer<juce::AudioProcessorValueTreeState> state;
-    
-    float inputStage = 0;
-    float shiftingStage1 = 0;
-    float shiftingStage2 = 0;
-    float shiftingStage3 = 0;
-    float shiftingStage4 = 0;
-    float output = 0;
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Sfaser25AudioProcessor)
+
+        //juce::ScopedPointer<juce::AudioProcessorValueTreeState> state;
+
+    float inputStageOutput = 0.0f;
+    float shiftStageOutput1 = 0.0f;
+    float shiftStageOutput2 = 0.0f;
+    float shiftStageOutput3 = 0.0f;
+    float shiftStageOutput4 = 0.0f;
+    float output = 0.0f;
     float lfo;
 
     //input stage
-        wavesIN initIN;
-        Matrix4f S_in;
+    InputStage* inputStage;
+    InputStage::wavesIN initIN;
+    Matrix4f S_in;
+
     //shifting stage
-        ShiftingStage::wavesSTAGE initSTAGE1, initSTAGE2, initSTAGE3, initSTAGE4;
-        Matrix8d S_stage;
+    ShiftStage* shiftStage;
+    ShiftStage::wavesSTAGE initSTAGE1, initSTAGE2, initSTAGE3, initSTAGE4;
+    Matrix8d S_stage;
+
     //output stage
-        wavesOUT initOUT;
-        Matrix6f S_out;
+    OutputStage* outputStage;
+    wavesOUT initOUT;
+    Matrix6f S_out;
     
     
     //Output_Data O_data;

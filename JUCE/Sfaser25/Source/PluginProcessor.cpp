@@ -23,6 +23,8 @@ Sfaser25AudioProcessor::Sfaser25AudioProcessor()
                        )
 #endif
 {
+    shiftStage = new ShiftStage();
+    inputStage = new InputStage();
 }
 
 Sfaser25AudioProcessor::~Sfaser25AudioProcessor()
@@ -100,63 +102,63 @@ void Sfaser25AudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlo
     juce::ignoreUnused (sampleRate, samplesPerBlock);
 
         //Compute S for each stage
-        S_in = prepareInputStage(sample_rate);
-        S_stage = prepareShiftStage(sample_rate);
-        S_out = prepareOutputStage(sample_rate);
-        juce::File inputFile("C:/Users/matti/Desktop/MAE/mxrPhase90/Face90/MATLAB/Useful Files/noise192.wav");
-        juce::File outputFile("C:/Users/matti/Desktop/MAE/mxrPhase90/Face90/MATLAB/Sfaser25/outputnoise.wav");
+        S_in = inputStage->prepareInputStage(sample_rate);
+        S_stage = shiftStage->prepareShiftStage(sample_rate);
+        S_out = outputStage->prepareOutputStage(sample_rate);
+        //juce::File inputFile("C:/Users/matti/Desktop/MAE/mxrPhase90/Face90/MATLAB/Useful Files/noise192.wav");
+        //juce::File outputFile("C:/Users/matti/Desktop/MAE/mxrPhase90/Face90/MATLAB/Sfaser25/outputnoise.wav");
 
-        juce::AudioFormatManager formatManager;
-        formatManager.registerBasicFormats();
+        //juce::AudioFormatManager formatManager;
+        //formatManager.registerBasicFormats();
 
-        juce::AudioFormatReader* reader = formatManager.createReaderFor(inputFile);
-        if (reader != nullptr)
-        {
-            // Read the audio data from the input file
-            juce::AudioBuffer<float> buffer(2, reader->lengthInSamples);
-            reader->read(&buffer, 0, reader->lengthInSamples, 0, true, true);
+        //juce::AudioFormatReader* reader = formatManager.createReaderFor(inputFile);
+        //if (reader != nullptr)
+        //{
+        //    // Read the audio data from the input file
+        //    juce::AudioBuffer<float> buffer(2, reader->lengthInSamples);
+        //    reader->read(&buffer, 0, reader->lengthInSamples, 0, true, true);
 
-            juce::AudioBuffer<float> buffer2(2, reader->lengthInSamples);
+        //    juce::AudioBuffer<float> buffer2(2, reader->lengthInSamples);
 
-            // Process the audio data here...
-            auto* inputBuffer = buffer.getReadPointer(0);
-            auto* outputBuffer = buffer2.getWritePointer(0);
-            auto* outputBuffer2 = buffer2.getWritePointer(1);
+        //    // Process the audio data here...
+        //    auto* inputBuffer = buffer.getReadPointer(0);
+        //    auto* outputBuffer = buffer2.getWritePointer(0);
+        //    auto* outputBuffer2 = buffer2.getWritePointer(1);
 
-            for (int sample = 0; sample < buffer.getNumSamples()-1; ++sample)
-            {
-                const float input_sample = inputBuffer[sample];
-                lfo = 3.64;
+        //    for (int sample = 0; sample < buffer.getNumSamples()-1; ++sample)
+        //    {
+        //        const float input_sample = inputBuffer[sample];
+        //        lfo = 3.64;
 
-                inputStage = inputStageSample(input_sample*2, S_in, initIN);
-                shiftingStage1 = shiftStageSample(inputStage, S_stage, initSTAGE1, lfo);
-                shiftingStage2 = shiftStageSample(shiftingStage1, S_stage, initSTAGE2, lfo);
-                shiftingStage3 = shiftStageSample(shiftingStage2, S_stage, initSTAGE3, lfo);
-                shiftingStage4 = shiftStageSample(shiftingStage3, S_stage, initSTAGE4, lfo);
-                output = outputStageSample(shiftingStage4, inputStage, S_out, initOUT);
+        //        inputStageOutput = inputStage->inputStageSample(input_sample*2, S_in, initIN);
+        //        shiftStageOutput1 = shiftStage->shiftStageSample(inputStageOutput, S_stage, initSTAGE1, lfo);
+        //        shiftStageOutput2 = shiftStage->shiftStageSample(shiftStageOutput1, S_stage, initSTAGE2, lfo);
+        //        shiftStageOutput3 = shiftStage->shiftStageSample(shiftStageOutput2, S_stage, initSTAGE3, lfo);
+        //        shiftStageOutput4 = shiftStage->shiftStageSample(shiftStageOutput3, S_stage, initSTAGE4, lfo);
+        //        output = outputStage->outputStageSample(shiftStageOutput4, inputStageOutput, S_out, initOUT);
 
-                outputBuffer[sample] = output * 3;
-                outputBuffer2[sample] = output * 3;
-            }
+        //        outputBuffer[sample] = output * 3;
+        //        outputBuffer2[sample] = output * 3;
+        //    }
 
-            // Create a new audio file for the output
-            juce::FileOutputStream outputStream(outputFile);
-            if (outputStream.openedOk())
-            {
-                juce::WavAudioFormat wavFormat;
-                std::unique_ptr<juce::AudioFormatWriter> writer(
-                    wavFormat.createWriterFor(&outputStream, reader->sampleRate, reader->numChannels, 16, {}, 0)
-                );;
-                if (writer != nullptr)
-                {
-                    // Write the processed audio data to the output file
-                    writer->writeFromAudioSampleBuffer(buffer2, 0, buffer2.getNumSamples());
-                }
-            }
+        //    // Create a new audio file for the output
+        //    juce::FileOutputStream outputStream(outputFile);
+        //    if (outputStream.openedOk())
+        //    {
+        //        juce::WavAudioFormat wavFormat;
+        //        std::unique_ptr<juce::AudioFormatWriter> writer(
+        //            wavFormat.createWriterFor(&outputStream, reader->sampleRate, reader->numChannels, 16, {}, 0)
+        //        );;
+        //        if (writer != nullptr)
+        //        {
+        //            // Write the processed audio data to the output file
+        //            writer->writeFromAudioSampleBuffer(buffer2, 0, buffer2.getNumSamples());
+        //        }
+        //    }
 
-            // Clean up the reader
-            delete reader;
-        }
+        //    // Clean up the reader
+        //    delete reader;
+        //}
 }
 
 //juce native - based method found online
@@ -230,12 +232,12 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
            lfo = 3.64;
            const float input_sample = inputBuffer[sample];
 
-           inputStage = inputStageSample(input_sample, S_in, initIN);
-           shiftingStage1 = shiftStageSample(inputStage, S_stage, initSTAGE1, lfo);
-           shiftingStage2 = shiftStageSample(shiftingStage1, S_stage, initSTAGE2, lfo);
-           shiftingStage3 = shiftStageSample(shiftingStage2, S_stage, initSTAGE3, lfo);
-           shiftingStage4 = shiftStageSample(shiftingStage3, S_stage, initSTAGE4, lfo);
-           output = outputStageSample(shiftingStage4, inputStage, S_out, initOUT);
+           inputStageOutput = inputStage->inputStageSample(input_sample * 2, S_in, initIN);
+           shiftStageOutput1 = shiftStage->shiftStageSample(inputStageOutput, S_stage, initSTAGE1, lfo);
+           shiftStageOutput2 = shiftStage->shiftStageSample(shiftStageOutput1, S_stage, initSTAGE2, lfo);
+           shiftStageOutput3 = shiftStage->shiftStageSample(shiftStageOutput2, S_stage, initSTAGE3, lfo);
+           shiftStageOutput4 = shiftStage->shiftStageSample(shiftStageOutput3, S_stage, initSTAGE4, lfo);
+           output = outputStage->outputStageSample(shiftStageOutput4, inputStageOutput, S_out, initOUT);
            
            channelDataL[sample] = output * makeupGain;
            channelDataR[sample] = output * makeupGain;
