@@ -33,7 +33,7 @@ public:
 
     void prepareShiftStage(float sampleRate);
     float shiftStageSample(float inputSample, wavesSTAGE& waves, float LFO);
-    void shiftMatrix(float Z4, float Z6);
+    void shiftScatteringMatrix(float Z4, float Z6);
 
 private:
    

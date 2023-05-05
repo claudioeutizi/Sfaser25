@@ -38,7 +38,7 @@ ShiftStage::ShiftStage() {
     //I = Matrix8d::Identity(8, 8);
     //I4 = Matrix4d::Identity(4, 4);
     //Z.fill(0);
-    //S1.fill(0);
+    S1.fill(0);
 }
 
 void ShiftStage::prepareShiftStage(float sampleRate)
@@ -56,7 +56,7 @@ float ShiftStage::shiftStageSample(float inputSample, wavesSTAGE& waves, float L
 {
     Z6 = 1 / (k * (LFO - Vref - Vp));
     
-    shiftMatrix(Z4, Z6);
+    shiftScatteringMatrix(Z4, Z6);
     waves.a[0] = -inputSample;
     waves.a[3] = waves.b(3);
     waves.a[7] = 5.1;
@@ -67,7 +67,7 @@ float ShiftStage::shiftStageSample(float inputSample, wavesSTAGE& waves, float L
 
 }
 
-void ShiftStage::shiftMatrix(float Z4, float Z6)
+void ShiftStage::shiftScatteringMatrix(float Z4, float Z6)
 {
     //S1(0, 0) = (64 * (3391812500141 * Z6 + 187500003384000)) / (108538000009049 * Z6 + 6000000217176000) - 1;
     //S1(0, 1) = -(9074 * Z6) / (108538000009049 * Z6 + 6000000217176000);

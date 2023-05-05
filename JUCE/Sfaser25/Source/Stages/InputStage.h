@@ -28,17 +28,18 @@ public:
 
     InputStage();
     ~InputStage() {}
-    Matrix4f prepareInputStage(float sampleRate);
-    float inputStageSample(const float inputSample, const Matrix4f& S, wavesIN& waves);
+    void prepareInputStage(float sampleRate);
+    float inputStageSample(const float inputSample, wavesIN& waves);
+    void inputScatteringMatrix(float Z2);
 
 private:
-    float Z1;
-    float Z3;
-    float Z4;
-
-    Matrix4f I;
-    Matrix<float, 4, 2> Qi_T;
-    Matrix<float, 4, 2> Qv_T;
-    Matrix<float, 2, 4> Qv;
-    Matrix<float, 2, 4> Qi;
+    //float Z1;
+    //float Z3;
+    //float Z4;
+    Matrix4f S;
+    //Matrix4f I;
+    //Matrix<float, 4, 2> Qi_T;
+    //Matrix<float, 4, 2> Qv_T;
+    //Matrix<float, 2, 4> Qv;
+    //Matrix<float, 2, 4> Qi;
 };
