@@ -11,9 +11,9 @@
 #include <juce_audio_processors/juce_audio_processors.h>
 #include <juce_audio_formats/juce_audio_formats.h>
 #include <JuceHeader.h>
-#include "InputStage.h"
-#include "OutputStage.h"
-#include "ShiftStage.h"
+#include "Stages/InputStage.h"
+#include "Stages/OutputStage.h"
+#include "Stages/ShiftStage.h"
 
 //==============================================================================
 /**
