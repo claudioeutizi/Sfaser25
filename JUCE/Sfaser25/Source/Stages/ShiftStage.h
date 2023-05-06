@@ -37,14 +37,14 @@ public:
 
 private:
    
-    //float Z1 = 1e-6;
-    //float Z2 = 24e3;
-    //float Z3 = 10e3;
+    float Z1 = 1e-6;
+    float Z2 = 24e3;
+    float Z3 = 10e3;
     float Z4 = 0;
-    //float Z5 = Z3;
+    float Z5 = Z3;
     float Z6 = 700;
-    //float Z7 = 1e9;
-    //float Z8 = 1e-6;
+    float Z7 = 1e9;
+    float Z8 = 1e-6;
 
     float Vref = 5.1;
     float Is = 5.185e-3;

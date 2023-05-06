@@ -20,7 +20,7 @@ Sfaser25AudioProcessor::Sfaser25AudioProcessor()
                       #endif
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
-                       ), inputStage(), shiftStage(), outputStage()
+                       ), inputStage(), shiftStage(), outputStage(), speed(1.5f)
 #endif
 {
 }
@@ -229,7 +229,7 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
        {
            //lfo = 3.64;
 
-           lfoValue = std::sin(2 * 3.14 * rate * lfoIndex / sample_rate) * 0.15 + 3.25;
+           lfoValue = std::sin(2 * 3.14 * speed * lfoIndex / sample_rate) * 0.15 + 3.25;
 
            const float input_sample = inputBuffer[sample];
 
@@ -244,7 +244,7 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
            channelDataR[sample] = output * makeupGain;
 
            lfoIndex++;
-           lfoIndex = lfoIndex % sample_rate / rate;
+           lfoIndex = lfoIndex % sample_rate / speed;
        }
     }
 

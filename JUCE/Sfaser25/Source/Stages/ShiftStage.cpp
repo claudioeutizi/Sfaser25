@@ -11,6 +11,7 @@
 
 #include "ShiftStage.h"
 #include <cmath>
+#include <stdio.h>
 
 ShiftStage::ShiftStage() {
 
@@ -55,9 +56,9 @@ void ShiftStage::prepareShiftStage(float sampleRate)
 float ShiftStage::shiftStageSample(float inputSample, wavesSTAGE& waves, float LFO)
 {
     Z6 = 1 / (k * (LFO - Vref - Vp));
-    if (LFO != LFOprev) {
+    //if (LFO != LFOprev) {
         shiftScatteringMatrix(Z4, Z6);
-    }
+    //}
     
     waves.a[0] = -inputSample;
     waves.a[3] = waves.b(3);
@@ -137,6 +138,5 @@ void ShiftStage::shiftScatteringMatrix(float Z4, float Z6)
     S(7, 6) = 0;
     S(7, 7) = (480000000000000 * Z6) / (240000000024000 * Z4 + 240000000020000 * Z6 + 10000000001 * Z4 * Z6 + 480000000) + (2 * (24000 * Z4 + 10000 * Z6 + Z4 * Z6 + 240000000)) / (240000000024000 * Z4 + 240000000020000 * Z6 + 10000000001 * Z4 * Z6 + 480000000) + (20000000000 * (24000 * Z4 + Z4 * Z6)) / (240000000024000 * Z4 + 240000000020000 * Z6 + 10000000001 * Z4 * Z6 + 480000000) - 1;
 }
-
 
 
