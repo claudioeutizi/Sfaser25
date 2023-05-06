@@ -77,7 +77,9 @@ private:
     float shiftStageOutput3 = 0;
     float shiftStageOutput4 = 0;
     float output = 0;
-    float lfo;
+    float lfoValue;
+    int lfoIndex = 0;
+    int rate = 1.5;
 
     //input stage
     InputStage inputStage;
@@ -96,6 +98,5 @@ private:
     
     //Output_Data O_data;
     juce::AudioFormatManager formatManager;
-    juce::AudioBuffer<float> GetAudioBufferFromFile(juce::File file);
-    float sample_rate = 192000;
+    int sample_rate = 44100;
 };

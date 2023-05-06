@@ -160,15 +160,15 @@ void Sfaser25AudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlo
 }
 
 //juce native - based method found online
-juce::AudioBuffer<float> Sfaser25AudioProcessor::GetAudioBufferFromFile(juce::File file)
-{
-    auto* reader = formatManager.createReaderFor(file);
-    juce::AudioBuffer<float> audioBuffer;
-    audioBuffer.setSize(reader->numChannels, reader->lengthInSamples);
-    reader->read(&audioBuffer, 0, reader->lengthInSamples, 0, true, true);
-    delete reader;
-    return audioBuffer;
-}
+//juce::AudioBuffer<float> Sfaser25AudioProcessor::GetAudioBufferFromFile(juce::File file)
+//{
+//    auto* reader = formatManager.createReaderFor(file);
+//    juce::AudioBuffer<float> audioBuffer;
+//    audioBuffer.setSize(reader->numChannels, reader->lengthInSamples);
+//    reader->read(&audioBuffer, 0, reader->lengthInSamples, 0, true, true);
+//    delete reader;
+//    return audioBuffer;
+//}
 
 void Sfaser25AudioProcessor::releaseResources()
 {
@@ -227,19 +227,24 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
 
        for(int sample = 0; sample < buffer.getNumSamples(); ++sample)
        {
-           lfo = 3.64;
+           //lfo = 3.64;
+
+           lfoValue = std::sin(2 * 3.14 * rate * lfoIndex / sample_rate) * 0.15 + 3.25;
 
            const float input_sample = inputBuffer[sample];
 
            inputStageOutput = inputStage.inputStageSample(input_sample, initIN);
-           shiftStageOutput1 = shiftStage.shiftStageSample(inputStageOutput, initSTAGE1, lfo);
-           shiftStageOutput2 = shiftStage.shiftStageSample(shiftStageOutput1, initSTAGE2, lfo);
-           shiftStageOutput3 = shiftStage.shiftStageSample(shiftStageOutput2, initSTAGE3, lfo);
-           shiftStageOutput4 = shiftStage.shiftStageSample(shiftStageOutput3, initSTAGE4, lfo);
+           shiftStageOutput1 = shiftStage.shiftStageSample(inputStageOutput, initSTAGE1, lfoValue);
+           shiftStageOutput2 = shiftStage.shiftStageSample(shiftStageOutput1, initSTAGE2, lfoValue);
+           shiftStageOutput3 = shiftStage.shiftStageSample(shiftStageOutput2, initSTAGE3, lfoValue);
+           shiftStageOutput4 = shiftStage.shiftStageSample(shiftStageOutput3, initSTAGE4, lfoValue);
            output = outputStage.outputStageSample(shiftStageOutput4, inputStageOutput, initOUT);
            
            channelDataL[sample] = output * makeupGain;
            channelDataR[sample] = output * makeupGain;
+
+           lfoIndex++;
+           lfoIndex = lfoIndex % sample_rate / rate;
        }
     }
 

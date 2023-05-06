@@ -50,7 +50,7 @@ private:
     float Is = 5.185e-3;
     float Vp = -2.021;
     float k = 2 * Is / (pow(Vp, 2));
-
+    float LFOprev;
     //Matrix<double, 8, 4> Qv_T;
     //
     //Matrix<double, 4, 8> Qv;
@@ -65,5 +65,5 @@ private:
 
     //Matrix4d I4;
 
-   Matrix8d S;
+    Matrix8d S;
 };
