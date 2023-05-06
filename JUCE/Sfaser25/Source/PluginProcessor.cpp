@@ -20,7 +20,7 @@ Sfaser25AudioProcessor::Sfaser25AudioProcessor()
                       #endif
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
-                       ), inputStage(), shiftStage(), outputStage(), speed(1.5f)
+                       ), inputStage(), shiftStage(), outputStage(), apvts(*this, nullptr, "Parameters", createParameterLayout())
 #endif
 {
 }
@@ -89,6 +89,25 @@ const juce::String Sfaser25AudioProcessor::getProgramName (int index)
 
 void Sfaser25AudioProcessor::changeProgramName (int index, const juce::String& newName)
 {
+}
+
+//==============================================================================
+
+void Sfaser25AudioProcessor::setSpeed(float speed)
+{
+    apvts.getParameter("SPEED")->setValue(speed);
+}
+float Sfaser25AudioProcessor::getSpeed()
+{
+    return apvts.getParameter("SPEED")->getValue();
+}
+void Sfaser25AudioProcessor::setOnOff(bool onOff)
+{
+    apvts.getParameter("ONOFF")->setValue(onOff);
+}
+bool Sfaser25AudioProcessor::getOnOff()
+{
+    return apvts.getParameter("ONOFF")->getValue();
 }
 
 //==============================================================================
@@ -211,41 +230,41 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
     auto totalNumInputChannels  = 1; //getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
 
+    auto speed = getSpeed();
+
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
             buffer.clear (i, 0, buffer.getNumSamples());
-
-     int channel = 0;
-     auto* channelDataL = buffer.getWritePointer (channel);
-     auto* channelDataR = buffer.getWritePointer (channel+1);
+        int channel = 0;
+        auto* channelDataL = buffer.getWritePointer (channel);
+        auto* channelDataR = buffer.getWritePointer (channel+1);
 
 
     float input_out = 0;
     float makeupGain = 5;
 
-       
-       auto inputBuffer = buffer.getReadPointer(channel);//MONO input
+    auto inputBuffer = buffer.getReadPointer(channel);//MONO input
 
-       for(int sample = 0; sample < buffer.getNumSamples(); ++sample)
-       {
-           //lfo = 3.64;
+    for (int sample = 0; sample < buffer.getNumSamples(); ++sample)
+    {
+        //lfo = 3.64;
 
-           lfoValue = std::sin(2 * 3.14 * speed * lfoIndex / sample_rate) * 0.15 + 3.25;
+        lfoValue = std::sin(2 * 3.14 * speed * lfoIndex / sample_rate) * 0.15 + 3.25;
 
-           const float input_sample = inputBuffer[sample];
+        const float input_sample = inputBuffer[sample];
 
-           inputStageOutput = inputStage.inputStageSample(input_sample, initIN);
-           shiftStageOutput1 = shiftStage.shiftStageSample(inputStageOutput, initSTAGE1, lfoValue);
-           shiftStageOutput2 = shiftStage.shiftStageSample(shiftStageOutput1, initSTAGE2, lfoValue);
-           shiftStageOutput3 = shiftStage.shiftStageSample(shiftStageOutput2, initSTAGE3, lfoValue);
-           shiftStageOutput4 = shiftStage.shiftStageSample(shiftStageOutput3, initSTAGE4, lfoValue);
-           output = outputStage.outputStageSample(shiftStageOutput4, inputStageOutput, initOUT);
-           
-           channelDataL[sample] = output * makeupGain;
-           channelDataR[sample] = output * makeupGain;
+        inputStageOutput = inputStage.inputStageSample(input_sample, initIN);
+        shiftStageOutput1 = shiftStage.shiftStageSample(inputStageOutput, initSTAGE1, lfoValue);
+        shiftStageOutput2 = shiftStage.shiftStageSample(shiftStageOutput1, initSTAGE2, lfoValue);
+        shiftStageOutput3 = shiftStage.shiftStageSample(shiftStageOutput2, initSTAGE3, lfoValue);
+        shiftStageOutput4 = shiftStage.shiftStageSample(shiftStageOutput3, initSTAGE4, lfoValue);
+        output = outputStage.outputStageSample(shiftStageOutput4, inputStageOutput, initOUT);
 
-           lfoIndex++;
-           lfoIndex = lfoIndex % sample_rate / speed;
-       }
+        channelDataL[sample] = output * makeupGain;
+        channelDataR[sample] = output * makeupGain;
+
+        lfoIndex++;
+        lfoIndex = lfoIndex % sample_rate / speed;
+    }
     }
 
 
@@ -275,14 +294,12 @@ void Sfaser25AudioProcessor::setStateInformation (const void* data, int sizeInBy
     
 }
 
-float Sfaser25AudioProcessor::getSpeed()
+juce::AudioProcessorValueTreeState::ParameterLayout Sfaser25AudioProcessor::createParameterLayout()
 {
-    return this->speed;
-}
-
-void Sfaser25AudioProcessor::setSpeed(float speed)
-{
-    this->speed = speed;
+    juce::AudioProcessorValueTreeState::ParameterLayout layout;
+    layout.add(std::make_unique<juce::AudioParameterFloat>("SPEED", "Speed", 0.1f, 10.0f, 0.1f));
+    layout.add(std::make_unique<juce::AudioParameterBool>("ONOFF", "OnOff", true));
+    return layout;
 }
 
 //==============================================================================

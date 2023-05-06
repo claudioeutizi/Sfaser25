@@ -60,12 +60,23 @@ public:
     //==============================================================================
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
-    float getSpeed();
-    void setSpeed(float speed);
+
     //==============================================================================
+    //float getSpeed() { return this->speed; };
+    //void setSpeed(float speed) { this->speed = speed; };
+    //bool getPedalOnOff() { return this->pedalOnOff; };
+    //void setPedalOnOff(bool onOff) { this->pedalOnOff = onOff; };
+    //==============================================================================
+    static juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
+    juce::AudioProcessorValueTreeState apvts;
+
+    //==============================================================================
+    void setSpeed(float speed);
+    float getSpeed();
+    void setOnOff(bool onOff);
+    bool getOnOff();
 
 private:
-    float speed;
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Sfaser25AudioProcessor)
 
