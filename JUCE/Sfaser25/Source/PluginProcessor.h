@@ -79,7 +79,7 @@ private:
     float output = 0;
     float lfoValue;
     int lfoIndex = 0;
-    int rate = 1.5;
+    int rate = 5;
 
     //input stage
     InputStage inputStage;
