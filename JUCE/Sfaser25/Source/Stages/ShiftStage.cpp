@@ -15,30 +15,6 @@
 
 ShiftStage::ShiftStage() {
 
-    //Qv_T << 1, 0, 0, 0,
-    //    0, 1, 0, 0,
-    //    0, 0, 1, 0,
-    //    0, 0, 0, 1,
-    //    0, 0, 0, 1,
-    //    0, 1, 0, 0,
-    //    -1, 0, -1, -1,
-    //    -1, -1, 0, -1;
-    //Qv = Qv_T.transpose();
-
-    //Qi_T << 1, 0, 0, 0,
-    //    0, 1, 0, 0,
-    //    0, 0, 1, 0,
-    //    0, 0, 0, 1,
-    //    -1, 0, -1, 0,
-    //    0, 1, 0, 0,
-    //    0, 0, 0, 0,
-    //    -1, -1, 0, -1;
-
-    //Qi = Qi_T.transpose();
-
-    //I = Matrix8d::Identity(8, 8);
-    //I4 = Matrix4d::Identity(4, 4);
-    //Z.fill(0);
     S.fill(0);
 }
 
@@ -47,10 +23,7 @@ void ShiftStage::prepareShiftStage(float sampleRate)
     float Ts = 1/sampleRate;
 
     Z4 = Ts / (2 * 47e-9);
-    //Matrix<double, 8, 1> z(Z1, Z2, Z3, Z4, Z5, Z6, Z7, Z8);
-    //Z = z.asDiagonal();
-    ///*Matrix8d S = 2 * Qv_T * (Qi * Z.inverse() * Qv_T).inverse() * (Qi * Z.inverse()) - I;*/
-    ////Matrix8d S;
+
 }
 
 float ShiftStage::shiftStageSample(float inputSample, wavesSTAGE& waves, float LFO)

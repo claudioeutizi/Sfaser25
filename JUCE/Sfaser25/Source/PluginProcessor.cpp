@@ -113,69 +113,13 @@ bool Sfaser25AudioProcessor::getOnOff()
 //==============================================================================
 void Sfaser25AudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-    // Use this method as the place to do any pre-playback
-    // initialisation that you need..
-    
+
     juce::ignoreUnused (sampleRate, samplesPerBlock);
 
         //Compute S for each stage
-        inputStage.prepareInputStage(sample_rate);
+        S_in = inputStage.prepareInputStage(sample_rate);
         shiftStage.prepareShiftStage(sample_rate);
-        outputStage.prepareOutputStage(sample_rate);
-        //juce::File inputFile("C:/Users/matti/Desktop/MAE/mxrPhase90/Face90/MATLAB/Useful Files/noise192.wav");
-        //juce::File outputFile("C:/Users/matti/Desktop/MAE/mxrPhase90/Face90/MATLAB/Sfaser25/outputnoise.wav");
-
-        //juce::AudioFormatManager formatManager;
-        //formatManager.registerBasicFormats();
-
-        //juce::AudioFormatReader* reader = formatManager.createReaderFor(inputFile);
-        //if (reader != nullptr)
-        //{
-        //    // Read the audio data from the input file
-        //    juce::AudioBuffer<float> buffer(2, reader->lengthInSamples);
-        //    reader->read(&buffer, 0, reader->lengthInSamples, 0, true, true);
-
-        //    juce::AudioBuffer<float> buffer2(2, reader->lengthInSamples);
-
-        //    // Process the audio data here...
-        //    auto* inputBuffer = buffer.getReadPointer(0);
-        //    auto* outputBuffer = buffer2.getWritePointer(0);
-        //    auto* outputBuffer2 = buffer2.getWritePointer(1);
-
-        //    for (int sample = 0; sample < buffer.getNumSamples()-1; ++sample)
-        //    {
-        //        const float input_sample = inputBuffer[sample];
-        //        lfo = 3.64;
-
-        //        inputStageOutput = inputStage->inputStageSample(input_sample*2, S_in, initIN);
-        //        shiftStageOutput1 = shiftStage->shiftStageSample(inputStageOutput, S_stage, initSTAGE1, lfo);
-        //        shiftStageOutput2 = shiftStage->shiftStageSample(shiftStageOutput1, S_stage, initSTAGE2, lfo);
-        //        shiftStageOutput3 = shiftStage->shiftStageSample(shiftStageOutput2, S_stage, initSTAGE3, lfo);
-        //        shiftStageOutput4 = shiftStage->shiftStageSample(shiftStageOutput3, S_stage, initSTAGE4, lfo);
-        //        output = outputStage->outputStageSample(shiftStageOutput4, inputStageOutput, S_out, initOUT);
-
-        //        outputBuffer[sample] = output * 3;
-        //        outputBuffer2[sample] = output * 3;
-        //    }
-
-        //    // Create a new audio file for the output
-        //    juce::FileOutputStream outputStream(outputFile);
-        //    if (outputStream.openedOk())
-        //    {
-        //        juce::WavAudioFormat wavFormat;
-        //        std::unique_ptr<juce::AudioFormatWriter> writer(
-        //            wavFormat.createWriterFor(&outputStream, reader->sampleRate, reader->numChannels, 16, {}, 0)
-        //        );;
-        //        if (writer != nullptr)
-        //        {
-        //            // Write the processed audio data to the output file
-        //            writer->writeFromAudioSampleBuffer(buffer2, 0, buffer2.getNumSamples());
-        //        }
-        //    }
-
-        //    // Clean up the reader
-        //    delete reader;
-        //}
+        S_out = outputStage.prepareOutputStage(sample_rate);
 }
 
 void Sfaser25AudioProcessor::releaseResources()
@@ -219,7 +163,7 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
     auto totalNumInputChannels  = 1; //getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
 
-    //perchè devo fare x10? Gli arriva un valore sballato di un ordine di grandezza?
+    //perchÃ¨ devo fare x10? Gli arriva un valore sballato di un ordine di grandezza?
     speed = getSpeed()*10;
     rounded = round(sample_rate / speed);
 
@@ -238,18 +182,17 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
 
     for (int sample = 0; sample < buffer.getNumSamples(); ++sample)
     {
-        //lfo = 3.64;
 
         lfoValue = std::sin(2 * 3.14159 * speed * lfoIndex / sample_rate) * 0.15 + 3.25;
 
         const float input_sample = inputBuffer[sample];
 
-        inputStageOutput = inputStage.inputStageSample(input_sample, initIN);
+        inputStageOutput = inputStage.inputStageSample(input_sample, S_in, initIN);
         shiftStageOutput1 = shiftStage.shiftStageSample(inputStageOutput, initSTAGE1, lfoValue);
         shiftStageOutput2 = shiftStage.shiftStageSample(shiftStageOutput1, initSTAGE2, lfoValue);
         shiftStageOutput3 = shiftStage.shiftStageSample(shiftStageOutput2, initSTAGE3, lfoValue);
         shiftStageOutput4 = shiftStage.shiftStageSample(shiftStageOutput3, initSTAGE4, lfoValue);
-        output = outputStage.outputStageSample(shiftStageOutput4, inputStageOutput, initOUT);
+        output = outputStage.outputStageSample(shiftStageOutput4, inputStageOutput, S_out, initOUT);
 
         channelDataL[sample] = output * makeupGain;
         channelDataR[sample] = output * makeupGain;
