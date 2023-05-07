@@ -31,11 +31,12 @@ Sfaser25AudioProcessorEditor::Sfaser25AudioProcessorEditor (Sfaser25AudioProcess
 
 	//on off led
 	addAndMakeVisible(ledOnOff);
+	ledOnOff.setEnabled(false);
 	ledOnOff.addListener(this);
 	ledOnOff.setImages(false, true, true,
 		juce::ImageCache::getFromMemory(BinaryData::onoffledoff_png, BinaryData::onoffledoff_pngSize), 1.000f, juce::Colour(0x00000000),
 		juce::Image(), 1.000f, juce::Colour(0x00000000),
-		juce::ImageCache::getFromMemory(BinaryData::onoffledon_png, BinaryData::onoffledon_pngSize), 1.000f, juce::Colour(0x00000000));
+		juce::Image(), 1.000f, juce::Colour(0x00000000));
 
 	//speed knob
 	addAndMakeVisible(speedKnob);
@@ -73,40 +74,6 @@ void Sfaser25AudioProcessorEditor::paint(juce::Graphics& g)
 		backgroundImage.getHeight(), 0, 0, backgroundImage.getWidth(),
 		backgroundImage.getHeight(), false);
 
-	//if (repaintFlag == true) {
-
-	//	if (onOffSwitchPressed == true)
-	//	{
-	//		ledOnOff->setBounds(windowWidth/2 - ledWidth/2, ledY, ledWidth, ledHeight);
-	//		ledOnOff->setImages(false, true, true,
-	//			juce::ImageCache::getFromMemory(BinaryData::onoffledon_png, BinaryData::onoffledon_pngSize), 1.000f, juce::Colour(0x00000000),
-	//			juce::Image(), 1.000f, juce::Colour(0x00000000),
-	//			juce::Image(), 1.000f, juce::Colour(0x00000000));
-
-	//		onOffSwitch->setBounds(windowWidth/2 - switchWidth/2, switchY, switchWidth, switchHeight);
-	//		onOffSwitch->setImages(false, true, true,
-	//			juce::ImageCache::getFromMemory(BinaryData::onoffswitchdown_png, BinaryData::onoffswitchdown_pngSize), 1.000f, juce::Colour(0x00000000),
-	//			juce::Image(), 1.000f, juce::Colour(0x00000000),
-	//			juce::Image(), 1.000f, juce::Colour(0x00000000));
-	//		repaintFlag = false;
-	//	}
-
-	//	else
-	//	{
-	//		ledOnOff->setBounds(windowWidth / 2 - ledWidth / 2, ledY, ledWidth, ledHeight);
-	//		ledOnOff->setImages(false, true, true,
-	//			juce::ImageCache::getFromMemory(BinaryData::onoffledoff_png, BinaryData::onoffledoff_pngSize), 1.000f, juce::Colour(0x00000000),
-	//			juce::Image(), 1.000f, juce::Colour(0x00000000),
-	//			juce::Image(), 1.000f, juce::Colour(0x00000000));
-
-	//		onOffSwitch->setBounds(windowWidth / 2 - switchWidth / 2, switchY, switchWidth, switchHeight);
-	//		onOffSwitch->setImages(false, true, true,
-	//			juce::ImageCache::getFromMemory(BinaryData::onoffswitchup_png, BinaryData::onoffswitchup_pngSize), 1.000f, juce::Colour(0x00000000),
-	//			juce::Image(), 1.000f, juce::Colour(0x00000000),
-	//			juce::Image(), 1.000f, juce::Colour(0x00000000));
-	//		repaintFlag = false;
-	//	}
-	//}
 	fssSpeed.drawFrame(g, windowWidth / 2 - knobWidth / 2, 29, knobWidth, knobHeight, speedKnob, audioProcessor.getSpeed());
 }
 
@@ -131,9 +98,9 @@ void Sfaser25AudioProcessorEditor::buttonClicked(juce::Button* button)
 	audioProcessor.setOnOff(this->getButtonState());
 	if (button == &onOffSwitch)
 	{
-		if (this->getButtonState() == false) {
+		if (!this->getButtonState()) {
 			ledOnOff.setImages(false, true, true,
-				juce::ImageCache::getFromMemory(BinaryData::onoffledon_png, BinaryData::onoffledon_pngSize), 1.000f, juce::Colour(0x00000000),
+				juce::ImageCache::getFromMemory(BinaryData::onoffledon_png, BinaryData::onoffledon_pngSize), 2.000f, juce::Colour(0x00000000),
 				juce::Image(), 1.000f, juce::Colour(0x00000000),
 				juce::Image(), 1.000f, juce::Colour(0x00000000));
 			this->setButtonState(true);
