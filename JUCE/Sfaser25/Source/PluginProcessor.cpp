@@ -160,7 +160,7 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
     juce::ScopedNoDenormals noDenormals;
 
     
-    auto totalNumInputChannels  = 1; //getTotalNumInputChannels();
+    auto totalNumInputChannels  = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
 
     //perchè devo fare x10? Gli arriva un valore sballato di un ordine di grandezza?
@@ -170,38 +170,67 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
             buffer.clear (i, 0, buffer.getNumSamples());
   
-    int channel = 0;
-    auto* channelDataL = buffer.getWritePointer (channel);
-    auto* channelDataR = buffer.getWritePointer (channel+1);
+    
+    auto* channelDataL = buffer.getWritePointer (0);
+    auto* channelDataR = buffer.getWritePointer (1);
 
+    auto* inputBufferL = buffer.getReadPointer(0);
+    auto* inputBufferR = buffer.getReadPointer(1);
 
-    float input_out = 0;
-    float makeupGain = 5;
+    if (apvts.getParameter("ONOFF")->getValue()) {
 
-    auto inputBuffer = buffer.getReadPointer(channel);//MONO input
-
-    for (int sample = 0; sample < buffer.getNumSamples(); ++sample)
-    {
-
-        lfoValue = std::sin(2 * 3.14159 * speed * lfoIndex / sample_rate) * 0.15 + 3.25;
-
-        const float input_sample = inputBuffer[sample];
-
-        inputStageOutput = inputStage.inputStageSample(input_sample, S_in, initIN);
-        shiftStageOutput1 = shiftStage.shiftStageSample(inputStageOutput, initSTAGE1, lfoValue);
-        shiftStageOutput2 = shiftStage.shiftStageSample(shiftStageOutput1, initSTAGE2, lfoValue);
-        shiftStageOutput3 = shiftStage.shiftStageSample(shiftStageOutput2, initSTAGE3, lfoValue);
-        shiftStageOutput4 = shiftStage.shiftStageSample(shiftStageOutput3, initSTAGE4, lfoValue);
-        output = outputStage.outputStageSample(shiftStageOutput4, inputStageOutput, S_out, initOUT);
-
-        channelDataL[sample] = output * makeupGain;
-        channelDataR[sample] = output * makeupGain;
-
-        lfoIndex++;
-  
-        lfoIndex = lfoIndex % rounded;
+        for (int sample = 0; sample < buffer.getNumSamples(); ++sample)
+        {
+             channelDataL[sample] = inputBufferL[sample];
+             channelDataR[sample] = inputBufferR[sample];
+        }
     }
+    else{
+        
+        for (int sample = 0; sample < buffer.getNumSamples(); ++sample)
+        {
+
+            lfoValue = std::sin(2 * 3.14159 * speed * lfoIndex / sample_rate) * 0.15 + 3.25;
+
+            input_sample = inputBufferL[sample];
+
+            if (!input_sample) {
+                outputL = 0;
+            }
+            else {
+                inputStageOutput = inputStage.inputStageSample(input_sample, S_in, initIN);
+                shiftStageOutput1 = shiftStage.shiftStageSample(inputStageOutput, initSTAGE1L, lfoValue);
+                shiftStageOutput2 = shiftStage.shiftStageSample(shiftStageOutput1, initSTAGE2L, lfoValue);
+                shiftStageOutput3 = shiftStage.shiftStageSample(shiftStageOutput2, initSTAGE3L, lfoValue);
+                shiftStageOutput4 = shiftStage.shiftStageSample(shiftStageOutput3, initSTAGE4L, lfoValue);
+                outputL = outputStage.outputStageSample(shiftStageOutput4, inputStageOutput, S_out, initOUT);
+            }
+
+            input_sample = inputBufferR[sample];
+
+            if (!input_sample) {
+                outputR = 0;
+            }
+            else {
+
+                inputStageOutput = inputStage.inputStageSample(input_sample, S_in, initIN);
+                shiftStageOutput1 = shiftStage.shiftStageSample(inputStageOutput, initSTAGE1R, lfoValue);
+                shiftStageOutput2 = shiftStage.shiftStageSample(shiftStageOutput1, initSTAGE2R, lfoValue);
+                shiftStageOutput3 = shiftStage.shiftStageSample(shiftStageOutput2, initSTAGE3R, lfoValue);
+                shiftStageOutput4 = shiftStage.shiftStageSample(shiftStageOutput3, initSTAGE4R, lfoValue);
+                outputR = outputStage.outputStageSample(shiftStageOutput4, inputStageOutput, S_out, initOUT);
+            }
+
+            channelDataL[sample] = outputL * makeupGain;
+            channelDataR[sample] = outputR * makeupGain;
+
+            lfoIndex++;
+
+            lfoIndex = lfoIndex % rounded;
+        }
     }
+ }
+    
 
 
 //==============================================================================

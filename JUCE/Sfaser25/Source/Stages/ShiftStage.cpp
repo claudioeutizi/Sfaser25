@@ -39,7 +39,7 @@ float ShiftStage::shiftStageSample(float inputSample, wavesSTAGE& waves, float L
     waves.b = S * waves.a;
     
     float outputSample = ((waves.a[6] + waves.b[6]) / 2);
-    LFOprev = LFO;
+    
     return outputSample;
 
 }

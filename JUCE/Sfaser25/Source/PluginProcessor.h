@@ -88,11 +88,14 @@ private:
     float shiftStageOutput2 = 0;
     float shiftStageOutput3 = 0;
     float shiftStageOutput4 = 0;
-    float output = 0;
+    float outputL = 0;
+    float outputR = 0;
     float lfoValue;
     float speed;
     int rounded;
     int lfoIndex = 0;
+    float input_sample = 0;
+    float makeupGain = 5;
 
     //input stage
     InputStage inputStage;
@@ -101,7 +104,7 @@ private:
 
     //shifting stage
     ShiftStage shiftStage;
-    wavesSTAGE initSTAGE1, initSTAGE2, initSTAGE3, initSTAGE4;
+    wavesSTAGE initSTAGE1L, initSTAGE2L, initSTAGE3L, initSTAGE4L, initSTAGE1R, initSTAGE2R, initSTAGE3R, initSTAGE4R;
     Matrix8d S_stage;
 
     //output stage
