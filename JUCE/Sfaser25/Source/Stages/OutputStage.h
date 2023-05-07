@@ -13,7 +13,6 @@
 
 #pragma once
 
-using Eigen::MatrixXd;
 using namespace Eigen;
 
 
@@ -29,22 +28,22 @@ class OutputStage {
 public:
     OutputStage();
     ~OutputStage() {};
-    void prepareOutputStage(float sampleRate);
-    void outputScatteringMatrix(float Z3);
-    float outputStageSample(float inputWet, float inputDry, wavesOUT& waves);
+    Matrix6f prepareOutputStage(float sampleRate);
+    float outputStageSample(float inputWet, float inputDry, Matrix6f S, wavesOUT& waves);
 
 private:
-    //Matrix<float, 6, 3> Qv_T;
-    //Matrix<float, 3, 6> Qv;
+    Matrix<float, 6, 3> Qv_T;
+    Matrix<float, 3, 6> Qv;
 
-    //Matrix<float, 6, 3> Qi_T = Qv_T;
-    //Matrix<float, 3, 6> Qi = Qv;
+    Matrix<float, 6, 3> Qi_T = Qv_T;
+    Matrix<float, 3, 6> Qi = Qv;
 
-    //float Z1;
-    //float Z2;
-    //float Z4;
-    //float Z5;
-    //float Z6;
+    Matrix6f I=Matrix6f::Identity(6,6);
 
+    float Z1 = 150e3;
+    float Z2 = Z1;
+    float Z4 = 56e3;
+    float Z5 = Z1;
+    float Z6 = Z1;
     Matrix6f S;
 };

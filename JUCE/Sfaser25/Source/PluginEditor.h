@@ -42,12 +42,13 @@ private:
 	juce::Image onOffSwitchStripImage;
 
 	Sfaser25AudioProcessor& audioProcessor;
-	juce::ScopedPointer<juce::Slider> speedKnob;
+	juce::Slider speedKnob;
+	juce::AudioProcessorValueTreeState::SliderAttachment speedKnobAttachment;
 
-	juce::ScopedPointer<juce::ImageButton> onOffSwitch;
+	juce::ImageButton onOffSwitch;
 	bool buttonState = false;
 
-	juce::ScopedPointer<juce::ImageButton> ledOnOff;
+	juce::ImageButton ledOnOff;
 
 	const int windowWidth = 360;
 	const int windowHeight = 497;

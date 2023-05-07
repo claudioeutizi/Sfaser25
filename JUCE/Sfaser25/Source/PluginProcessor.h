@@ -14,6 +14,7 @@
 #include "Stages/InputStage.h"
 #include "Stages/OutputStage.h"
 #include "Stages/ShiftStage.h"
+#include <cmath>
 
 //==============================================================================
 /**
@@ -60,12 +61,23 @@ public:
     //==============================================================================
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
-    float getSpeed();
-    void setSpeed(float speed);
+
     //==============================================================================
+    //float getSpeed() { return this->speed; };
+    //void setSpeed(float speed) { this->speed = speed; };
+    //bool getPedalOnOff() { return this->pedalOnOff; };
+    //void setPedalOnOff(bool onOff) { this->pedalOnOff = onOff; };
+    //==============================================================================
+    static juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
+    juce::AudioProcessorValueTreeState apvts;
+
+    //==============================================================================
+    void setSpeed(float speed);
+    float getSpeed();
+    void setOnOff(bool onOff);
+    bool getOnOff();
 
 private:
-    float speed;
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Sfaser25AudioProcessor)
 
@@ -76,10 +88,14 @@ private:
     float shiftStageOutput2 = 0;
     float shiftStageOutput3 = 0;
     float shiftStageOutput4 = 0;
-    float output = 0;
+    float outputL = 0;
+    float outputR = 0;
     float lfoValue;
+    float speed;
+    int rounded;
     int lfoIndex = 0;
-    int rate = 1.5;
+    float input_sample = 0;
+    float makeupGain = 5;
 
     //input stage
     InputStage inputStage;
@@ -88,7 +104,7 @@ private:
 
     //shifting stage
     ShiftStage shiftStage;
-    wavesSTAGE initSTAGE1, initSTAGE2, initSTAGE3, initSTAGE4;
+    wavesSTAGE initSTAGE1L, initSTAGE2L, initSTAGE3L, initSTAGE4L, initSTAGE1R, initSTAGE2R, initSTAGE3R, initSTAGE4R;
     Matrix8d S_stage;
 
     //output stage

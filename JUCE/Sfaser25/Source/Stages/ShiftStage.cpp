@@ -11,33 +11,10 @@
 
 #include "ShiftStage.h"
 #include <cmath>
+#include <stdio.h>
 
 ShiftStage::ShiftStage() {
 
-    //Qv_T << 1, 0, 0, 0,
-    //    0, 1, 0, 0,
-    //    0, 0, 1, 0,
-    //    0, 0, 0, 1,
-    //    0, 0, 0, 1,
-    //    0, 1, 0, 0,
-    //    -1, 0, -1, -1,
-    //    -1, -1, 0, -1;
-    //Qv = Qv_T.transpose();
-
-    //Qi_T << 1, 0, 0, 0,
-    //    0, 1, 0, 0,
-    //    0, 0, 1, 0,
-    //    0, 0, 0, 1,
-    //    -1, 0, -1, 0,
-    //    0, 1, 0, 0,
-    //    0, 0, 0, 0,
-    //    -1, -1, 0, -1;
-
-    //Qi = Qi_T.transpose();
-
-    //I = Matrix8d::Identity(8, 8);
-    //I4 = Matrix4d::Identity(4, 4);
-    //Z.fill(0);
     S.fill(0);
 }
 
@@ -46,18 +23,15 @@ void ShiftStage::prepareShiftStage(float sampleRate)
     float Ts = 1/sampleRate;
 
     Z4 = Ts / (2 * 47e-9);
-    //Matrix<double, 8, 1> z(Z1, Z2, Z3, Z4, Z5, Z6, Z7, Z8);
-    //Z = z.asDiagonal();
-    ///*Matrix8d S = 2 * Qv_T * (Qi * Z.inverse() * Qv_T).inverse() * (Qi * Z.inverse()) - I;*/
-    ////Matrix8d S;
+
 }
 
 float ShiftStage::shiftStageSample(float inputSample, wavesSTAGE& waves, float LFO)
 {
     Z6 = 1 / (k * (LFO - Vref - Vp));
-    if (LFO != LFOprev) {
-        shiftScatteringMatrix(Z4, Z6);
-    }
+ 
+    shiftScatteringMatrix(Z4, Z6);
+ 
     
     waves.a[0] = -inputSample;
     waves.a[3] = waves.b(3);
@@ -65,7 +39,7 @@ float ShiftStage::shiftStageSample(float inputSample, wavesSTAGE& waves, float L
     waves.b = S * waves.a;
     
     float outputSample = ((waves.a[6] + waves.b[6]) / 2);
-    LFOprev = LFO;
+    
     return outputSample;
 
 }
@@ -137,6 +111,5 @@ void ShiftStage::shiftScatteringMatrix(float Z4, float Z6)
     S(7, 6) = 0;
     S(7, 7) = (480000000000000 * Z6) / (240000000024000 * Z4 + 240000000020000 * Z6 + 10000000001 * Z4 * Z6 + 480000000) + (2 * (24000 * Z4 + 10000 * Z6 + Z4 * Z6 + 240000000)) / (240000000024000 * Z4 + 240000000020000 * Z6 + 10000000001 * Z4 * Z6 + 480000000) + (20000000000 * (24000 * Z4 + Z4 * Z6)) / (240000000024000 * Z4 + 240000000020000 * Z6 + 10000000001 * Z4 * Z6 + 480000000) - 1;
 }
-
 
 
