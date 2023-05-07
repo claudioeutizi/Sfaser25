@@ -56,9 +56,9 @@ void ShiftStage::prepareShiftStage(float sampleRate)
 float ShiftStage::shiftStageSample(float inputSample, wavesSTAGE& waves, float LFO)
 {
     Z6 = 1 / (k * (LFO - Vref - Vp));
-    //if (LFO != LFOprev) {
-        shiftScatteringMatrix(Z4, Z6);
-    //}
+ 
+    shiftScatteringMatrix(Z4, Z6);
+ 
     
     waves.a[0] = -inputSample;
     waves.a[3] = waves.b(3);

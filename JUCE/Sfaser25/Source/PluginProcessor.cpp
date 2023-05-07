@@ -178,17 +178,6 @@ void Sfaser25AudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlo
         //}
 }
 
-//juce native - based method found online
-//juce::AudioBuffer<float> Sfaser25AudioProcessor::GetAudioBufferFromFile(juce::File file)
-//{
-//    auto* reader = formatManager.createReaderFor(file);
-//    juce::AudioBuffer<float> audioBuffer;
-//    audioBuffer.setSize(reader->numChannels, reader->lengthInSamples);
-//    reader->read(&audioBuffer, 0, reader->lengthInSamples, 0, true, true);
-//    delete reader;
-//    return audioBuffer;
-//}
-
 void Sfaser25AudioProcessor::releaseResources()
 {
     // When playback stops, you can use this as an opportunity to free up any
@@ -230,13 +219,16 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
     auto totalNumInputChannels  = 1; //getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
 
-    auto speed = getSpeed();
+    //perchè devo fare x10? Gli arriva un valore sballato di un ordine di grandezza?
+    speed = getSpeed()*10;
+    rounded = round(sample_rate / speed);
 
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
             buffer.clear (i, 0, buffer.getNumSamples());
-        int channel = 0;
-        auto* channelDataL = buffer.getWritePointer (channel);
-        auto* channelDataR = buffer.getWritePointer (channel+1);
+  
+    int channel = 0;
+    auto* channelDataL = buffer.getWritePointer (channel);
+    auto* channelDataR = buffer.getWritePointer (channel+1);
 
 
     float input_out = 0;
@@ -248,7 +240,7 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
     {
         //lfo = 3.64;
 
-        lfoValue = std::sin(2 * 3.14 * speed * lfoIndex / sample_rate) * 0.15 + 3.25;
+        lfoValue = std::sin(2 * 3.14159 * speed * lfoIndex / sample_rate) * 0.15 + 3.25;
 
         const float input_sample = inputBuffer[sample];
 
@@ -263,7 +255,8 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
         channelDataR[sample] = output * makeupGain;
 
         lfoIndex++;
-        lfoIndex = lfoIndex % sample_rate / speed;
+  
+        lfoIndex = lfoIndex % rounded;
     }
     }
 

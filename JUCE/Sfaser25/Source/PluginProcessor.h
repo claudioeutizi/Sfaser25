@@ -14,6 +14,7 @@
 #include "Stages/InputStage.h"
 #include "Stages/OutputStage.h"
 #include "Stages/ShiftStage.h"
+#include <cmath>
 
 //==============================================================================
 /**
@@ -89,6 +90,8 @@ private:
     float shiftStageOutput4 = 0;
     float output = 0;
     float lfoValue;
+    float speed;
+    int rounded;
     int lfoIndex = 0;
 
     //input stage
