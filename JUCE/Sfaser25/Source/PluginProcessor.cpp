@@ -193,8 +193,8 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
         for (int sample = 0; sample < buffer.getNumSamples(); ++sample)
         {
 
-            /*lfoValue = std::sin(2 * 3.14159 * speed * lfoIndex / sample_rate) * 0.15 + 3.25;*/
-            lfoValue = 3.4;
+            //lfoValue = std::sin(2 * 3.14159 * speed * lfoIndex / sample_rate) * 0.15 + 3.25;
+            lfoValue = 2 * 0.3 * std::abs(speed*lfoIndex/sample_rate - floor(speed*lfoIndex/sample_rate + 0.5))+3.1;
             input_sample = inputBufferL[sample];
 
             if (!input_sample) {
@@ -261,6 +261,9 @@ void Sfaser25AudioProcessor::setStateInformation (const void* data, int sizeInBy
     // whose contents will have been created by the getStateInformation() call.
     
 }
+void Sfaser25AudioProcessor::lfoGenerator(int index, float speed) {
+    juce::Array LFO = 2 * 0.3 * std::abs(speed * lfoIndex / sample_rate - floor(speed * lfoIndex / sample_rate + 0.5)) + 3.1;
+}
 
 juce::AudioProcessorValueTreeState::ParameterLayout Sfaser25AudioProcessor::createParameterLayout()
 {
@@ -276,3 +279,4 @@ juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
     return new Sfaser25AudioProcessor();
 }
+
