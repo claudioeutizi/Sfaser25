@@ -114,5 +114,5 @@ private:
     
     //Output_Data O_data;
     juce::AudioFormatManager formatManager;
-    int sample_rate = 44100;
+    int sample_rate;
 };

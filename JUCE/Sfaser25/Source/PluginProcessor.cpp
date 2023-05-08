@@ -114,12 +114,15 @@ bool Sfaser25AudioProcessor::getOnOff()
 void Sfaser25AudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
 
-    juce::ignoreUnused (sampleRate, samplesPerBlock);
+    juce::ignoreUnused (samplesPerBlock);
+    sample_rate = (int)sampleRate;
 
-        //Compute S for each stage
-        S_in = inputStage.prepareInputStage(sample_rate);
-        shiftStage.prepareShiftStage(sample_rate);
-        S_out = outputStage.prepareOutputStage(sample_rate);
+    //Compute S for each stage
+
+    S_in = inputStage.prepareInputStage(sample_rate);
+    shiftStage.prepareShiftStage(sample_rate);
+    S_out = outputStage.prepareOutputStage(sample_rate);
+    
 }
 
 void Sfaser25AudioProcessor::releaseResources()
@@ -190,8 +193,8 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
         for (int sample = 0; sample < buffer.getNumSamples(); ++sample)
         {
 
-            lfoValue = std::sin(2 * 3.14159 * speed * lfoIndex / sample_rate) * 0.15 + 3.25;
-
+            /*lfoValue = std::sin(2 * 3.14159 * speed * lfoIndex / sample_rate) * 0.15 + 3.25;*/
+            lfoValue = 3.4;
             input_sample = inputBufferL[sample];
 
             if (!input_sample) {
