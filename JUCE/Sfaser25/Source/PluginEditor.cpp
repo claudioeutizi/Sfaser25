@@ -9,11 +9,13 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 #include "./GUI/FilmStripSlider.h"
+#include <stdio.h>
 
 //==============================================================================
 Sfaser25AudioProcessorEditor::Sfaser25AudioProcessorEditor (Sfaser25AudioProcessor& p)
     : AudioProcessorEditor (&p), audioProcessor (p),
-	onOffSwitch("onOffSwitch"), ledOnOff("onOffLed"), speedKnob("speedKnob"), speedKnobAttachment(audioProcessor.apvts, "SPEED", speedKnob)
+	onOffSwitch("onOffSwitch"), ledOnOff("onOffLed"), speedKnob("speedKnob"),
+	speedKnobAttachment(std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, "SPEED", speedKnob))
 {
 	//background 
 	backgroundImage = juce::ImageCache::getFromMemory(BinaryData::pedal_full_res_2k_cropped_scaled_png, BinaryData::pedal_full_res_2k_cropped_scaled_pngSize);
@@ -44,7 +46,8 @@ Sfaser25AudioProcessorEditor::Sfaser25AudioProcessorEditor (Sfaser25AudioProcess
 	speedKnob.setMouseCursor(juce::MouseCursor::PointingHandCursor);
 	speedKnob.setPopupDisplayEnabled(true, true, nullptr);
 	speedKnob.setTextValueSuffix(" Hz");
-	speedKnob.setRange(0.1, 10, 0.01);
+	speedKnob.setRange(0.f, 1.f);
+	speedKnob.setValue(0.5f);
 	speedKnob.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
 	speedKnob.setTextBoxStyle(juce::Slider::TextBoxLeft, false, 0, 0);
 	speedKnob.addListener(this);
@@ -74,7 +77,7 @@ void Sfaser25AudioProcessorEditor::paint(juce::Graphics& g)
 		backgroundImage.getHeight(), 0, 0, backgroundImage.getWidth(),
 		backgroundImage.getHeight(), false);
 
-	fssSpeed.drawFrame(g, windowWidth / 2 - knobWidth / 2, 29, knobWidth, knobHeight, speedKnob, audioProcessor.getSpeed());
+	fssSpeed.drawFrame(g, windowWidth / 2 - knobWidth / 2, 29, knobWidth, knobHeight, speedKnob, *audioProcessor.apvts.getRawParameterValue("SPEED"));
 }
 
 void Sfaser25AudioProcessorEditor::resized()
@@ -88,14 +91,15 @@ void Sfaser25AudioProcessorEditor::sliderValueChanged(juce::Slider* slider)
 {
 	if (slider == &speedKnob)
 	{
-		audioProcessor.setSpeed((float)(slider->getValue()));
+		float value = slider->getValue();
+		audioProcessor.apvts.getParameter("SPEED")->setValue(value);
 	}
 }
 
 
 void Sfaser25AudioProcessorEditor::buttonClicked(juce::Button* button)
 {
-	audioProcessor.setOnOff(this->getButtonState());
+	audioProcessor.apvts.getParameter("ONOFF")->setValue((this->getButtonState()));
 	if (button == &onOffSwitch)
 	{
 		if (!this->getButtonState()) {
@@ -117,9 +121,9 @@ void Sfaser25AudioProcessorEditor::buttonClicked(juce::Button* button)
 
 void Sfaser25AudioProcessorEditor::timerCallback()
 {
-	if (previousSpeed != audioProcessor.getSpeed())
+	if (previousSpeed != *audioProcessor.apvts.getRawParameterValue("SPEED"))
 	{
 		repaint();
-		previousSpeed = audioProcessor.getSpeed();
+		previousSpeed = *audioProcessor.apvts.getRawParameterValue("SPEED");
 	}
 }

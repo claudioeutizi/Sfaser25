@@ -43,7 +43,7 @@ private:
 
 	Sfaser25AudioProcessor& audioProcessor;
 	juce::Slider speedKnob;
-	juce::AudioProcessorValueTreeState::SliderAttachment speedKnobAttachment;
+	std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> speedKnobAttachment;
 
 	juce::ImageButton onOffSwitch;
 	bool buttonState = false;

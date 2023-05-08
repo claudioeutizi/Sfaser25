@@ -72,10 +72,6 @@ public:
     juce::AudioProcessorValueTreeState apvts;
 
     //==============================================================================
-    void setSpeed(float speed);
-    float getSpeed();
-    void setOnOff(bool onOff);
-    bool getOnOff();
 
 private:
     //==============================================================================

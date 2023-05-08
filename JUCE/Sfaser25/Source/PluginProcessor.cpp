@@ -92,25 +92,6 @@ void Sfaser25AudioProcessor::changeProgramName (int index, const juce::String& n
 }
 
 //==============================================================================
-
-void Sfaser25AudioProcessor::setSpeed(float speed)
-{
-    apvts.getParameter("SPEED")->setValue(speed);
-}
-float Sfaser25AudioProcessor::getSpeed()
-{
-    return apvts.getParameter("SPEED")->getValue();
-}
-void Sfaser25AudioProcessor::setOnOff(bool onOff)
-{
-    apvts.getParameter("ONOFF")->setValue(onOff);
-}
-bool Sfaser25AudioProcessor::getOnOff()
-{
-    return apvts.getParameter("ONOFF")->getValue();
-}
-
-//==============================================================================
 void Sfaser25AudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
 
@@ -167,7 +148,8 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
     auto totalNumOutputChannels = getTotalNumOutputChannels();
 
     //perchè devo fare x10? Gli arriva un valore sballato di un ordine di grandezza?
-    speed = getSpeed()*10;
+    float speed = apvts.getParameter("SPEED")->getValue();
+
     rounded = round(sample_rate / speed);
 
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
@@ -193,8 +175,7 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
         for (int sample = 0; sample < buffer.getNumSamples(); ++sample)
         {
 
-            /*lfoValue = std::sin(2 * 3.14159 * speed * lfoIndex / sample_rate) * 0.15 + 3.25;*/
-            lfoValue = 3.4;
+            lfoValue = std::sin(2 * 3.14159 * speed * lfoIndex / sample_rate) * 0.15 + 3.25;
             input_sample = inputBufferL[sample];
 
             if (!input_sample) {
@@ -265,7 +246,7 @@ void Sfaser25AudioProcessor::setStateInformation (const void* data, int sizeInBy
 juce::AudioProcessorValueTreeState::ParameterLayout Sfaser25AudioProcessor::createParameterLayout()
 {
     juce::AudioProcessorValueTreeState::ParameterLayout layout;
-    layout.add(std::make_unique<juce::AudioParameterFloat>("SPEED", "Speed", 0.1f, 10.0f, 0.1f));
+    layout.add(std::make_unique<juce::AudioParameterFloat>("SPEED", "Speed", 0.1f, 10.f, 0.5f));
     layout.add(std::make_unique<juce::AudioParameterBool>("ONOFF", "OnOff", true));
     return layout;
 }
