@@ -15,8 +15,8 @@ using namespace juce;
 class Sfaser25LookAndFeel : public juce::LookAndFeel_V4
 {
 public:
-    Sfaser25LookAndFeel::Sfaser25LookAndFeel();
-    Sfaser25LookAndFeel::~Sfaser25LookAndFeel();
+    Sfaser25LookAndFeel();
+    ~Sfaser25LookAndFeel();
 
     void drawRotarySlider(juce::Graphics& g, int x, int y, int width, int height, float sliderPos, float rotaryStartAngle, float rotaryEndAngle, juce::Slider& slider) override;
 
@@ -30,6 +30,5 @@ private:
     const int windowHeight = 497;
 
     int speedKnobStripFrames;
-
     Image speedKnobStripImage;
 };

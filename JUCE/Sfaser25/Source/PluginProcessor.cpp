@@ -266,7 +266,7 @@ void Sfaser25AudioProcessor::setPedalOnOff(bool onOff)
 juce::AudioProcessorValueTreeState::ParameterLayout Sfaser25AudioProcessor::createParameterLayout()
 {
     std::vector<std::unique_ptr<juce::RangedAudioParameter>> params;
-    juce::NormalisableRange<float> speedRange = juce::NormalisableRange<float>(0.1f, 10.f, 0.1f);
+    juce::NormalisableRange<float> speedRange = juce::NormalisableRange<float>(0.1f, 10.f, 0.005f);
     speedRange.setSkewForCentre(2.5f);
     params.push_back(std::make_unique<juce::AudioParameterFloat>("SPEED", "Speed", speedRange, 0.1f, "Hz"));
     params.push_back(std::make_unique<juce::AudioParameterBool>("ONOFF", "OnOff", false));

@@ -25,7 +25,6 @@ Sfaser25LookAndFeel::~Sfaser25LookAndFeel()
 void Sfaser25LookAndFeel::drawRotarySlider(juce::Graphics& g, int x, int y, int width, int height, float sliderPos, float rotaryStartAngle, float rotaryEndAngle, juce::Slider& slider)
 {
     if (speedKnobStripImage.isValid()) {
-
         // Così la grafica funziona, ma la metà va a 5Hz
         //const double div = (slider.getMaximum() + slider.getInterval()) / speedKnobStripFrames;
         //double pos = (int)(slider.getValue() / div);
@@ -40,7 +39,7 @@ void Sfaser25LookAndFeel::drawRotarySlider(juce::Graphics& g, int x, int y, int 
         auto imageIndex = int(sliderPos * frames);
         const int frameId = jlimit(0, frames - 1, imageIndex);
         const float radius = juce::jmin(width / 2.0f, height / 2.0f);
-        const float centerX = x + width * 0.5f ;
+        const float centerX = x + width * 0.5f;
         const float centerY = y + height * 0.5f;
         const float rx = centerX - radius;
         const float ry = centerY - radius;
