@@ -26,11 +26,21 @@ void Sfaser25LookAndFeel::drawRotarySlider(juce::Graphics& g, int x, int y, int 
 {
     if (speedKnobStripImage.isValid()) {
 
+        // Così la grafica funziona, ma la metà va a 5Hz
+        //const double div = (slider.getMaximum() + slider.getInterval()) / speedKnobStripFrames;
+        //double pos = (int)(slider.getValue() / div);
+
+        //g.drawImage(speedKnobStripImage, x, y, knobWidth, knobHeight, 0, (int)pos * 135, width, height);
+
+        //Così la grafica è sbagliata, il knob si muove male ma il centrale è a 2.5Hz.
+
+        //AIUTO
+
         const int frames = speedKnobStripImage.getHeight() / knobHeight;
         auto imageIndex = int(sliderPos * frames);
         const int frameId = jlimit(0, frames - 1, imageIndex);
         const float radius = juce::jmin(width / 2.0f, height / 2.0f);
-        const float centerX = x + width * 0.5f;
+        const float centerX = x + width * 0.5f ;
         const float centerY = y + height * 0.5f;
         const float rx = centerX - radius;
         const float ry = centerY - radius;
