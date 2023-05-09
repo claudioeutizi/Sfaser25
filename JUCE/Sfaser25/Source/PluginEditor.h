@@ -10,20 +10,18 @@
 
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
-#include "GUI/FilmStripSlider.h"
+#include "GUI/Sfaser25LookAndFeel.h"
 
 //==============================================================================
 /**
 */
 class Sfaser25AudioProcessorEditor : public juce::AudioProcessorEditor,
     juce::Button::Listener,
-    juce::Slider::Listener,
 	juce::Timer
 {
 public:
     Sfaser25AudioProcessorEditor (Sfaser25AudioProcessor&);
     ~Sfaser25AudioProcessorEditor() override;
-    void sliderValueChanged(juce::Slider* slider) override;
     void buttonClicked(juce::Button* btn) override;
 	void timerCallback() override;
     //==============================================================================
@@ -37,6 +35,7 @@ private:
 	bool onOffSwitchPressed = false;
 	bool repaintFlag = false;
 
+	Sfaser25LookAndFeel sliderLookAndFeel;
 	juce::Image speedKnobStripImage;
 	juce::Image backgroundImage;
 	juce::Image onOffSwitchStripImage;
@@ -44,6 +43,7 @@ private:
 	Sfaser25AudioProcessor& audioProcessor;
 	juce::Slider speedKnob;
 	std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> speedKnobAttachment;
+	std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> onOffSwitchAttachment;
 
 	juce::ImageButton onOffSwitch;
 	bool buttonState = false;

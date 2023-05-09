@@ -9,7 +9,7 @@
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
-
+#include "Utils/melatonin_parameters.h"
 //==============================================================================
 Sfaser25AudioProcessor::Sfaser25AudioProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
@@ -148,7 +148,7 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
     auto totalNumOutputChannels = getTotalNumOutputChannels();
 
     //perchè devo fare x10? Gli arriva un valore sballato di un ordine di grandezza?
-    float speed = apvts.getParameter("SPEED")->getValue();
+    float speed = getSpeed();
 
     rounded = round(sample_rate / speed);
 
@@ -162,7 +162,7 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
     auto* inputBufferL = buffer.getReadPointer(0);
     auto* inputBufferR = buffer.getReadPointer(1);
 
-    if (apvts.getParameter("ONOFF")->getValue()) {
+    if (getPedalOnOff()) {
 
         for (int sample = 0; sample < buffer.getNumSamples(); ++sample)
         {
@@ -243,12 +243,34 @@ void Sfaser25AudioProcessor::setStateInformation (const void* data, int sizeInBy
     
 }
 
+float Sfaser25AudioProcessor::getSpeed()
+{
+    auto& speedValue = *apvts.getRawParameterValue("SPEED");
+    return speedValue;
+}
+
+void Sfaser25AudioProcessor::setSpeed(float speed)
+{
+}
+
+bool Sfaser25AudioProcessor::getPedalOnOff()
+{
+    auto& onOffValue = *apvts.getRawParameterValue("ONOFF");
+    return onOffValue;
+}
+
+void Sfaser25AudioProcessor::setPedalOnOff(bool onOff)
+{
+}
+
 juce::AudioProcessorValueTreeState::ParameterLayout Sfaser25AudioProcessor::createParameterLayout()
 {
-    juce::AudioProcessorValueTreeState::ParameterLayout layout;
-    layout.add(std::make_unique<juce::AudioParameterFloat>("SPEED", "Speed", 0.1f, 10.f, 0.5f));
-    layout.add(std::make_unique<juce::AudioParameterBool>("ONOFF", "OnOff", true));
-    return layout;
+    std::vector<std::unique_ptr<juce::RangedAudioParameter>> params;
+    juce::NormalisableRange<float> speedRange = juce::NormalisableRange<float>(0.1f, 10.f, 0.1f);
+    speedRange.setSkewForCentre(2.5f);
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("SPEED", "Speed", speedRange, 0.1f, "Hz"));
+    params.push_back(std::make_unique<juce::AudioParameterBool>("ONOFF", "OnOff", false));
+    return { params.begin(), params.end() };
 }
 
 //==============================================================================

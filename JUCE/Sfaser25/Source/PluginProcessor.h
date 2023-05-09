@@ -63,10 +63,10 @@ public:
     void setStateInformation (const void* data, int sizeInBytes) override;
 
     //==============================================================================
-    //float getSpeed() { return this->speed; };
-    //void setSpeed(float speed) { this->speed = speed; };
-    //bool getPedalOnOff() { return this->pedalOnOff; };
-    //void setPedalOnOff(bool onOff) { this->pedalOnOff = onOff; };
+    float getSpeed();
+    void setSpeed(float speed);
+    bool getPedalOnOff();
+    void setPedalOnOff(bool onOff);
     //==============================================================================
     static juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
     juce::AudioProcessorValueTreeState apvts;

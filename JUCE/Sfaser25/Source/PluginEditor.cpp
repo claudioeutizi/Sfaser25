@@ -14,16 +14,13 @@
 //==============================================================================
 Sfaser25AudioProcessorEditor::Sfaser25AudioProcessorEditor (Sfaser25AudioProcessor& p)
     : AudioProcessorEditor (&p), audioProcessor (p),
-	onOffSwitch("onOffSwitch"), ledOnOff("onOffLed"), speedKnob("speedKnob"),
-	speedKnobAttachment(std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, "SPEED", speedKnob))
-{
-	//background 
+	onOffSwitch("onOffSwitch"), ledOnOff("onOffLed"), speedKnob("speedKnob")
+
+{	//background 
 	backgroundImage = juce::ImageCache::getFromMemory(BinaryData::pedal_full_res_2k_cropped_scaled_png, BinaryData::pedal_full_res_2k_cropped_scaled_pngSize);
 
-	//knob strip
-	speedKnobStripImage = juce::ImageCache::getFromMemory(BinaryData::speedknobstrip_png, BinaryData::speedknobstrip_pngSize);
-
-	//on off 
+	//on off
+	onOffSwitchAttachment = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(audioProcessor.apvts, "ONOFF", onOffSwitch);
 	addAndMakeVisible(onOffSwitch);
 	onOffSwitch.addListener(this);
 	onOffSwitch.setImages(false, true, true,
@@ -41,21 +38,15 @@ Sfaser25AudioProcessorEditor::Sfaser25AudioProcessorEditor (Sfaser25AudioProcess
 		juce::Image(), 1.000f, juce::Colour(0x00000000));
 
 	//speed knob
+	speedKnobAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, "SPEED", speedKnob);
 	addAndMakeVisible(speedKnob);
-	speedKnob.setAlpha(0.0f);
+	speedKnob.setLookAndFeel(&sliderLookAndFeel);
 	speedKnob.setMouseCursor(juce::MouseCursor::PointingHandCursor);
 	speedKnob.setPopupDisplayEnabled(true, true, nullptr);
 	speedKnob.setTextValueSuffix(" Hz");
-	speedKnob.setRange(0.f, 1.f);
-	speedKnob.setValue(0.5f);
 	speedKnob.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
 	speedKnob.setTextBoxStyle(juce::Slider::TextBoxLeft, false, 0, 0);
-	speedKnob.addListener(this);
 
-	//previousRate = audioProcessor.getRateHz();
-	//speedKnob->setValue(audioProcessor.getRateHz());
-	//speedKnob->setAlpha(0);
-	// 
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
 	setSize(windowWidth, windowHeight);
@@ -76,8 +67,6 @@ void Sfaser25AudioProcessorEditor::paint(juce::Graphics& g)
 	g.drawImage(backgroundImage, 0, 0, backgroundImage.getWidth(),
 		backgroundImage.getHeight(), 0, 0, backgroundImage.getWidth(),
 		backgroundImage.getHeight(), false);
-
-	fssSpeed.drawFrame(g, windowWidth / 2 - knobWidth / 2, 29, knobWidth, knobHeight, speedKnob, *audioProcessor.apvts.getRawParameterValue("SPEED"));
 }
 
 void Sfaser25AudioProcessorEditor::resized()
@@ -85,15 +74,6 @@ void Sfaser25AudioProcessorEditor::resized()
 	onOffSwitch.setBounds(windowWidth / 2 - switchWidth / 2, switchY, switchWidth, switchHeight);
 	ledOnOff.setBounds(windowWidth / 2 - ledWidth / 2, ledY, ledWidth, ledHeight);
 	speedKnob.setBounds(windowWidth / 2 - knobWidth / 2, knobY, knobWidth, knobHeight);
-}
-
-void Sfaser25AudioProcessorEditor::sliderValueChanged(juce::Slider* slider)
-{
-	if (slider == &speedKnob)
-	{
-		float value = slider->getValue();
-		audioProcessor.apvts.getParameter("SPEED")->setValue(value);
-	}
 }
 
 
