@@ -192,10 +192,17 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
         
         for (int sample = 0; sample < buffer.getNumSamples(); ++sample)
         {
+            //lfoValue = 2 * 0.3 * std::abs(speed*lfoIndex/sample_rate - floor(speed*lfoIndex/sample_rate + 0.5))+3.1;
+            if (speed!=speedOld) {
+                lfoIndex = lfoIndex*speedOld/speed;
+            }
 
-            //lfoValue = std::sin(2 * 3.14159 * speed * lfoIndex / sample_rate) * 0.15 + 3.25;
-            lfoValue = 2 * 0.3 * std::abs(speed*lfoIndex/sample_rate - floor(speed*lfoIndex/sample_rate + 0.5))+3.1;
-            input_sample = inputBufferL[sample];
+            speedOld = speed;
+
+                lfoValue = LFO((float)(lfoIndex * speed) / sample_rate);
+            
+            
+                input_sample = inputBufferL[sample];
 
             if (!input_sample) {
                 outputL = 0;
@@ -227,6 +234,8 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
             channelDataL[sample] = outputL * makeupGain;
             channelDataR[sample] = outputR * makeupGain;
 
+
+            
             lfoIndex++;
 
             lfoIndex = lfoIndex % rounded;
@@ -261,8 +270,14 @@ void Sfaser25AudioProcessor::setStateInformation (const void* data, int sizeInBy
     // whose contents will have been created by the getStateInformation() call.
     
 }
-void Sfaser25AudioProcessor::lfoGenerator(int index, float speed) {
-    juce::Array LFO = 2 * 0.3 * std::abs(speed * lfoIndex / sample_rate - floor(speed * lfoIndex / sample_rate + 0.5)) + 3.1;
+
+float Sfaser25AudioProcessor::LFO(float index) {
+    if (index < dutyCycle) {
+        return (index*0.3) / dutyCycle+3.1;
+    }
+    else {
+        return 0.3 / (1 - dutyCycle)*(-index + 1)+3.1;
+    }
 }
 
 juce::AudioProcessorValueTreeState::ParameterLayout Sfaser25AudioProcessor::createParameterLayout()

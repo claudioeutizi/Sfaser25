@@ -76,7 +76,8 @@ public:
     float getSpeed();
     void setOnOff(bool onOff);
     bool getOnOff();
-    void lfoGenerator(int iindex, float speed);
+    float LFO(float index);
+
 private:
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Sfaser25AudioProcessor)
@@ -90,12 +91,14 @@ private:
     float shiftStageOutput4 = 0;
     float outputL = 0;
     float outputR = 0;
-    float lfoValue;
+    float lfoValue, lfoValue2;
     float speed;
     int rounded;
     int lfoIndex = 0;
     float input_sample = 0;
     float makeupGain = 5;
+    float dutyCycle = 0.65;
+    float speedOld = 0;
 
     //input stage
     InputStage inputStage;
