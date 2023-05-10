@@ -9,7 +9,6 @@
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
-
 //==============================================================================
 Sfaser25AudioProcessor::Sfaser25AudioProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
@@ -92,25 +91,6 @@ void Sfaser25AudioProcessor::changeProgramName (int index, const juce::String& n
 }
 
 //==============================================================================
-
-void Sfaser25AudioProcessor::setSpeed(float speed)
-{
-    apvts.getParameter("SPEED")->setValue(speed);
-}
-float Sfaser25AudioProcessor::getSpeed()
-{
-    return apvts.getParameter("SPEED")->getValue();
-}
-void Sfaser25AudioProcessor::setOnOff(bool onOff)
-{
-    apvts.getParameter("ONOFF")->setValue(onOff);
-}
-bool Sfaser25AudioProcessor::getOnOff()
-{
-    return apvts.getParameter("ONOFF")->getValue();
-}
-
-//==============================================================================
 void Sfaser25AudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
 
@@ -166,8 +146,8 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
     auto totalNumInputChannels  = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
 
-    //perchè devo fare x10? Gli arriva un valore sballato di un ordine di grandezza?
-    speed = getSpeed()*10;
+    float speed = getSpeed();
+
     rounded = round(sample_rate / speed);
 
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
@@ -180,7 +160,7 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
     auto* inputBufferL = buffer.getReadPointer(0);
     auto* inputBufferR = buffer.getReadPointer(1);
 
-    if (apvts.getParameter("ONOFF")->getValue()) {
+    if (getPedalOnOff()) {
 
         for (int sample = 0; sample < buffer.getNumSamples(); ++sample)
         {
@@ -189,6 +169,11 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
         }
     }
     else{
+
+        //prendo parametro dal knob e calcolo la quantita di dry/wet
+        dryWetParam = getMix();
+        dry = 1.0f - dryWetParam;
+        wet = dryWetParam;
         
         for (int sample = 0; sample < buffer.getNumSamples(); ++sample)
         {
@@ -202,7 +187,11 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
                 lfoValue = LFO((float)(lfoIndex * speed) / sample_rate);
             
             
-                input_sample = inputBufferL[sample];
+
+            //prendo il dry signal L
+            drySampleL = inputBufferL[sample] * dry;
+
+            input_sample = inputBufferL[sample];
 
             if (!input_sample) {
                 outputL = 0;
@@ -215,6 +204,9 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
                 shiftStageOutput4 = shiftStage.shiftStageSample(shiftStageOutput3, initSTAGE4L, lfoValue);
                 outputL = outputStage.outputStageSample(shiftStageOutput4, inputStageOutput, S_out, initOUT);
             }
+
+            //prendo il dry signal R
+            drySampleR = inputBufferR[sample] * dry;
 
             input_sample = inputBufferR[sample];
 
@@ -231,8 +223,14 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
                 outputR = outputStage.outputStageSample(shiftStageOutput4, inputStageOutput, S_out, initOUT);
             }
 
-            channelDataL[sample] = outputL * makeupGain;
-            channelDataR[sample] = outputR * makeupGain;
+            //calcolo il wet signal L/R
+            wetSampleL = outputL * wet;
+            wetSampleR = outputR * wet;
+
+            //output somma dei segnali dry/wet
+            channelDataL[sample] = (drySampleL + wetSampleL)* makeupGain;
+            channelDataR[sample] = (drySampleR + wetSampleR)* makeupGain;
+            
 
 
             
@@ -282,10 +280,19 @@ float Sfaser25AudioProcessor::LFO(float index) {
 
 juce::AudioProcessorValueTreeState::ParameterLayout Sfaser25AudioProcessor::createParameterLayout()
 {
-    juce::AudioProcessorValueTreeState::ParameterLayout layout;
-    layout.add(std::make_unique<juce::AudioParameterFloat>("SPEED", "Speed", 0.1f, 10.0f, 0.1f));
-    layout.add(std::make_unique<juce::AudioParameterBool>("ONOFF", "OnOff", true));
-    return layout;
+    std::vector<std::unique_ptr<juce::RangedAudioParameter>> params;
+
+    //Speed Parameter
+    juce::NormalisableRange<float> speedRange = juce::NormalisableRange<float>(0.1f, 10.f, 0.005f);
+    speedRange.setSkewForCentre(2.5f);
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("SPEED", "Speed", speedRange, 0.1f, "Hz"));
+
+    //Dry Wet Parameter
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("MIX", "Mix", juce::NormalisableRange<float>(0.f, 1.f, 0.0005f), 1.f));
+
+    // On Off Parameter
+    params.push_back(std::make_unique<juce::AudioParameterBool>("ONOFF", "OnOff", false));
+    return { params.begin(), params.end() };
 }
 
 //==============================================================================

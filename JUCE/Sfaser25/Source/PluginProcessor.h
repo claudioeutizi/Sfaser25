@@ -63,20 +63,14 @@ public:
     void setStateInformation (const void* data, int sizeInBytes) override;
 
     //==============================================================================
-    //float getSpeed() { return this->speed; };
-    //void setSpeed(float speed) { this->speed = speed; };
-    //bool getPedalOnOff() { return this->pedalOnOff; };
-    //void setPedalOnOff(bool onOff) { this->pedalOnOff = onOff; };
+    float getSpeed();
+    bool getPedalOnOff();
+    float getMix();
     //==============================================================================
     static juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
     juce::AudioProcessorValueTreeState apvts;
 
     //==============================================================================
-    void setSpeed(float speed);
-    float getSpeed();
-    void setOnOff(bool onOff);
-    bool getOnOff();
-    float LFO(float index);
 
 private:
     //==============================================================================
@@ -100,6 +94,14 @@ private:
     float dutyCycle = 0.65;
     float speedOld = 0;
 
+    float drySampleL;
+    float drySampleR;
+    float dryWetParam;
+    float dry;
+    float wet;
+    float wetSampleL;
+    float wetSampleR;
+
     //input stage
     InputStage inputStage;
     wavesIN initIN;
@@ -114,6 +116,8 @@ private:
     OutputStage outputStage;
     wavesOUT initOUT;
     Matrix6f S_out;
+
+
     
     //Output_Data O_data;
     juce::AudioFormatManager formatManager;

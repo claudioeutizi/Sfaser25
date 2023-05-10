@@ -10,20 +10,18 @@
 
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
-#include "GUI/FilmStripSlider.h"
+#include "GUI/Sfaser25LookAndFeel.h"
 
 //==============================================================================
 /**
 */
 class Sfaser25AudioProcessorEditor : public juce::AudioProcessorEditor,
     juce::Button::Listener,
-    juce::Slider::Listener,
 	juce::Timer
 {
 public:
     Sfaser25AudioProcessorEditor (Sfaser25AudioProcessor&);
     ~Sfaser25AudioProcessorEditor() override;
-    void sliderValueChanged(juce::Slider* slider) override;
     void buttonClicked(juce::Button* btn) override;
 	void timerCallback() override;
     //==============================================================================
@@ -37,13 +35,17 @@ private:
 	bool onOffSwitchPressed = false;
 	bool repaintFlag = false;
 
+	Sfaser25LookAndFeel sliderLookAndFeel;
 	juce::Image speedKnobStripImage;
 	juce::Image backgroundImage;
 	juce::Image onOffSwitchStripImage;
 
-	Sfaser25AudioProcessor& audioProcessor;
 	juce::Slider speedKnob;
-	juce::AudioProcessorValueTreeState::SliderAttachment speedKnobAttachment;
+	juce::Slider mixKnob;
+
+	std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> mixKnobAttachment;
+	std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> speedKnobAttachment;
+	std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> onOffSwitchAttachment;
 
 	juce::ImageButton onOffSwitch;
 	bool buttonState = false;
@@ -65,6 +67,7 @@ private:
 	const int switchWidth = 146;
 	const int switchHeight = 164;
 
+	Sfaser25AudioProcessor& audioProcessor;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Sfaser25AudioProcessorEditor)
 };
