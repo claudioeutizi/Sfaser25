@@ -90,7 +90,7 @@ void Sfaser25AudioProcessorEditor::buttonClicked(juce::Button* button)
 		}
 		else {
 			ledOnOff.setImages(false, true, true,
-				juce::ImageCache::getFromMemory(BinaryData::onoffledoff_png, BinaryData::onoffledoff_pngSize), 1.000f, juce::Colour(0x00000000),
+				juce::ImageCache::getFromMemory(BinaryData::onoffledoff_png, BinaryData::onoffledoff_pngSize), 2.000f, juce::Colour(0x00000000),
 				juce::Image(), 1.000f, juce::Colour(0x00000000),
 				juce::Image(), 1.000f, juce::Colour(0x00000000));
 			this->setButtonState(false);
