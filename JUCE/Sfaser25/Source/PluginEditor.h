@@ -10,44 +10,42 @@
 
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
-#include "GUI/FilmStripSlider.h"
+#include "GUI/Sfaser25LookAndFeel.h"
 
 //==============================================================================
 /**
 */
 class Sfaser25AudioProcessorEditor : public juce::AudioProcessorEditor,
     juce::Button::Listener,
-    juce::Slider::Listener,
 	juce::Timer
 {
 public:
     Sfaser25AudioProcessorEditor (Sfaser25AudioProcessor&);
     ~Sfaser25AudioProcessorEditor() override;
-    void sliderValueChanged(juce::Slider* slider) override;
     void buttonClicked(juce::Button* btn) override;
 	void timerCallback() override;
     //==============================================================================
     void paint (juce::Graphics&) override;
     void resized() override;
-	void setButtonState(bool buttonState) { this->buttonState = buttonState; };
-	bool getButtonState() { return this->buttonState; };
 
 private:
 	float previousSpeed = 0;
-	bool onOffSwitchPressed = false;
+	bool previousState = true;
 	bool repaintFlag = false;
 
-	juce::Image speedKnobStripImage;
-	juce::Image backgroundImage;
-	juce::Image onOffSwitchStripImage;
+	SpeedKnobLookAndFeel speedKnobLookAndFeel;
+	MixKnobLookAndFeel mixKnobLookAndFeel;
+	juce::Image speedKnobStripImage, backgroundImage, ledOnImage, ledOffImage;
 
-	Sfaser25AudioProcessor& audioProcessor;
-	juce::ScopedPointer<juce::Slider> speedKnob;
+	juce::Slider speedKnob;
+	juce::Slider mixKnob;
 
-	juce::ScopedPointer<juce::ImageButton> onOffSwitch;
-	bool buttonState = false;
+	std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> mixKnobAttachment;
+	std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> speedKnobAttachment;
 
-	juce::ScopedPointer<juce::ImageButton> ledOnOff;
+	juce::ImageButton onOffSwitch;
+
+	juce::ImageButton ledOnOff;
 
 	const int windowWidth = 360;
 	const int windowHeight = 497;
@@ -64,6 +62,7 @@ private:
 	const int switchWidth = 146;
 	const int switchHeight = 164;
 
+	Sfaser25AudioProcessor& audioProcessor;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Sfaser25AudioProcessorEditor)
 };

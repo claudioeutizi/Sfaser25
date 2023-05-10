@@ -13,7 +13,6 @@
 #include <stdio.h>
 #include <iostream>
 
-using Eigen::MatrixXd;
 using namespace Eigen;
 
 struct wavesIN
@@ -28,18 +27,18 @@ public:
 
     InputStage();
     ~InputStage() {}
-    void prepareInputStage(float sampleRate);
-    float inputStageSample(const float inputSample, wavesIN& waves);
-    void inputScatteringMatrix(float Z2);
+    Matrix4f prepareInputStage(float sampleRate);
+    float inputStageSample(const float inputSample, Matrix4f S, wavesIN& waves);
+
 
 private:
-    //float Z1;
-    //float Z3;
-    //float Z4;
+    float Z1 = 10e3;
+    float Z3 = 1e9;
+    float Z4 = 470e3;
     Matrix4f S;
-    //Matrix4f I;
-    //Matrix<float, 4, 2> Qi_T;
-    //Matrix<float, 4, 2> Qv_T;
-    //Matrix<float, 2, 4> Qv;
-    //Matrix<float, 2, 4> Qi;
+    Matrix4f I;
+    Matrix<float, 4, 2> Qi_T;
+    Matrix<float, 4, 2> Qv_T;
+    Matrix<float, 2, 4> Qv;
+    Matrix<float, 2, 4> Qi;
 };

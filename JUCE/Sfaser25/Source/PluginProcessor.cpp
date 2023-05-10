@@ -9,7 +9,6 @@
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
-
 //==============================================================================
 Sfaser25AudioProcessor::Sfaser25AudioProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
@@ -20,7 +19,7 @@ Sfaser25AudioProcessor::Sfaser25AudioProcessor()
                       #endif
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
-                       ), inputStage(), shiftStage(), outputStage()
+                       ), inputStage(), shiftStage(), outputStage(), apvts(*this, nullptr, "Parameters", createParameterLayout())
 #endif
 {
 }
@@ -94,81 +93,17 @@ void Sfaser25AudioProcessor::changeProgramName (int index, const juce::String& n
 //==============================================================================
 void Sfaser25AudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-    // Use this method as the place to do any pre-playback
-    // initialisation that you need..
+
+    juce::ignoreUnused (samplesPerBlock);
+    sample_rate = (int)sampleRate;
+
+    //Compute S for each stage
+
+    S_in = inputStage.prepareInputStage(sample_rate);
+    shiftStage.prepareShiftStage(sample_rate);
+    S_out = outputStage.prepareOutputStage(sample_rate);
     
-    juce::ignoreUnused (sampleRate, samplesPerBlock);
-
-        //Compute S for each stage
-        inputStage.prepareInputStage(sample_rate);
-        shiftStage.prepareShiftStage(sample_rate);
-        outputStage.prepareOutputStage(sample_rate);
-        //juce::File inputFile("C:/Users/matti/Desktop/MAE/mxrPhase90/Face90/MATLAB/Useful Files/noise192.wav");
-        //juce::File outputFile("C:/Users/matti/Desktop/MAE/mxrPhase90/Face90/MATLAB/Sfaser25/outputnoise.wav");
-
-        //juce::AudioFormatManager formatManager;
-        //formatManager.registerBasicFormats();
-
-        //juce::AudioFormatReader* reader = formatManager.createReaderFor(inputFile);
-        //if (reader != nullptr)
-        //{
-        //    // Read the audio data from the input file
-        //    juce::AudioBuffer<float> buffer(2, reader->lengthInSamples);
-        //    reader->read(&buffer, 0, reader->lengthInSamples, 0, true, true);
-
-        //    juce::AudioBuffer<float> buffer2(2, reader->lengthInSamples);
-
-        //    // Process the audio data here...
-        //    auto* inputBuffer = buffer.getReadPointer(0);
-        //    auto* outputBuffer = buffer2.getWritePointer(0);
-        //    auto* outputBuffer2 = buffer2.getWritePointer(1);
-
-        //    for (int sample = 0; sample < buffer.getNumSamples()-1; ++sample)
-        //    {
-        //        const float input_sample = inputBuffer[sample];
-        //        lfo = 3.64;
-
-        //        inputStageOutput = inputStage->inputStageSample(input_sample*2, S_in, initIN);
-        //        shiftStageOutput1 = shiftStage->shiftStageSample(inputStageOutput, S_stage, initSTAGE1, lfo);
-        //        shiftStageOutput2 = shiftStage->shiftStageSample(shiftStageOutput1, S_stage, initSTAGE2, lfo);
-        //        shiftStageOutput3 = shiftStage->shiftStageSample(shiftStageOutput2, S_stage, initSTAGE3, lfo);
-        //        shiftStageOutput4 = shiftStage->shiftStageSample(shiftStageOutput3, S_stage, initSTAGE4, lfo);
-        //        output = outputStage->outputStageSample(shiftStageOutput4, inputStageOutput, S_out, initOUT);
-
-        //        outputBuffer[sample] = output * 3;
-        //        outputBuffer2[sample] = output * 3;
-        //    }
-
-        //    // Create a new audio file for the output
-        //    juce::FileOutputStream outputStream(outputFile);
-        //    if (outputStream.openedOk())
-        //    {
-        //        juce::WavAudioFormat wavFormat;
-        //        std::unique_ptr<juce::AudioFormatWriter> writer(
-        //            wavFormat.createWriterFor(&outputStream, reader->sampleRate, reader->numChannels, 16, {}, 0)
-        //        );;
-        //        if (writer != nullptr)
-        //        {
-        //            // Write the processed audio data to the output file
-        //            writer->writeFromAudioSampleBuffer(buffer2, 0, buffer2.getNumSamples());
-        //        }
-        //    }
-
-        //    // Clean up the reader
-        //    delete reader;
-        //}
 }
-
-//juce native - based method found online
-//juce::AudioBuffer<float> Sfaser25AudioProcessor::GetAudioBufferFromFile(juce::File file)
-//{
-//    auto* reader = formatManager.createReaderFor(file);
-//    juce::AudioBuffer<float> audioBuffer;
-//    audioBuffer.setSize(reader->numChannels, reader->lengthInSamples);
-//    reader->read(&audioBuffer, 0, reader->lengthInSamples, 0, true, true);
-//    delete reader;
-//    return audioBuffer;
-//}
 
 void Sfaser25AudioProcessor::releaseResources()
 {
@@ -208,45 +143,102 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
     juce::ScopedNoDenormals noDenormals;
 
     
-    auto totalNumInputChannels  = 1; //getTotalNumInputChannels();
+    auto totalNumInputChannels  = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
+
+    float speed = getSpeed();
+
+    rounded = round(sample_rate / speed);
 
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
             buffer.clear (i, 0, buffer.getNumSamples());
+  
+    
+    auto* channelDataL = buffer.getWritePointer (0);
+    auto* channelDataR = buffer.getWritePointer (1);
 
-     int channel = 0;
-     auto* channelDataL = buffer.getWritePointer (channel);
-     auto* channelDataR = buffer.getWritePointer (channel+1);
+    auto* inputBufferL = buffer.getReadPointer(0);
+    auto* inputBufferR = buffer.getReadPointer(1);
 
+    
 
-    float input_out = 0;
-    float makeupGain = 5;
+    if (!getOnOffState()) {
 
-       
-       auto inputBuffer = buffer.getReadPointer(channel);//MONO input
-
-       for(int sample = 0; sample < buffer.getNumSamples(); ++sample)
-       {
-           //lfo = 3.64;
-
-           lfoValue = std::sin(2 * 3.14 * rate * lfoIndex / sample_rate) * 0.15 + 3.25;
-
-           const float input_sample = inputBuffer[sample];
-
-           inputStageOutput = inputStage.inputStageSample(input_sample, initIN);
-           shiftStageOutput1 = shiftStage.shiftStageSample(inputStageOutput, initSTAGE1, lfoValue);
-           shiftStageOutput2 = shiftStage.shiftStageSample(shiftStageOutput1, initSTAGE2, lfoValue);
-           shiftStageOutput3 = shiftStage.shiftStageSample(shiftStageOutput2, initSTAGE3, lfoValue);
-           shiftStageOutput4 = shiftStage.shiftStageSample(shiftStageOutput3, initSTAGE4, lfoValue);
-           output = outputStage.outputStageSample(shiftStageOutput4, inputStageOutput, initOUT);
-           
-           channelDataL[sample] = output * makeupGain;
-           channelDataR[sample] = output * makeupGain;
-
-           lfoIndex++;
-           lfoIndex = lfoIndex % sample_rate / rate;
-       }
+        for (int sample = 0; sample < buffer.getNumSamples(); ++sample)
+        {
+             channelDataL[sample] = inputBufferL[sample];
+             channelDataR[sample] = inputBufferR[sample];
+        }
     }
+
+    else {
+
+        //prendo parametro dal knob e calcolo la quantita di dry/wet
+        dryWetParam = getMix();
+        dry = 1.0f - dryWetParam;
+        wet = dryWetParam;
+        
+        for (int sample = 0; sample < buffer.getNumSamples(); ++sample)
+        {
+            //lfoValue = 2 * 0.3 * std::abs(speed*lfoIndex/sample_rate - floor(speed*lfoIndex/sample_rate + 0.5))+3.1;
+            if (speed!=speedOld) {
+                lfoIndex = lfoIndex*speedOld/speed;
+            }
+
+            speedOld = speed;
+
+            lfoValue = LFO((float)(lfoIndex * speed) / sample_rate);
+            
+            //prendo il dry signal L
+            drySampleL = inputBufferL[sample] * dry;
+
+            input_sample = inputBufferL[sample];
+
+            if (!input_sample) {
+                outputL = 0;
+            }
+            else {
+                inputStageOutput = inputStage.inputStageSample(input_sample, S_in, initIN);
+                shiftStageOutput1 = shiftStage.shiftStageSample(inputStageOutput, initSTAGE1L, lfoValue);
+                shiftStageOutput2 = shiftStage.shiftStageSample(shiftStageOutput1, initSTAGE2L, lfoValue);
+                shiftStageOutput3 = shiftStage.shiftStageSample(shiftStageOutput2, initSTAGE3L, lfoValue);
+                shiftStageOutput4 = shiftStage.shiftStageSample(shiftStageOutput3, initSTAGE4L, lfoValue);
+                outputL = outputStage.outputStageSample(shiftStageOutput4, inputStageOutput, S_out, initOUT);
+            }
+
+            //prendo il dry signal R
+            drySampleR = inputBufferR[sample] * dry;
+
+            input_sample = inputBufferR[sample];
+
+            if (!input_sample) {
+                outputR = 0;
+            }
+            else {
+
+                inputStageOutput = inputStage.inputStageSample(input_sample, S_in, initIN);
+                shiftStageOutput1 = shiftStage.shiftStageSample(inputStageOutput, initSTAGE1R, lfoValue);
+                shiftStageOutput2 = shiftStage.shiftStageSample(shiftStageOutput1, initSTAGE2R, lfoValue);
+                shiftStageOutput3 = shiftStage.shiftStageSample(shiftStageOutput2, initSTAGE3R, lfoValue);
+                shiftStageOutput4 = shiftStage.shiftStageSample(shiftStageOutput3, initSTAGE4R, lfoValue);
+                outputR = outputStage.outputStageSample(shiftStageOutput4, inputStageOutput, S_out, initOUT);
+            }
+
+            //calcolo il wet signal L/R
+            wetSampleL = outputL * wet;
+            wetSampleR = outputR * wet;
+
+            //output somma dei segnali dry/wet
+            channelDataL[sample] = (drySampleL + wetSampleL * makeupGain);
+            channelDataR[sample] = (drySampleR + wetSampleR * makeupGain);
+
+            lfoIndex++;
+
+            lfoIndex = lfoIndex % rounded;
+        }
+    }
+ }
+    
 
 
 //==============================================================================
@@ -277,12 +269,39 @@ void Sfaser25AudioProcessor::setStateInformation (const void* data, int sizeInBy
 
 float Sfaser25AudioProcessor::getSpeed()
 {
-    return this->speed;
+    auto& speedValue = *apvts.getRawParameterValue("SPEED");
+    return speedValue;
 }
 
-void Sfaser25AudioProcessor::setSpeed(float speed)
+float Sfaser25AudioProcessor::getMix()
 {
-    this->speed = speed;
+    auto& speedValue = *apvts.getRawParameterValue("MIX");
+    return speedValue;
+}
+
+
+float Sfaser25AudioProcessor::LFO(float index) {
+    if (index < dutyCycle) {
+        return (index*0.3) / dutyCycle+3.1;
+    }
+    else {
+        return 0.3 / (1 - dutyCycle)*(-index + 1)+3.1;
+    }
+}
+
+juce::AudioProcessorValueTreeState::ParameterLayout Sfaser25AudioProcessor::createParameterLayout()
+{
+    std::vector<std::unique_ptr<juce::RangedAudioParameter>> params;
+
+    //Speed Parameter
+    juce::NormalisableRange<float> speedRange = juce::NormalisableRange<float>(0.1f, 10.f, 0.005f);
+    speedRange.setSkewForCentre(2.5f);
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("SPEED", "Speed", speedRange, 0.1f, "Hz"));
+
+    //Dry Wet Parameter
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("MIX", "Mix", juce::NormalisableRange<float>(0.f, 1.f, 0.0005f), 1.f));
+
+    return { params.begin(), params.end() };
 }
 
 //==============================================================================
@@ -291,3 +310,4 @@ juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
     return new Sfaser25AudioProcessor();
 }
+
