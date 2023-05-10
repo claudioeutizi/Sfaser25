@@ -66,6 +66,7 @@ public:
     float getSpeed();
     bool getPedalOnOff();
     float getMix();
+    float LFO(float index);
     //==============================================================================
     static juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
     juce::AudioProcessorValueTreeState apvts;

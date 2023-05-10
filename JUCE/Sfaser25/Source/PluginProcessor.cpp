@@ -184,10 +184,8 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
 
             speedOld = speed;
 
-                lfoValue = LFO((float)(lfoIndex * speed) / sample_rate);
+            lfoValue = LFO((float)(lfoIndex * speed) / sample_rate);
             
-            
-
             //prendo il dry signal L
             drySampleL = inputBufferL[sample] * dry;
 
@@ -228,8 +226,8 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
             wetSampleR = outputR * wet;
 
             //output somma dei segnali dry/wet
-            channelDataL[sample] = (drySampleL + wetSampleL)* makeupGain;
-            channelDataR[sample] = (drySampleR + wetSampleR)* makeupGain;
+            channelDataL[sample] = (drySampleL + wetSampleL * makeupGain);
+            channelDataR[sample] = (drySampleR + wetSampleR * makeupGain);
             
 
 
@@ -267,6 +265,25 @@ void Sfaser25AudioProcessor::setStateInformation (const void* data, int sizeInBy
     // You should use this method to restore your parameters from this memory block,
     // whose contents will have been created by the getStateInformation() call.
     
+}
+
+float Sfaser25AudioProcessor::getSpeed()
+{
+    auto& speedValue = *apvts.getRawParameterValue("SPEED");
+    return speedValue;
+}
+
+float Sfaser25AudioProcessor::getMix()
+{
+    auto& speedValue = *apvts.getRawParameterValue("MIX");
+    return speedValue;
+}
+
+
+bool Sfaser25AudioProcessor::getPedalOnOff()
+{
+    auto& onOffValue = *apvts.getRawParameterValue("ONOFF");
+    return onOffValue;
 }
 
 float Sfaser25AudioProcessor::LFO(float index) {
