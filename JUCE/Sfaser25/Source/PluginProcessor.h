@@ -65,6 +65,7 @@ public:
     //==============================================================================
     float getSpeed();
     bool getPedalOnOff();
+    float getMix();
     //==============================================================================
     static juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
     juce::AudioProcessorValueTreeState apvts;
@@ -91,6 +92,14 @@ private:
     float input_sample = 0;
     float makeupGain = 5;
 
+    float drySampleL;
+    float drySampleR;
+    float dryWetParam;
+    float dry;
+    float wet;
+    float wetSampleL;
+    float wetSampleR;
+
     //input stage
     InputStage inputStage;
     wavesIN initIN;
@@ -105,6 +114,8 @@ private:
     OutputStage outputStage;
     wavesOUT initOUT;
     Matrix6f S_out;
+
+
     
     //Output_Data O_data;
     juce::AudioFormatManager formatManager;

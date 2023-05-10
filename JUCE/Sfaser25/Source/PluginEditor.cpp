@@ -14,7 +14,7 @@
 //==============================================================================
 Sfaser25AudioProcessorEditor::Sfaser25AudioProcessorEditor (Sfaser25AudioProcessor& p)
     : AudioProcessorEditor (&p), audioProcessor (p),
-	onOffSwitch("onOffSwitch"), ledOnOff("onOffLed"), speedKnob("speedKnob")
+	onOffSwitch("onOffSwitch"), ledOnOff("onOffLed"), speedKnob("speedKnob"), mixKnob("mixKnob")
 
 {	//background 
 	backgroundImage = juce::ImageCache::getFromMemory(BinaryData::pedal_full_res_2k_cropped_scaled_png, BinaryData::pedal_full_res_2k_cropped_scaled_pngSize);
@@ -33,7 +33,7 @@ Sfaser25AudioProcessorEditor::Sfaser25AudioProcessorEditor (Sfaser25AudioProcess
 	ledOnOff.setEnabled(false);
 	ledOnOff.addListener(this);
 	ledOnOff.setImages(false, true, true,
-		juce::ImageCache::getFromMemory(BinaryData::onoffledoff_png, BinaryData::onoffledoff_pngSize), 1.000f, juce::Colour(0x00000000),
+		juce::ImageCache::getFromMemory(BinaryData::onoffledoff_png, BinaryData::onoffledoff_pngSize), 2.000f, juce::Colour(0x00000000),
 		juce::Image(), 1.000f, juce::Colour(0x00000000),
 		juce::Image(), 1.000f, juce::Colour(0x00000000));
 
@@ -46,6 +46,13 @@ Sfaser25AudioProcessorEditor::Sfaser25AudioProcessorEditor (Sfaser25AudioProcess
 	speedKnob.setTextValueSuffix(" Hz");
 	speedKnob.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
 	speedKnob.setTextBoxStyle(juce::Slider::TextBoxLeft, false, 0, 0);
+
+	//dry wet knob
+	mixKnobAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, "MIX", mixKnob);
+	addAndMakeVisible(mixKnob);
+	mixKnob.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+	mixKnob.setTextBoxStyle(juce::Slider::TextBoxLeft, false, 0, 0);
+	mixKnob.setPopupDisplayEnabled(true, true, nullptr);
 
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
@@ -74,6 +81,7 @@ void Sfaser25AudioProcessorEditor::resized()
 	onOffSwitch.setBounds(windowWidth / 2 - switchWidth / 2, switchY, switchWidth, switchHeight);
 	ledOnOff.setBounds(windowWidth / 2 - ledWidth / 2, ledY, ledWidth, ledHeight);
 	speedKnob.setBounds(windowWidth / 2 - knobWidth / 2, knobY, knobWidth, knobHeight);
+	mixKnob.setBounds(windowWidth - 55, knobY, 50, 50);
 }
 
 

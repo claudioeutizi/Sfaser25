@@ -169,11 +169,20 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
         }
     }
     else{
+
+        //prendo parametro dal knob e calcolo la quantita di dry/wet
+        dryWetParam = getMix();
+        dry = 1.0f - dryWetParam;
+        wet = dryWetParam;
         
         for (int sample = 0; sample < buffer.getNumSamples(); ++sample)
         {
 
             lfoValue = std::sin(2 * 3.14159 * speed * lfoIndex / sample_rate) * 0.15 + 3.25;
+
+            //prendo il dry signal L
+            drySampleL = inputBufferL[sample] * dry;
+
             input_sample = inputBufferL[sample];
 
             if (!input_sample) {
@@ -187,6 +196,9 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
                 shiftStageOutput4 = shiftStage.shiftStageSample(shiftStageOutput3, initSTAGE4L, lfoValue);
                 outputL = outputStage.outputStageSample(shiftStageOutput4, inputStageOutput, S_out, initOUT);
             }
+
+            //prendo il dry signal R
+            drySampleR = inputBufferR[sample] * dry;
 
             input_sample = inputBufferR[sample];
 
@@ -203,8 +215,14 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
                 outputR = outputStage.outputStageSample(shiftStageOutput4, inputStageOutput, S_out, initOUT);
             }
 
-            channelDataL[sample] = outputL * makeupGain;
-            channelDataR[sample] = outputR * makeupGain;
+            //calcolo il wet signal L/R
+            wetSampleL = outputL * wet;
+            wetSampleR = outputR * wet;
+
+            //output somma dei segnali dry/wet
+            channelDataL[sample] = (drySampleL + wetSampleL)* makeupGain;
+            channelDataR[sample] = (drySampleR + wetSampleR)* makeupGain;
+            
 
             lfoIndex++;
 
@@ -247,6 +265,12 @@ float Sfaser25AudioProcessor::getSpeed()
     return speedValue;
 }
 
+float Sfaser25AudioProcessor::getMix()
+{
+    auto& speedValue = *apvts.getRawParameterValue("MIX");
+    return speedValue;
+}
+
 
 bool Sfaser25AudioProcessor::getPedalOnOff()
 {
@@ -255,12 +279,20 @@ bool Sfaser25AudioProcessor::getPedalOnOff()
 }
 
 
+
 juce::AudioProcessorValueTreeState::ParameterLayout Sfaser25AudioProcessor::createParameterLayout()
 {
     std::vector<std::unique_ptr<juce::RangedAudioParameter>> params;
+
+    //Speed Parameter
     juce::NormalisableRange<float> speedRange = juce::NormalisableRange<float>(0.1f, 10.f, 0.005f);
     speedRange.setSkewForCentre(2.5f);
     params.push_back(std::make_unique<juce::AudioParameterFloat>("SPEED", "Speed", speedRange, 0.1f, "Hz"));
+
+    //Dry Wet Parameter
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("MIX", "Mix", juce::NormalisableRange<float>(0.f, 1.f, 0.0005f), 1.f));
+
+    // On Off Parameter
     params.push_back(std::make_unique<juce::AudioParameterBool>("ONOFF", "OnOff", false));
     return { params.begin(), params.end() };
 }

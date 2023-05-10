@@ -40,8 +40,10 @@ private:
 	juce::Image backgroundImage;
 	juce::Image onOffSwitchStripImage;
 
-	Sfaser25AudioProcessor& audioProcessor;
 	juce::Slider speedKnob;
+	juce::Slider mixKnob;
+
+	std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> mixKnobAttachment;
 	std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> speedKnobAttachment;
 	std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> onOffSwitchAttachment;
 
@@ -65,6 +67,7 @@ private:
 	const int switchWidth = 146;
 	const int switchHeight = 164;
 
+	Sfaser25AudioProcessor& audioProcessor;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Sfaser25AudioProcessorEditor)
 };
