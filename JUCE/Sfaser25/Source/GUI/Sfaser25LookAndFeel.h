@@ -12,11 +12,11 @@
 #include <JuceHeader.h>
 using namespace juce;
 
-class Sfaser25LookAndFeel : public juce::LookAndFeel_V4
+class SpeedKnobLookAndFeel : public juce::LookAndFeel_V4
 {
 public:
-    Sfaser25LookAndFeel();
-    ~Sfaser25LookAndFeel();
+    SpeedKnobLookAndFeel();
+    ~SpeedKnobLookAndFeel();
 
     void drawRotarySlider(juce::Graphics& g, int x, int y, int width,
         int height, float sliderPos, float rotaryStartAngle,
@@ -33,4 +33,28 @@ private:
 
     int speedKnobStripFrames;
     Image speedKnobStripImage;
+};
+
+#pragma once
+#include <JuceHeader.h>
+using namespace juce;
+
+class MixKnobLookAndFeel : public juce::LookAndFeel_V4
+{
+public:
+    MixKnobLookAndFeel();
+    ~MixKnobLookAndFeel();
+
+    void drawRotarySlider(juce::Graphics& g, int x, int y, int width,
+        int height, float sliderPos, float rotaryStartAngle,
+        float rotaryEndAngle, juce::Slider& slider) override;
+
+private:
+
+    const int knobY = 29;
+    const int knobWidth = 50;
+    const int knobHeight = 50;
+
+    int mixKnobStripFrames;
+    Image mixKnobStripImage;
 };

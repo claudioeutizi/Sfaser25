@@ -64,9 +64,11 @@ public:
 
     //==============================================================================
     float getSpeed();
-    bool getPedalOnOff();
+    bool getOnOffState() { return onOffState; };
     float getMix();
     float LFO(float index);
+    //==============================================================================
+    void setOnOffState(bool onOffState) { this->onOffState = onOffState; };
     //==============================================================================
     static juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
     juce::AudioProcessorValueTreeState apvts;
@@ -94,6 +96,7 @@ private:
     float makeupGain = 5;
     float dutyCycle = 0.65;
     float speedOld = 0;
+    bool onOffState = true;
 
     float drySampleL;
     float drySampleR;
@@ -117,8 +120,6 @@ private:
     OutputStage outputStage;
     wavesOUT initOUT;
     Matrix6f S_out;
-
-
     
     //Output_Data O_data;
     juce::AudioFormatManager formatManager;

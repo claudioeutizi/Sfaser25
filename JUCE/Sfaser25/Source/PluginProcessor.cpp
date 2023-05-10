@@ -160,7 +160,9 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
     auto* inputBufferL = buffer.getReadPointer(0);
     auto* inputBufferR = buffer.getReadPointer(1);
 
-    if (getPedalOnOff()) {
+    
+
+    if (!getOnOffState()) {
 
         for (int sample = 0; sample < buffer.getNumSamples(); ++sample)
         {
@@ -168,7 +170,8 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
              channelDataR[sample] = inputBufferR[sample];
         }
     }
-    else{
+
+    else {
 
         //prendo parametro dal knob e calcolo la quantita di dry/wet
         dryWetParam = getMix();
@@ -228,10 +231,7 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
             //output somma dei segnali dry/wet
             channelDataL[sample] = (drySampleL + wetSampleL * makeupGain);
             channelDataR[sample] = (drySampleR + wetSampleR * makeupGain);
-            
 
-
-            
             lfoIndex++;
 
             lfoIndex = lfoIndex % rounded;
@@ -280,12 +280,6 @@ float Sfaser25AudioProcessor::getMix()
 }
 
 
-bool Sfaser25AudioProcessor::getPedalOnOff()
-{
-    auto& onOffValue = *apvts.getRawParameterValue("ONOFF");
-    return onOffValue;
-}
-
 float Sfaser25AudioProcessor::LFO(float index) {
     if (index < dutyCycle) {
         return (index*0.3) / dutyCycle+3.1;
@@ -307,8 +301,6 @@ juce::AudioProcessorValueTreeState::ParameterLayout Sfaser25AudioProcessor::crea
     //Dry Wet Parameter
     params.push_back(std::make_unique<juce::AudioParameterFloat>("MIX", "Mix", juce::NormalisableRange<float>(0.f, 1.f, 0.0005f), 1.f));
 
-    // On Off Parameter
-    params.push_back(std::make_unique<juce::AudioParameterBool>("ONOFF", "OnOff", false));
     return { params.begin(), params.end() };
 }
 

@@ -10,19 +10,19 @@
 
 #include "Sfaser25LookAndFeel.h"
 
-Sfaser25LookAndFeel::Sfaser25LookAndFeel() 
+SpeedKnobLookAndFeel::SpeedKnobLookAndFeel()
 {
     speedKnobStripImage = ImageCache::getFromMemory(BinaryData::speedknobstrip_png, BinaryData::speedknobstrip_pngSize);
     speedKnobStripFrames = speedKnobStripImage.getHeight() / knobHeight;
 }
 
-Sfaser25LookAndFeel::~Sfaser25LookAndFeel() 
+SpeedKnobLookAndFeel::~SpeedKnobLookAndFeel()
 {
 }
 
 // ==========================================================================================================================
 
-void Sfaser25LookAndFeel::drawRotarySlider(juce::Graphics& g, int x, int y, int width, int height, float sliderPos, float rotaryStartAngle, float rotaryEndAngle, juce::Slider& slider)
+void SpeedKnobLookAndFeel::drawRotarySlider(juce::Graphics& g, int x, int y, int width, int height, float sliderPos, float rotaryStartAngle, float rotaryEndAngle, juce::Slider& slider)
 {
     if (speedKnobStripImage.isValid()) {
 
@@ -47,4 +47,34 @@ void Sfaser25LookAndFeel::drawRotarySlider(juce::Graphics& g, int x, int y, int 
         g.drawFittedText(juce::String("No Image"), text_bounds.getSmallestIntegerContainer(),
             juce::Justification::horizontallyCentred | juce::Justification::centred, 1);
     }
+}
+
+//================================================================================================================
+MixKnobLookAndFeel::MixKnobLookAndFeel()
+{
+   mixKnobStripImage = ImageCache::getFromMemory(BinaryData::dry_wet_knob_png, BinaryData::dry_wet_knob_pngSize);
+}
+
+MixKnobLookAndFeel::~MixKnobLookAndFeel()
+{
+}
+void MixKnobLookAndFeel::drawRotarySlider(juce::Graphics& g, int x, int y, int width, int height, 
+    float sliderPos, float rotaryStartAngle, float rotaryEndAngle, juce::Slider& slider)
+{
+    const double rotation = (slider.getValue()
+        - slider.getMinimum())
+        / (slider.getMaximum()
+            - slider.getMinimum());
+
+    const int frames = mixKnobStripImage.getHeight() / mixKnobStripImage.getWidth();
+    const int frameId = (int)ceil(rotation * ((double)frames - 1.0));
+    const float radius = juce::jmin(width / 2.0f, height / 2.0f);
+    const float centerX = x + width * 0.5f;
+    const float centerY = y + height * 0.5f;
+    const float rx = centerX - radius - 1.0f;
+    const float ry = centerY - radius;
+
+    g.drawImage(mixKnobStripImage, (int)rx, (int)ry, 2 * (int)radius, 2 * (int)radius, 0, frameId * mixKnobStripImage.getWidth(),
+        mixKnobStripImage.getWidth(),
+        mixKnobStripImage.getWidth());
 }

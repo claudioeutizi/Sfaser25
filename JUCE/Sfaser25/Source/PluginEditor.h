@@ -27,28 +27,23 @@ public:
     //==============================================================================
     void paint (juce::Graphics&) override;
     void resized() override;
-	void setButtonState(bool buttonState) { this->buttonState = buttonState; };
-	bool getButtonState() { return this->buttonState; };
 
 private:
 	float previousSpeed = 0;
-	bool onOffSwitchPressed = false;
+	bool previousState = true;
 	bool repaintFlag = false;
 
-	Sfaser25LookAndFeel sliderLookAndFeel;
-	juce::Image speedKnobStripImage;
-	juce::Image backgroundImage;
-	juce::Image onOffSwitchStripImage;
+	SpeedKnobLookAndFeel speedKnobLookAndFeel;
+	MixKnobLookAndFeel mixKnobLookAndFeel;
+	juce::Image speedKnobStripImage, backgroundImage, ledOnImage, ledOffImage;
 
 	juce::Slider speedKnob;
 	juce::Slider mixKnob;
 
 	std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> mixKnobAttachment;
 	std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> speedKnobAttachment;
-	std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> onOffSwitchAttachment;
 
 	juce::ImageButton onOffSwitch;
-	bool buttonState = false;
 
 	juce::ImageButton ledOnOff;
 

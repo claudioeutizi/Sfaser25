@@ -20,7 +20,6 @@ Sfaser25AudioProcessorEditor::Sfaser25AudioProcessorEditor (Sfaser25AudioProcess
 	backgroundImage = juce::ImageCache::getFromMemory(BinaryData::pedal_full_res_2k_cropped_scaled_png, BinaryData::pedal_full_res_2k_cropped_scaled_pngSize);
 
 	//on off
-	onOffSwitchAttachment = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(audioProcessor.apvts, "ONOFF", onOffSwitch);
 	addAndMakeVisible(onOffSwitch);
 	onOffSwitch.addListener(this);
 	onOffSwitch.setImages(false, true, true,
@@ -29,18 +28,14 @@ Sfaser25AudioProcessorEditor::Sfaser25AudioProcessorEditor (Sfaser25AudioProcess
 		juce::ImageCache::getFromMemory(BinaryData::onoffswitchdown_png, BinaryData::onoffswitchdown_pngSize), 1.000f, juce::Colour(0x00000000));
 
 	//on off led
-	addAndMakeVisible(ledOnOff);
-	ledOnOff.setEnabled(false);
-	ledOnOff.addListener(this);
-	ledOnOff.setImages(false, true, true,
-		juce::ImageCache::getFromMemory(BinaryData::onoffledoff_png, BinaryData::onoffledoff_pngSize), 2.000f, juce::Colour(0x00000000),
-		juce::Image(), 1.000f, juce::Colour(0x00000000),
-		juce::Image(), 1.000f, juce::Colour(0x00000000));
+	ledOnImage = juce::ImageCache::getFromMemory(BinaryData::onoffledon_png, BinaryData::onoffledon_pngSize);
+	ledOffImage = juce::ImageCache::getFromMemory(BinaryData::onoffledoff_png, BinaryData::onoffledoff_pngSize);
 
 	//speed knob
 	speedKnobAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, "SPEED", speedKnob);
 	addAndMakeVisible(speedKnob);
-	speedKnob.setLookAndFeel(&sliderLookAndFeel);
+	speedKnob.setLookAndFeel(&speedKnobLookAndFeel);
+	mixKnob.setLookAndFeel(&mixKnobLookAndFeel);
 	speedKnob.setMouseCursor(juce::MouseCursor::PointingHandCursor);
 	speedKnob.setPopupDisplayEnabled(true, true, nullptr);
 	speedKnob.setTextValueSuffix(" Hz");
@@ -57,6 +52,8 @@ Sfaser25AudioProcessorEditor::Sfaser25AudioProcessorEditor (Sfaser25AudioProcess
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
 	setSize(windowWidth, windowHeight);
+
+	startTimerHz(20);
 }
 
 Sfaser25AudioProcessorEditor::~Sfaser25AudioProcessorEditor()
@@ -74,6 +71,9 @@ void Sfaser25AudioProcessorEditor::paint(juce::Graphics& g)
 	g.drawImage(backgroundImage, 0, 0, backgroundImage.getWidth(),
 		backgroundImage.getHeight(), 0, 0, backgroundImage.getWidth(),
 		backgroundImage.getHeight(), false);
+	int ledX = windowWidth / 2 - ledWidth / 2;
+	juce::Image& image = audioProcessor.getOnOffState() ? ledOnImage : ledOffImage;
+	g.drawImageAt(image, ledX , ledY);
 }
 
 void Sfaser25AudioProcessorEditor::resized()
@@ -89,28 +89,28 @@ void Sfaser25AudioProcessorEditor::buttonClicked(juce::Button* button)
 {
 	if (button == &onOffSwitch)
 	{
-		if (!this->getButtonState()) {
+		if (!audioProcessor.getOnOffState()) {
 			ledOnOff.setImages(false, true, true,
 				juce::ImageCache::getFromMemory(BinaryData::onoffledon_png, BinaryData::onoffledon_pngSize), 2.000f, juce::Colour(0x00000000),
 				juce::Image(), 1.000f, juce::Colour(0x00000000),
 				juce::Image(), 1.000f, juce::Colour(0x00000000));
-			this->setButtonState(true);
+			audioProcessor.setOnOffState(true);
 		}
 		else {
 			ledOnOff.setImages(false, true, true,
 				juce::ImageCache::getFromMemory(BinaryData::onoffledoff_png, BinaryData::onoffledoff_pngSize), 2.000f, juce::Colour(0x00000000),
 				juce::Image(), 1.000f, juce::Colour(0x00000000),
 				juce::Image(), 1.000f, juce::Colour(0x00000000));
-			this->setButtonState(false);
+			audioProcessor.setOnOffState(false);
 		}
 	}
 }
 
 void Sfaser25AudioProcessorEditor::timerCallback()
 {
-	if (previousSpeed != *audioProcessor.apvts.getRawParameterValue("SPEED"))
+	if (previousState != audioProcessor.getOnOffState())
 	{
 		repaint();
-		previousSpeed = *audioProcessor.apvts.getRawParameterValue("SPEED");
+		previousState = audioProcessor.getOnOffState();
 	}
 }
