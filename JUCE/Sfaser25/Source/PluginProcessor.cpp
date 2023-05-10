@@ -9,7 +9,6 @@
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
-#include "Utils/melatonin_parameters.h"
 //==============================================================================
 Sfaser25AudioProcessor::Sfaser25AudioProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
@@ -147,7 +146,6 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
     auto totalNumInputChannels  = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
 
-    //perchè devo fare x10? Gli arriva un valore sballato di un ordine di grandezza?
     float speed = getSpeed();
 
     rounded = round(sample_rate / speed);
@@ -249,9 +247,6 @@ float Sfaser25AudioProcessor::getSpeed()
     return speedValue;
 }
 
-void Sfaser25AudioProcessor::setSpeed(float speed)
-{
-}
 
 bool Sfaser25AudioProcessor::getPedalOnOff()
 {
@@ -259,9 +254,6 @@ bool Sfaser25AudioProcessor::getPedalOnOff()
     return onOffValue;
 }
 
-void Sfaser25AudioProcessor::setPedalOnOff(bool onOff)
-{
-}
 
 juce::AudioProcessorValueTreeState::ParameterLayout Sfaser25AudioProcessor::createParameterLayout()
 {

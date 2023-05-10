@@ -64,9 +64,7 @@ public:
 
     //==============================================================================
     float getSpeed();
-    void setSpeed(float speed);
     bool getPedalOnOff();
-    void setPedalOnOff(bool onOff);
     //==============================================================================
     static juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
     juce::AudioProcessorValueTreeState apvts;

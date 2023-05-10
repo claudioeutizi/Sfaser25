@@ -79,7 +79,6 @@ void Sfaser25AudioProcessorEditor::resized()
 
 void Sfaser25AudioProcessorEditor::buttonClicked(juce::Button* button)
 {
-	audioProcessor.apvts.getParameter("ONOFF")->setValue((this->getButtonState()));
 	if (button == &onOffSwitch)
 	{
 		if (!this->getButtonState()) {

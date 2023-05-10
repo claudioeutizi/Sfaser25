@@ -13,7 +13,7 @@
 Sfaser25LookAndFeel::Sfaser25LookAndFeel() 
 {
     speedKnobStripImage = ImageCache::getFromMemory(BinaryData::speedknobstrip_png, BinaryData::speedknobstrip_pngSize);
-    speedKnobStripFrames = speedKnobStripImage.getHeight() / speedKnobStripImage.getWidth();
+    speedKnobStripFrames = speedKnobStripImage.getHeight() / knobHeight;
 }
 
 Sfaser25LookAndFeel::~Sfaser25LookAndFeel() 
@@ -25,26 +25,17 @@ Sfaser25LookAndFeel::~Sfaser25LookAndFeel()
 void Sfaser25LookAndFeel::drawRotarySlider(juce::Graphics& g, int x, int y, int width, int height, float sliderPos, float rotaryStartAngle, float rotaryEndAngle, juce::Slider& slider)
 {
     if (speedKnobStripImage.isValid()) {
-        // Così la grafica funziona, ma la metà va a 5Hz
-        //const double div = (slider.getMaximum() + slider.getInterval()) / speedKnobStripFrames;
-        //double pos = (int)(slider.getValue() / div);
 
-        //g.drawImage(speedKnobStripImage, x, y, knobWidth, knobHeight, 0, (int)pos * 135, width, height);
-
-        //Così la grafica è sbagliata, il knob si muove male ma il centrale è a 2.5Hz.
-
-        //AIUTO
-
-        const int frames = speedKnobStripImage.getHeight() / knobHeight;
-        auto imageIndex = int(sliderPos * frames);
-        const int frameId = jlimit(0, frames - 1, imageIndex);
-        const float radius = juce::jmin(width / 2.0f, height / 2.0f);
+        auto imageIndex = int(sliderPos * speedKnobStripFrames);
+        const int frameId = jlimit(0, speedKnobStripFrames - 1, imageIndex);
+        const float radiusWidth = width / 2.0f;
+        const float radiusHeight = height / 2.0f;
         const float centerX = x + width * 0.5f;
         const float centerY = y + height * 0.5f;
-        const float rx = centerX - radius;
-        const float ry = centerY - radius;
+        const float rx = centerX - radiusWidth;
+        const float ry = centerY - radiusHeight;
 
-        g.drawImage(speedKnobStripImage, rx, ry, knobWidth, knobHeight, 0, frameId * (speedKnobStripImage.getHeight() / frames), knobWidth, knobHeight);
+        g.drawImage(speedKnobStripImage, rx, ry, knobWidth, knobHeight, 0, frameId * (speedKnobStripImage.getHeight() / speedKnobStripFrames), knobWidth, knobHeight);
     }
     else {
         static const float textPpercent = 0.35f;
