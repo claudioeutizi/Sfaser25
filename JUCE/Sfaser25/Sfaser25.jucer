@@ -4,14 +4,11 @@
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1">
   <MAINGROUP id="rtYDuW" name="Sfaser25">
     <GROUP id="{62A10761-4B4D-06E8-617E-2410959EE530}" name="Source">
-      <GROUP id="{F1071F8F-C8CC-11FB-F1CE-3E72D7810969}" name="Utils">
-        <FILE id="EzNx5P" name="melatonin_parameters.cpp" compile="1" resource="0"
-              file="Source/Utils/melatonin_parameters.cpp"/>
-        <FILE id="SqThza" name="melatonin_parameters.h" compile="0" resource="0"
-              file="Source/Utils/melatonin_parameters.h"/>
-      </GROUP>
       <GROUP id="{DFA0EA5C-0F7A-6675-B0C4-487859F5AD16}" name="GUI">
-        <GROUP id="{126EC93D-DB55-3F9F-19BB-E9C9AEAC3EAC}" name="Assets"/>
+        <GROUP id="{126EC93D-DB55-3F9F-19BB-E9C9AEAC3EAC}" name="Assets">
+          <FILE id="OmTod6" name="dry_wet_knob.png" compile="0" resource="1"
+                file="Source/GUI/Assets/dry_wet_knob.png"/>
+        </GROUP>
         <FILE id="gMnulk" name="Sfaser25LookAndFeel.cpp" compile="1" resource="0"
               file="Source/GUI/Sfaser25LookAndFeel.cpp"/>
         <FILE id="G46jOp" name="Sfaser25LookAndFeel.h" compile="0" resource="0"
