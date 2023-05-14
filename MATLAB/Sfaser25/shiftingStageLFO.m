@@ -6,11 +6,12 @@ Vref = 5.1;
 Is = 5.185e-3;
 Vp = -2.021;
 k = 2 * Is / Vp^2;
+k2=4e-3*Is/Vp^2;
 
 %% LFO accurato
 fs = 1/Ts; % Frequenza di campionamento
 T = N/fs; % Durata del segnale
-f = 7; % Frequenza del segnale triangolare
+f = 1; % Frequenza del segnale triangolare
 A = 0.15; % Ampiezza del segnale triangolare
 
 % Generazione del segnale triangolare
@@ -37,7 +38,7 @@ hpFilt = designfilt('highpassiir','FilterOrder',2, ...
     'SampleRate',fs);
 
 Vg = filter(hpFilt, y) + 3.25;
-
+Vg=3.08;
 % Vg=3.25;
 % figure;
 % plot(t,Vg);
@@ -76,12 +77,18 @@ Z7 = 1e9;
 Z8 = 1e-6;
 
 Vout = zeros(N,1);
-
+Vds=0;
 for n = 1 : N
  
+if(Vds<=Vg-5.1-Vp)
+    Z6 = 1 / (k * (Vg - Vref - Vp - Vds));
 
-% Z6 = 1 / (k * (Vg(n) - Vref - Vp));
-syms Z1 Z2 Z3 Z4 Z5 Z6 Z7 Z8;
+else
+    Z6 = 1 / (k2 * (Vg - Vref - Vp)^2);
+end
+%  Z6 = 1 / (k * (Vg - Vref - Vp));
+
+% syms Z1 Z2 Z3 Z4 Z5 Z6 Z7 Z8;
 Z = diag([Z1 Z2 Z3 Z4 Z5 Z6 Z7 Z8]);
 
 S = 2*Qv'*((Qi/Z*Qv')\(Qi/Z)) - eye(size(Qv,2));
@@ -96,6 +103,7 @@ S = 2*Qv'*((Qi/Z*Qv')\(Qi/Z)) - eye(size(Qv,2));
     b_old = b(4);
 
     Vout(n) = (a(7) + b(7))/2;
+    Vds = (a(6)+b(6))/2;
  
 end
 

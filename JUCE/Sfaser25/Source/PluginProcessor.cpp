@@ -194,7 +194,7 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
 
             input_sample = inputBufferL[sample];
 
-            if (!input_sample) {
+            if (0) {
                 outputL = 0;
             }
             else {
@@ -211,7 +211,7 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
 
             input_sample = inputBufferR[sample];
 
-            if (!input_sample) {
+            if (0) {
                 outputR = 0;
             }
             else {

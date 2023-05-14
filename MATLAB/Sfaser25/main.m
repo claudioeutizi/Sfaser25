@@ -4,19 +4,18 @@ close all;
 
 
 input = 'audio';
-
 if strcmp(input, 'sine')
-f0 = 440;
-fs = 44100;
+f0 = 500;
+fs = 192000;
 Ts = 1/fs;
-StopTime = 22/f0;
+StopTime = 2*f0/f0;
 t = 0:Ts:StopTime;
 Vin = sin(2*pi*f0*t);
 end
 
 if strcmp(input, 'noise')
 fs = 192000;
-N=0.5*fs;
+N=2*fs;
 Ts = 1/fs;
 t = 0:Ts:N*Ts-Ts;
 Vin=randn(N,1);
@@ -25,12 +24,12 @@ end
 if strcmp(input, 'audio')
 [Vin,fs] = audioread('ExpSweep.wav');
 Ts=1/fs;
-Vin=Vin(1:2*fs);
+% Vin=Vin(1:2*fs);
 N=length(Vin);
 t = 0:Ts:N*Ts-Ts;
 
-% [V_spiceOUT,fs2] = audioread('sweep.wav');
-% t_spiceOUT = 0:1/fs2:length(V_spiceOUT)/fs2-1/fs2;
+[V_spiceOUT,fs2] = audioread('sweep.wav');
+t_spiceOUT = 0:1/fs2:length(V_spiceOUT)/fs2-1/fs2;
 end
 
 
@@ -100,7 +99,7 @@ Vout = outputStage(stage0, stage4, Ts);
 % l = legend('show','FontSize',15);
 % set(l,'Interpreter','Latex');
 
-%% output
+% output
 
 % figure('color', 'white');
 % plot(t, Vout, 'b', 'LineWidth', 2, 'DisplayName', 'WDF');
@@ -141,15 +140,15 @@ xlim([20, 20e3]);
 
 H=P1./P1_in;
 figure;
-loglog(f,medfilt1(20*log10(H),5));
+loglog(f,medfilt1(20*log10(H),10));
 xlim([20, 20e3]);
 
 
-audiowrite('output.wav',Vout,fs);
+audiowrite('sweep2.wav',Vout,fs);
 
-window=2048;
-spectrogram(Vout, window, window/2, fs, 'yaxis', 'MinThreshold', -70);
-ylim([20*2/fs, 20e3*2/fs]);
-set(gca,'Yscale','log')
+% window=2048;
+% spectrogram(Vout, window, window/2, fs, 'yaxis', 'MinThreshold', -70);
+% ylim([20*2/fs, 20e3*2/fs]);
+% set(gca,'Yscale','log')
 
 
