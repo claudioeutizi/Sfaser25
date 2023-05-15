@@ -93,6 +93,11 @@ void Sfaser25AudioProcessor::changeProgramName (int index, const juce::String& n
 //==============================================================================
 void Sfaser25AudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
+    // Set up the filter state
+    antiAliasingFilter.reset();
+    antiAliasingFilter.setType(juce::dsp::StateVariableTPTFilterType::lowpass);
+    antiAliasingFilter.setCutoffFrequency(20000.f);
+    antiAliasingFilter.setResonance(0.7071f);
 
     juce::ignoreUnused (samplesPerBlock);
     sample_rate = (int)sampleRate;
@@ -102,7 +107,8 @@ void Sfaser25AudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlo
     S_in = inputStage.prepareInputStage(sample_rate);
     shiftStage.prepareShiftStage(sample_rate);
     S_out = outputStage.prepareOutputStage(sample_rate);
-    
+
+    //anti aliasing filter
 }
 
 void Sfaser25AudioProcessor::releaseResources()
@@ -204,7 +210,7 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
                 shiftStageOutput2 = shiftStage.shiftStageSample(shiftStageOutput1, initSTAGE2L, lfoValue);
                 shiftStageOutput3 = shiftStage.shiftStageSample(shiftStageOutput2, initSTAGE3L, lfoValue);
                 shiftStageOutput4 = shiftStage.shiftStageSample(shiftStageOutput3, initSTAGE4L, lfoValue);
-                outputL = outputStage.outputStageSample(shiftStageOutput4, inputStageOutput, S_out, initOUT);
+                outputL = antiAliasingFilter.processSample(0, outputStage.outputStageSample(shiftStageOutput4, inputStageOutput, S_out, initOUT));
             }
 
             //prendo il dry signal R
@@ -222,7 +228,8 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
                 shiftStageOutput2 = shiftStage.shiftStageSample(shiftStageOutput1, initSTAGE2R, lfoValue);
                 shiftStageOutput3 = shiftStage.shiftStageSample(shiftStageOutput2, initSTAGE3R, lfoValue);
                 shiftStageOutput4 = shiftStage.shiftStageSample(shiftStageOutput3, initSTAGE4R, lfoValue);
-                outputR = outputStage.outputStageSample(shiftStageOutput4, inputStageOutput, S_out, initOUT);
+                outputR = antiAliasingFilter.processSample(1, outputStage.outputStageSample(shiftStageOutput4, inputStageOutput, S_out, initOUT));
+
             }
 
             //calcolo il wet signal L/R
