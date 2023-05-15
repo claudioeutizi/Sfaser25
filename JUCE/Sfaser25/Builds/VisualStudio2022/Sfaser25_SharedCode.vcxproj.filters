@@ -2,8 +2,8 @@
 
 <Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Sfaser25\Source\Utils">
-      <UniqueIdentifier>{A4AF9592-01E3-AED9-F227-BFDF74837155}</UniqueIdentifier>
+    <Filter Include="Sfaser25\Source\GUI\Assets">
+      <UniqueIdentifier>{93FD1D1E-F57F-3459-D011-942EFFDCC99B}</UniqueIdentifier>
     </Filter>
     <Filter Include="Sfaser25\Source\GUI">
       <UniqueIdentifier>{D083BF6E-C6BA-8A65-ED7B-62116498465F}</UniqueIdentifier>
@@ -616,9 +616,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Source\Utils\melatonin_parameters.cpp">
-      <Filter>Sfaser25\Source\Utils</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\GUI\Sfaser25LookAndFeel.cpp">
       <Filter>Sfaser25\Source\GUI</Filter>
     </ClCompile>
@@ -3081,9 +3078,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Source\Utils\melatonin_parameters.h">
-      <Filter>Sfaser25\Source\Utils</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\GUI\Sfaser25LookAndFeel.h">
       <Filter>Sfaser25\Source\GUI</Filter>
     </ClInclude>
@@ -5948,6 +5942,9 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Source\GUI\Assets\dry_wet_knob.png">
+      <Filter>Sfaser25\Source\GUI\Assets</Filter>
+    </None>
     <None Include="..\..\Source\GUI\Assets\onoff-led-off.png">
       <Filter>Sfaser25\Source\GUI\Assets</Filter>
     </None>
