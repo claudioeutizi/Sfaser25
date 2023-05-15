@@ -187,7 +187,8 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
 
             speedOld = speed;
 
-            lfoValue = LFO((float)(lfoIndex * speed) / sample_rate);
+            /*lfoValue = LFO((float)(lfoIndex * speed) / sample_rate);*/
+            lfoValue = 3.1;
             
             //prendo il dry signal L
             drySampleL = inputBufferL[sample] * dry;
@@ -282,10 +283,10 @@ float Sfaser25AudioProcessor::getMix()
 
 float Sfaser25AudioProcessor::LFO(float index) {
     if (index < dutyCycle) {
-        return (index*0.3) / dutyCycle+3.1;
+        return (index*0.3) / dutyCycle + 3.1;
     }
     else {
-        return 0.3 / (1 - dutyCycle)*(-index + 1)+3.1;
+        return 0.3 / (1 - dutyCycle)*(-index + 1) + 3.1;
     }
 }
 

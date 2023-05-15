@@ -45,7 +45,7 @@ private:
     float Z6 = 700;
     float Z7 = 1e9;
     float Z8 = 1e-6;
-    Matrix<float, 8, 1> Vds = { 0,0,0,0,0,0,0,0 };
+    Matrix<float, 4, 1> Vds = { 0,0,0,0 };
 
     int stageIndex = 0;
     float Vref = 5.1;
