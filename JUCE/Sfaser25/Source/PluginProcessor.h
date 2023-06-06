@@ -124,7 +124,5 @@ private:
     //Output_Data O_data;
     juce::AudioFormatManager formatManager;
     int sample_rate;
-
-    //anti aliasing filter
-    juce::dsp::StateVariableTPTFilter<float> antiAliasingFilter;
+    
 };

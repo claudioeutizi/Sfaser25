@@ -28,17 +28,6 @@ S = 2*Qv'*((Qi/Z*Qv')\(Qi/Z)) - eye(size(Qv,2));
 
 Vout = zeros(N,1);
 
-% b_old=0;
-% 
-% for n = 1 : N
-%     a(2) = b_old;
-%     a(4) = Vref;
-% 
-%     b = S*a;
-%     
-%     b_old = b(2);
-% end
-
 b_old=-5.1;
 for n = 1 : N
 

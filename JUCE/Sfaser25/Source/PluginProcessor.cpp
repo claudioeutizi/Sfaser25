@@ -93,22 +93,21 @@ void Sfaser25AudioProcessor::changeProgramName (int index, const juce::String& n
 //==============================================================================
 void Sfaser25AudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-    // Set up the filter state
-    antiAliasingFilter.reset();
-    antiAliasingFilter.setType(juce::dsp::StateVariableTPTFilterType::lowpass);
-    antiAliasingFilter.setCutoffFrequency(20000.f);
-    antiAliasingFilter.setResonance(0.7071f);
 
     juce::ignoreUnused (samplesPerBlock);
     sample_rate = (int)sampleRate;
+    //internalSampleRate = sampleRate;
+    //oversamplingFactor = log2(sample_rate / internalSampleRate);
 
+    //oversampling(channels, oversamplingFactor, juce::dsp::Oversampling<float>::FilterType::filterHalfBandFIREquiripple);
+    
     //Compute S for each stage
 
     S_in = inputStage.prepareInputStage(sample_rate);
     shiftStage.prepareShiftStage(sample_rate);
     S_out = outputStage.prepareOutputStage(sample_rate);
 
-    //anti aliasing filter
+
 }
 
 void Sfaser25AudioProcessor::releaseResources()
@@ -148,7 +147,7 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
     juce::ignoreUnused(midiMessages);
     juce::ScopedNoDenormals noDenormals;
 
-    
+
     auto totalNumInputChannels  = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
 
@@ -166,8 +165,6 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
     auto* inputBufferL = buffer.getReadPointer(0);
     auto* inputBufferR = buffer.getReadPointer(1);
 
-    
-
     if (!getOnOffState()) {
 
         for (int sample = 0; sample < buffer.getNumSamples(); ++sample)
@@ -179,24 +176,24 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
 
     else {
 
-        //prendo parametro dal knob e calcolo la quantita di dry/wet
         dryWetParam = getMix();
         dry = 1.0f - dryWetParam;
         wet = dryWetParam;
-        
+
+
         for (int sample = 0; sample < buffer.getNumSamples(); ++sample)
         {
-            //lfoValue = 2 * 0.3 * std::abs(speed*lfoIndex/sample_rate - floor(speed*lfoIndex/sample_rate + 0.5))+3.1;
+           
             if (speed!=speedOld) {
                 lfoIndex = lfoIndex*speedOld/speed;
             }
 
             speedOld = speed;
-
-            /*lfoValue = LFO((float)(lfoIndex * speed) / sample_rate);*/
-            lfoValue = 3.1;
-            
-            //prendo il dry signal L
+            //lfoValue = 2 * 0.3 * std::abs(speed * lfoIndex / sample_rate - floor(speed * lfoIndex / sample_rate + 0.5)) + 3.1;
+            //lfoValue = LFO((float)(lfoIndex * speed) / sample_rate);
+            lfoValue = std::sin(lfoIndex * 2 * 3.1415 * speed / sample_rate) * 0.15 + 3.25;
+         
+           
             drySampleL = inputBufferL[sample] * dry;
 
             input_sample = inputBufferL[sample];
@@ -210,10 +207,10 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
                 shiftStageOutput2 = shiftStage.shiftStageSample(shiftStageOutput1, initSTAGE2L, lfoValue);
                 shiftStageOutput3 = shiftStage.shiftStageSample(shiftStageOutput2, initSTAGE3L, lfoValue);
                 shiftStageOutput4 = shiftStage.shiftStageSample(shiftStageOutput3, initSTAGE4L, lfoValue);
-                outputL = antiAliasingFilter.processSample(0, outputStage.outputStageSample(shiftStageOutput4, inputStageOutput, S_out, initOUT));
+                outputL = outputStage.outputStageSample(shiftStageOutput4, inputStageOutput, S_out, initOUT)-1e-4;
             }
 
-            //prendo il dry signal R
+            
             drySampleR = inputBufferR[sample] * dry;
 
             input_sample = inputBufferR[sample];
@@ -228,11 +225,10 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
                 shiftStageOutput2 = shiftStage.shiftStageSample(shiftStageOutput1, initSTAGE2R, lfoValue);
                 shiftStageOutput3 = shiftStage.shiftStageSample(shiftStageOutput2, initSTAGE3R, lfoValue);
                 shiftStageOutput4 = shiftStage.shiftStageSample(shiftStageOutput3, initSTAGE4R, lfoValue);
-                outputR = antiAliasingFilter.processSample(1, outputStage.outputStageSample(shiftStageOutput4, inputStageOutput, S_out, initOUT));
-
+                outputR = outputStage.outputStageSample(shiftStageOutput4, inputStageOutput, S_out, initOUT)-1e-4;
             }
 
-            //calcolo il wet signal L/R
+            
             wetSampleL = outputL * wet;
             wetSampleR = outputR * wet;
 
@@ -244,6 +240,8 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
 
             lfoIndex = lfoIndex % rounded;
         }
+
+
     }
  }
     
