@@ -48,7 +48,8 @@ plot(t(fs:end), Vin(fs:end), 'b', 'LineWidth', 2, 'DisplayName', 'WDF');
 
 hold on
 %figure('color', 'white');
-%for 0.35 is 8344
+%for 96k is -28622
+%fot 44k is 18163
 aligned=circshift(Vout/1.2,-28622);
 plot(t(fs:end),aligned(fs:end) , 'r--', 'LineWidth', 2, 'DisplayName', 'LTspice');
 
@@ -60,7 +61,7 @@ l = legend('show','FontSize',15);
 set(l,'Interpreter','Latex');
 figure;
 error= Vin(fs:end)-aligned(fs:end);
-E=sum(error.^2)/L
+Et=sum(error.^2)/L;
 plot(t(fs:end), error);
 
 figure('color', 'white');

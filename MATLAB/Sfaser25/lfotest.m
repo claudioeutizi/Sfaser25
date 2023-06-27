@@ -23,4 +23,4 @@ for lfoIndex=1:(sample_rate+1)/speed
     end
 end
 lfoIndex=1:sample_rate/speed;
-plot(lfoIndex,lfoValue);
+plot(lfoIndex,lfoValue, 'b', 'LineWidth', 2);
