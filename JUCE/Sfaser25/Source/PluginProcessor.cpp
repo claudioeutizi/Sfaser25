@@ -190,8 +190,8 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
 
             speedOld = speed;
             //lfoValue = 2 * 0.3 * std::abs(speed * lfoIndex / sample_rate - floor(speed * lfoIndex / sample_rate + 0.5)) + 3.1;
-            //lfoValue = LFO((float)(lfoIndex * speed) / sample_rate);
-            lfoValue = std::sin(lfoIndex * 2 * 3.1415 * speed / sample_rate) * 0.15 + 3.25;
+            lfoValue = LFO((float)(lfoIndex * speed) / sample_rate);
+            //lfoValue = std::sin(lfoIndex * 2 * 3.1415 * speed / sample_rate) * 0.15 + 3.25;
          
            
             drySampleL = inputBufferL[sample] * dry;

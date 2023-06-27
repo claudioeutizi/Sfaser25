@@ -2,12 +2,13 @@ close all;
 clear;
 clc;
 %%44
-[Vin,fs] = audioread('Sine0.35.wav');
-[Vout,fs] = audioread('SineSpiceNorm44.wav');
+[Vin,fs] = audioread('sineNewImp96.wav');
+[Vout,fs] = audioread('SineSpiceNorm.wav');
 
 
 Vin=Vin(:,1);
-Vout=-Vout(:,1)*1.3;
+%per confrontare spice e juce
+Vout=-Vout(:,1)*1.2;
 
 
 Y = fft(Vin);
@@ -39,7 +40,7 @@ t = 0:1/fs:(L-1)/fs;
 
 
 
-
+if 1
 figure('color', 'white');
 %plot(Vin);
 %hold on; 
@@ -47,7 +48,8 @@ plot(t(fs:end), Vin(fs:end), 'b', 'LineWidth', 2, 'DisplayName', 'WDF');
 
 hold on
 %figure('color', 'white');
-aligned=circshift(Vout/1.2,8344);
+%for 0.35 is 8344
+aligned=circshift(Vout/1.2,-28622);
 plot(t(fs:end),aligned(fs:end) , 'r--', 'LineWidth', 2, 'DisplayName', 'LTspice');
 
 ylabel('\bf Voltage [V]','interpreter','latex','FontSize',13)
@@ -80,7 +82,48 @@ l = legend('show','FontSize',15);
 set(l,'Interpreter','Latex');
 
 
+else
 
+figure('color', 'white');
+%plot(Vin);
+%hold on; 
+plot(t(fs:end), Vin(fs:end), 'b', 'LineWidth', 2, 'DisplayName', 'Real op-amps');
+
+hold on
+%figure('color', 'white');
+aligned=Vout;
+plot(t(fs:end),aligned(fs:end) , 'r--', 'LineWidth', 2, 'DisplayName', 'Ideal op-amps');
+
+ylabel('\bf Voltage [V]','interpreter','latex','FontSize',13)
+xlabel('\bf Time [S]','interpreter','latex','FontSize',13)
+ax = gca;
+ax.FontSize = 13;
+l = legend('show','FontSize',15);
+set(l,'Interpreter','Latex');
+figure;
+error= Vin(fs:end)-aligned(fs:end);
+E=sum(error.^2)/L
+plot(t(fs:end), error);
+
+figure('color', 'white');
+%plot(Vin);
+%hold on; 
+loglog(f, 20*log10(P1_in), 'b', 'LineWidth', 2, 'DisplayName', 'Real op-amps');
+xlim([20, 20e3]);
+ylim([-120, -25]);
+hold on
+%figure('color', 'white');
+loglog(f1, 20*log10(P1), 'r--', 'LineWidth', 2, 'DisplayName', 'Ideal op-amps');
+xlim([20, 20e3]);
+ylim([-120, -25]);
+ylabel('\bf Voltage [V]','interpreter','latex','FontSize',13)
+xlabel('\bf Time [S]','interpreter','latex','FontSize',13)
+ax = gca;
+ax.FontSize = 13;
+l = legend('show','FontSize',15);
+set(l,'Interpreter','Latex');
+
+end
 % figure;
 % window=2048;
 % spectrogram(Vout, window, window/2, fs, 'yaxis', 'MinThreshold', -70);

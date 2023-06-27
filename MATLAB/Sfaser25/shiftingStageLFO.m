@@ -3,18 +3,20 @@ function Vout = shiftingStageLFO(input, Ts)
 
 N = length(input);
 Vref = 5.1;
-Is = 5.185e-3;
+Is = 5.367e-3;
 Vp = -2.021;
 k = 2 * Is / Vp^2;
 
 lambda = 4e-3;
 k2 = (lambda * Is);
 
-speed = 1;
+alpha=1;
+
+speed = 0;
 sample_rate = 1/Ts;
 lfoIndex = 0:Ts:N/sample_rate-Ts;
 lfoValue = sin(lfoIndex * 2 * 3.1415 * speed) * 0.15 + 3.25;
-     
+ 
 %% LFO accurato
 % fs = 1/Ts; % Frequenza di campionamento
 % T = N/fs; % Durata del segnale
@@ -102,14 +104,19 @@ Z8 = 1e-6;
 
 Vout = zeros(N,1);
 Vds=0;
+VdsArray=zeros(N,1);
+IdsArray=zeros(N,1);
+ZArray=zeros(N,1);
 for n = 1 : N
- 
+
 
  if Vds < lfoValue(n) - 5.1 - Vp
 
-        Z6 = 1 / (k * (lfoValue(n) - Vref - Vp - Vds) );
+        Z6 = 1 / (k * (lfoValue(n) - Vref - Vp - Vds/2) );
  else 
-        Z6 = 1 / (k2 * (1-(lfoValue(n)-Vref)/Vp)^2); 
+%         Z6 = 1 / (k2 * (1-(lfoValue(n)-Vref)/Vp)^2);
+        Z6 = Vds/(Is*(1-(lfoValue(n)-Vref)/Vp)^2*(1+lambda*Vds));
+%     Z6=15790;
  end
 %syms Z1 Z2 Z3 Z4 Z5 Z6 Z7 Z8;
 Z = diag([Z1 Z2 Z3 Z4 Z5 Z6 Z7 Z8]);
@@ -125,12 +132,19 @@ S = 2*Qv'*((Qi/Z*Qv')\(Qi/Z)) - eye(size(Qv,2));
     
     b_old = b(4);
     
+    
+    VdsArray(n) = Vds;
+    IdsArray(n) = Vds/Z6;
+    ZArray(n) = Z6;
     Vds=(a(6)+b(6))/2;
+
 
     Vout(n) = (a(7) + b(7))/2;
  
+
+
 end
-
-
+    plot(VdsArray, IdsArray);
+    save('variables', 'VdsArray', 'IdsArray', 'ZArray');
 end
 

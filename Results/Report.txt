@@ -1,0 +1,35 @@
+Explicit wave digital filter implementation of MXR phase90
+
+- Abstract
+
+- -Introduzione:
+implementazione senza metodi iterativi->resistenze tempo varianti controllate in tensione, possono non convergere, costo computazionale, numero iterazione indefinito, citare altre implementazioni (descrizioni brevi). Sommario delle sezioni
+
+- -Background WDF: 
+giunzioni, elementi lineari (thevenin), giunzioni con nullori (molto rapidamente). 
+
+- -Proposed WDF model
+Riferimento a sito per diagramma circuitale (senza metterlo direttamente), descrivere struttura semplificata degli stadi con semplificazioni (descrivi)
+
+-Topological Structure/Signal flow scheme.
+ Schema a blocchi dei 3 stage e breve descrizione di un solo stage (shifting stage). Output stage senza bjt, opamp ideali. 
+
+-JFET implementaton
+implementazione jfet. Curve Ids/Vds da spice e wdf con vgs costante. Sinusoidi a varie ampiezze/frequenze e valutare MSE (alta fs). Usare alpha [0,1]invece di 0.35 e spiegare successivamente
+
+- Numerical results:
+Plot con alpha = 1, plot con alpha = 0.35, plot con alpha = 0. Quantificare l'efficienza per diverse fs (dati computer di test)
+
+- Conclusioni
+Recap generale, aspetti positivi e limitazioni->future work (brevi)
+
+
+27 giugno primo draft report (finito)
+
+peer review e presentazione (20/30 min): esempi video, risulati alla fine, seguire vagamente la struttura del report
+
+4 luglio conferenza
+
+Consegna finale a metà luglio
+
+commenti su codice e readme

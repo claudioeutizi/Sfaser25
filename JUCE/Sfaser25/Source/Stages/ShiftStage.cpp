@@ -29,16 +29,15 @@ void ShiftStage::prepareShiftStage(float sampleRate)
 float ShiftStage::shiftStageSample(float inputSample, wavesSTAGE& waves, float LFO)
 {
 
-    if (0.35*Vds(stageIndex, 0) < LFO - Vref - Vp){ //Ohmic region
+    if (Vds(stageIndex, 0) < LFO - Vref - Vp) { //Ohmic region
 
-        Z6 = 1 / (k * (LFO - Vref - Vp - 0.35*Vds(stageIndex, 0)));
+        Z6 = 1 / (k * (LFO - Vref - Vp -  Vds(stageIndex, 0)/2));
 
     }
 
-    else {
-        Z6 = 1 / (k2 * pow((1-(LFO-Vref)/Vp),2)); //Saturation region
+    else { //Saturation region
+        Z6 = Vds(stageIndex, 0) / (Is * pow((1 - (LFO - Vref) / Vp), 2)*(1+lambda* Vds(stageIndex, 0))); //Saturation region
     }
-    //Z6 = 1 / (k * (LFO - Vref - Vp));
    
     shiftScatteringMatrix(Z4, Z6);
     
