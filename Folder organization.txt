@@ -1,0 +1,7 @@
+
+FOLDER ORGANIZATION
+
+- JUCE: source code of the JUCE implementation of the plugimn
+- MATLAB: matlab scripts and output files, used for the analysis and plots
+- SPICE: LTSpice implementation of the circuit, used as ground-truth in the comparisons
+- BUILDS: the .vst3 file and standalone
