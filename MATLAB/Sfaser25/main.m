@@ -9,7 +9,7 @@ if strcmp(input, 'sine')
 f0 = 1000;
 fs = 96000;
 Ts = 1/fs;
-StopTime = 5.1e-3;
+StopTime = 1;
 t = 0:Ts:StopTime;
 Vin = sin(2*pi*f0*t);
 % Vin=Vin(1:end-1);
@@ -29,8 +29,6 @@ Ts=1/fs;
 % Vin=Vin(1:2*fs);
 N=length(Vin);
 t = 0:Ts:N*Ts-Ts;
-sine35 = audioread('Sine0.35.wav');
-sine35=sine35(:,1);
 % [V_spiceOUT,fs2] = audioread('sweep.wav');
 % t_spiceOUT = 0:1/fs2:length(V_spiceOUT)/fs2-1/fs2;
 end
@@ -74,10 +72,10 @@ Vout = outputStage(stage0, stage4, Ts);
 
 audiowrite('output.wav',Vout,fs);
 
-% window=2048;
-% spectrogram(Vout, window, window/2, fs, 'yaxis', 'MinThreshold', -70);
-% ylim([20*2/fs, 20e3*2/fs]);
-% set(gca,'Yscale','log')
+window=2048;
+spectrogram(Vout, window, window/2, fs, 'yaxis', 'MinThreshold', -70);
+ylim([20*2/fs, 20e3*2/fs]);
+set(gca,'Yscale','log')
 % 
 % figure;
 % 

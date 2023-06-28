@@ -30,19 +30,6 @@ S = 2*Qv'*((Qi/Z*Qv')\(Qi/Z)) - eye(size(Qv,2));
 
 Vout = zeros(N,1);
 
-% b_old=0;
-% 
-% for n = 1 : N
-% 
-%     a(1) = -5.1;
-%     a(5) = -5.1;
-%     a(3) = b_old;
-%  
-%     b = S*a;
-%     
-%     b_old = b(3);
-%     
-% end
 b_old=1.01637;
 for n = 1 : N
 

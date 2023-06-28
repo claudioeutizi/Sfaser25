@@ -1,13 +1,13 @@
 close all;
 clear;
 clc;
-%%44
+
 [Vin,fs] = audioread('sineNewImp96.wav');
 [Vout,fs] = audioread('SineSpiceNorm.wav');
 
 
 Vin=Vin(:,1);
-%per confrontare spice e juce
+
 Vout=-Vout(:,1)*1.2;
 
 
@@ -42,12 +42,9 @@ t = 0:1/fs:(L-1)/fs;
 
 if 1
 figure('color', 'white');
-%plot(Vin);
-%hold on; 
 plot(t(fs:end), Vin(fs:end), 'b', 'LineWidth', 2, 'DisplayName', 'WDF');
 
 hold on
-%figure('color', 'white');
 %for 96k is -28622
 %fot 44k is 18163
 aligned=circshift(Vout/1.2,-28622);
@@ -65,13 +62,10 @@ Et=sum(error.^2)/L;
 plot(t(fs:end), error);
 
 figure('color', 'white');
-%plot(Vin);
-%hold on; 
 loglog(f, 20*log10(P1_in), 'b', 'LineWidth', 2, 'DisplayName', 'WDF');
 xlim([20, 20e3]);
 ylim([-120, -25]);
 hold on
-%figure('color', 'white');
 loglog(f1, 20*log10(P1), 'r--', 'LineWidth', 2, 'DisplayName', 'LTspice');
 xlim([20, 20e3]);
 ylim([-120, -25]);
