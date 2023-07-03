@@ -48,7 +48,7 @@ float OutputStage::outputStageSample(float inputWet, float inputDry, Matrix6f S,
     waves.a[2] = waves.b(2);
     waves.b = S*waves.a;
     
-    float outputSample = ((waves.a[5]+waves.b[5])/2);
+    float outputSample = ((waves.a[5]+waves.b[5])/2)*1.9;
     return outputSample;
 }
 

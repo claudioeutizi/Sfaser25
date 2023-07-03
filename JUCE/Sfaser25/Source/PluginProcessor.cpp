@@ -207,7 +207,7 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
                 shiftStageOutput2 = shiftStage.shiftStageSample(shiftStageOutput1, initSTAGE2L, lfoValue);
                 shiftStageOutput3 = shiftStage.shiftStageSample(shiftStageOutput2, initSTAGE3L, lfoValue);
                 shiftStageOutput4 = shiftStage.shiftStageSample(shiftStageOutput3, initSTAGE4L, lfoValue);
-                outputL = outputStage.outputStageSample(shiftStageOutput4, inputStageOutput, S_out, initOUT)-1e-4;
+                outputL = (outputStage.outputStageSample(shiftStageOutput4, inputStageOutput, S_out, initOUT)-1e-4);
             }
 
             
@@ -225,7 +225,7 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
                 shiftStageOutput2 = shiftStage.shiftStageSample(shiftStageOutput1, initSTAGE2R, lfoValue);
                 shiftStageOutput3 = shiftStage.shiftStageSample(shiftStageOutput2, initSTAGE3R, lfoValue);
                 shiftStageOutput4 = shiftStage.shiftStageSample(shiftStageOutput3, initSTAGE4R, lfoValue);
-                outputR = outputStage.outputStageSample(shiftStageOutput4, inputStageOutput, S_out, initOUT)-1e-4;
+                outputR = (outputStage.outputStageSample(shiftStageOutput4, inputStageOutput, S_out, initOUT)-1e-4);
             }
 
             
