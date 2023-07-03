@@ -233,8 +233,8 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
             wetSampleR = outputR * wet;
 
             //output somma dei segnali dry/wet
-            channelDataL[sample] = (drySampleL + wetSampleL * makeupGain);
-            channelDataR[sample] = (drySampleR + wetSampleR * makeupGain);
+            channelDataL[sample] = ((drySampleL + wetSampleL) * makeupGain);
+            channelDataR[sample] = ((drySampleR + wetSampleR) * makeupGain);
 
             lfoIndex++;
 

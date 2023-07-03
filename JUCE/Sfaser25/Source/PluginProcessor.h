@@ -93,7 +93,7 @@ private:
     int rounded;
     int lfoIndex = 0;
     float input_sample = 0;
-    float makeupGain = 5;
+    float makeupGain = 10;
     float dutyCycle = 0.65;
     float speedOld = 0;
     bool onOffState = true;
