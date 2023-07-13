@@ -28,14 +28,14 @@ void ShiftStage::prepareShiftStage(float sampleRate)
 
 float ShiftStage::shiftStageSample(float inputSample, wavesSTAGE& waves, float LFO)
 {
-
-    if (Vds(stageIndex, 0) < LFO - Vref - Vp) { //Ohmic region
+    //Ohmic region
+    if (Vds(stageIndex, 0) < LFO - Vref - Vp) { 
 
         Z6 = 1 / (k * (LFO - Vref - Vp -  Vds(stageIndex, 0)/2));
 
     }
-
-    else { //Saturation region
+    //Saturation region
+    else { 
         Z6 = Vds(stageIndex, 0) / (Is * pow((1 - (LFO - Vref) / Vp), 2)*(1+lambda* Vds(stageIndex, 0))); //Saturation region
     }
    
@@ -55,6 +55,7 @@ float ShiftStage::shiftStageSample(float inputSample, wavesSTAGE& waves, float L
 
 }
 
+// Scattering matrix function, given Z4 Ts-dependent and Z6 JFET variable resistor
 void ShiftStage::shiftScatteringMatrix(float Z4, float Z6)
 {
     S(0, 0) = (20000 * (24000000000 * Z4 + 24000000001 * Z6 + 1000000 * Z4 * Z6 + 24000)) / (240000000024000 * Z4 + 240000000020000 * Z6 + 10000000001 * Z4 * Z6 + 480000000) - 1;

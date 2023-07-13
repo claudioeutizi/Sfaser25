@@ -9,7 +9,7 @@
 
 InputStage::InputStage()
 {
-
+    // Cut-set Matrices initialization
     Qv_T << 1, 0,
         0, 1,
         -1, -1,
@@ -30,8 +30,11 @@ Matrix4f InputStage::prepareInputStage(float sampleRate)
     float Ts = 1/sampleRate; 
     float Z2 = Ts / (2 * 0.01e-6);
     Vector4f z(Z1, Z2, Z3, Z4);
+
+    // Diagonal Z
     Matrix4f Z = z.asDiagonal();
 
+    // Scattering Matrix computation
     S = 2 * Qv_T * (Qi * Z.inverse() * Qv_T).inverse() * (Qi * Z.inverse()) - I;
     return S;
     

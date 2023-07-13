@@ -12,7 +12,7 @@
 
 OutputStage::OutputStage()
 {
-
+    // Cut-set Matrices initialization
     Qv_T << 1, 0, 0,
         0, 1, 0,
         0, 0, 1,
@@ -23,7 +23,7 @@ OutputStage::OutputStage()
     Qi_T = Qv_T;
     Qv = Qv_T.transpose();
     Qi = Qv;
-
+    //scattering matrix initialization
     S.fill(0);
 }
 
@@ -35,6 +35,7 @@ Matrix6f OutputStage::prepareOutputStage(float sampleRate)
     Matrix<float, 6,1> z(Z1, Z2, Z3, Z4, Z5, Z6);
     Matrix6f Z = z.asDiagonal();
     
+    //scattering matrix computation
     S = 2 * Qv_T * (Qi * Z.inverse() * Qv_T).inverse() * (Qi * Z.inverse()) - I;
     
     return S;

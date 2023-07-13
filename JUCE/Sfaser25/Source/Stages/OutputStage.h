@@ -40,6 +40,7 @@ private:
 
     Matrix6f I=Matrix6f::Identity(6,6);
 
+    //port impedances
     float Z1 = 150e3;
     float Z2 = Z1;
     float Z4 = 56e3;

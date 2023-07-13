@@ -96,10 +96,6 @@ void Sfaser25AudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlo
 
     juce::ignoreUnused (samplesPerBlock);
     sample_rate = (int)sampleRate;
-    //internalSampleRate = sampleRate;
-    //oversamplingFactor = log2(sample_rate / internalSampleRate);
-
-    //oversampling(channels, oversamplingFactor, juce::dsp::Oversampling<float>::FilterType::filterHalfBandFIREquiripple);
     
     //Compute S for each stage
 
@@ -165,6 +161,7 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
     auto* inputBufferL = buffer.getReadPointer(0);
     auto* inputBufferR = buffer.getReadPointer(1);
 
+    //if the effect is off, dry signal output
     if (!getOnOffState()) {
 
         for (int sample = 0; sample < buffer.getNumSamples(); ++sample)
@@ -176,16 +173,16 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
 
     else {
 
+        //dry wet blending
         dryWetParam = getMix();
         dry = 1.0f - dryWetParam;
         wet = dryWetParam;
 
-
         for (int sample = 0; sample < buffer.getNumSamples(); ++sample)
         {
            
-            if (speed!=speedOld) {
-                lfoIndex = lfoIndex*speedOld/speed;
+            if (speed != speedOld) {
+                lfoIndex = lfoIndex * speedOld / speed;
             }
 
             speedOld = speed;
@@ -201,6 +198,7 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
             if (!input_sample) {
                 outputL = 0;
             }
+
             else {
                 inputStageOutput = inputStage.inputStageSample(input_sample, S_in, initIN);
                 shiftStageOutput1 = shiftStage.shiftStageSample(inputStageOutput, initSTAGE1L, lfoValue);
@@ -232,7 +230,7 @@ void Sfaser25AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
             wetSampleL = outputL * wet;
             wetSampleR = outputR * wet;
 
-            //output somma dei segnali dry/wet
+            //output: sum of dry/wet signals
             channelDataL[sample] = (drySampleL + wetSampleL * makeupGain);
             channelDataR[sample] = (drySampleR + wetSampleR * makeupGain);
 
@@ -286,9 +284,10 @@ float Sfaser25AudioProcessor::getMix()
 }
 
 
+// function that generates the LFO asymmetric triangular waveshape
 float Sfaser25AudioProcessor::LFO(float index) {
     if (index < dutyCycle) {
-        return (index*0.3) / dutyCycle + 3.1;
+        return (index * 0.3) / dutyCycle + 3.1;
     }
     else {
         return 0.3 / (1 - dutyCycle)*(-index + 1) + 3.1;

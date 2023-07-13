@@ -37,6 +37,7 @@ public:
 
 private:
    
+    //Port impedances
     float Z1 = 1e-6;
     float Z2 = 24e3;
     float Z3 = 10e3;
@@ -45,6 +46,7 @@ private:
     float Z6 = 700;
     float Z7 = 1e9;
     float Z8 = 1e-6;
+
     Matrix<float, 8, 1> Vds = { 0,0,0,0,0,0,0,0 };
 
     int stageIndex = 0;

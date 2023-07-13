@@ -79,8 +79,6 @@ private:
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Sfaser25AudioProcessor)
 
-        //juce::ScopedPointer<juce::AudioProcessorValueTreeState> state;
-
     float inputStageOutput = 0;
     float shiftStageOutput1 = 0;
     float shiftStageOutput2 = 0;
@@ -98,6 +96,7 @@ private:
     float speedOld = 0;
     bool onOffState = true;
 
+    // dry/wet
     float drySampleL;
     float drySampleR;
     float dryWetParam;
@@ -106,17 +105,17 @@ private:
     float wetSampleL;
     float wetSampleR;
 
-    //input stage
+    // input stage
     InputStage inputStage;
     wavesIN initIN;
     Matrix4f S_in;
 
-    //shifting stage
+    // shifting stage
     ShiftStage shiftStage;
     wavesSTAGE initSTAGE1L, initSTAGE2L, initSTAGE3L, initSTAGE4L, initSTAGE1R, initSTAGE2R, initSTAGE3R, initSTAGE4R;
     Matrix8d S_stage;
 
-    //output stage
+    // output stage
     OutputStage outputStage;
     wavesOUT initOUT;
     Matrix6f S_out;
