@@ -2,8 +2,8 @@ close all;
 clear;
 clc;
 
-[Vin,fs] = audioread('sineNewImp.wav');
-[Vout,fs] = audioread('SineSpiceNorm44.wav');
+[Vin,fs] = audioread('sineNewImp96.wav');
+[Vout,fs] = audioread('SineSpiceNorm.wav');
 
 
 Vin=Vin(:,1);
