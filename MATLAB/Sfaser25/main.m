@@ -29,8 +29,7 @@ Ts=1/fs;
 % Vin=Vin(1:2*fs);
 N=length(Vin);
 t = 0:Ts:N*Ts-Ts;
-% [V_spiceOUT,fs2] = audioread('sweep.wav');
-% t_spiceOUT = 0:1/fs2:length(V_spiceOUT)/fs2-1/fs2;
+
 end
 
 
@@ -76,11 +75,6 @@ window=2048;
 spectrogram(Vout, window, window/2, fs, 'yaxis', 'MinThreshold', -70);
 ylim([20*2/fs, 20e3*2/fs]);
 set(gca,'Yscale','log')
-% 
-% figure;
-% 
-% spectrogram(sine35, window, window/2, fs, 'yaxis', 'MinThreshold', -70);
-% ylim([20*2/fs, 20e3*2/fs]);
-% set(gca,'Yscale','log')
+
 
 

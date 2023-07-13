@@ -2,8 +2,8 @@ close all;
 clear;
 clc;
 
-[Vin,fs] = audioread('sineNewImp96.wav');
-[Vout,fs] = audioread('SineSpiceNorm.wav');
+[Vin,fs] = audioread('sineNewImp.wav');
+[Vout,fs] = audioread('SineSpiceNorm44.wav');
 
 
 Vin=Vin(:,1);
@@ -17,8 +17,7 @@ P2 = abs(Y/L);
 P1_in = P2(1:L/2+1);
 P1_in(2:end-1) = 2*P1_in(2:end-1);
 f = fs*(0:(L/2))/L;
-% loglog(f,20*log10(P1_in))
-% xlim([20, 20e3]);
+
 
 
 Y = fft(Vout);
@@ -27,14 +26,7 @@ P2 = abs(Y/L);
 P1 = P2(1:L/2+1);
 P1(2:end-1) = 2*P1(2:end-1);
 f1 = fs*(0:(L/2))/L;
-% loglog(f1,20*log10(P1))
-% xlim([20, 20e3]);
 
-
-% H=P1./P1_in;
-% figure;
-% loglog(f,medfilt1(20*log10(H),5));
-% xlim([20, 20e3]);
 
 t = 0:1/fs:(L-1)/fs;
 
@@ -50,8 +42,8 @@ hold on
 aligned=circshift(Vout/1.2,-28622);
 plot(t(fs:end),aligned(fs:end) , 'r--', 'LineWidth', 2, 'DisplayName', 'LTspice');
 
-ylabel('\bf Voltage [V]','interpreter','latex','FontSize',13)
-xlabel('\bf Time [S]','interpreter','latex','FontSize',13)
+ylabel('\bf Amplitude[dB]','interpreter','latex','FontSize',13)
+xlabel('\bf Frequency[Hz]','interpreter','latex','FontSize',13)
 ax = gca;
 ax.FontSize = 13;
 l = legend('show','FontSize',15);
@@ -69,8 +61,8 @@ hold on
 loglog(f1, 20*log10(P1), 'r--', 'LineWidth', 2, 'DisplayName', 'LTspice');
 xlim([20, 20e3]);
 ylim([-120, -25]);
-ylabel('\bf Voltage [V]','interpreter','latex','FontSize',13)
-xlabel('\bf Time [S]','interpreter','latex','FontSize',13)
+ylabel('\bf Amplitude[dB]','interpreter','latex','FontSize',13)
+xlabel('\bf Frequency[Hz]','interpreter','latex','FontSize',13)
 ax = gca;
 ax.FontSize = 13;
 l = legend('show','FontSize',15);
@@ -80,12 +72,9 @@ set(l,'Interpreter','Latex');
 else
 
 figure('color', 'white');
-%plot(Vin);
-%hold on; 
 plot(t(fs:end), Vin(fs:end), 'b', 'LineWidth', 2, 'DisplayName', 'Real op-amps');
 
 hold on
-%figure('color', 'white');
 aligned=Vout;
 plot(t(fs:end),aligned(fs:end) , 'r--', 'LineWidth', 2, 'DisplayName', 'Ideal op-amps');
 
@@ -119,14 +108,3 @@ l = legend('show','FontSize',15);
 set(l,'Interpreter','Latex');
 
 end
-% figure;
-% window=2048;
-% spectrogram(Vout, window, window/2, fs, 'yaxis', 'MinThreshold', -70);
-% ylim([20*2/fs, 20e3*2/fs]);
-% set(gca,'Yscale','log')
-% 
-% figure;
-% window=2048;
-% spectrogram(Vin, window, window/2, fs, 'yaxis', 'MinThreshold', -70);
-% ylim([20*2/fs, 20e3*2/fs]);
-% set(gca,'Yscale','log')
