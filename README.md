@@ -34,5 +34,7 @@ Here the JUCE/C++ implementation of the project can be found. The [Eigen C++ lib
 * **GUI** folder contains knob, LED and buttons' stripes and the [Cinema4D](https://www.maxon.net/it/cinema-4d) project with which the plugin GUI has been designed.
 * **JuceLibraryCode** contains the files that JUCE needs in order to build the project.
 #### MATLAB
+The folder contains the 3 stages implementation and the main with some output files. The two sub-folder contain the matlab scripts and the files used to create the plots that can be seen in the report
 #### SPICE
+SPICE folder has the "cmp" sub-folder with the LTSpice models of the transistors used and the "datasheet" sub-folder with some useful datasheets. Then, we can find the spice circuits for a single stage, the ideal circuit with resistors instead of JFETs, the ideal circuit with JFETs and the real circuit (with non-ideal op-amps)
 
